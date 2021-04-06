@@ -1,5 +1,8 @@
 package org.linlinjava.litemall.db.service;
 import org.linlinjava.litemall.db.domain.Dict;
+import org.linlinjava.litemall.db.domain.LitemallAdmin;
+
+import java.util.List;
 
 
 /**
@@ -17,4 +20,6 @@ public interface DictService  {
     Integer save(Dict bean);
 
     boolean removeById(Long id);
+
+    List<LitemallAdmin> getListPage(Integer page, Integer limit, Dict dict);
 }

@@ -2,6 +2,9 @@ package org.linlinjava.litemall.db.dao;
 
 
 import org.linlinjava.litemall.db.domain.Dict;
+import org.linlinjava.litemall.db.domain.LitemallAdmin;
+
+import java.util.List;
 
 
 /**
@@ -23,4 +26,6 @@ public interface DictMapper  {
     int updateByPrimaryKeySelective(Dict record);
 
     int updateByPrimaryKey(Dict record);
-    }
+
+    List<LitemallAdmin> getList(Dict dict);
+}

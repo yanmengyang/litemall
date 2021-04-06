@@ -2,9 +2,14 @@ package org.linlinjava.litemall.db.service.Impl;
 
 import org.linlinjava.litemall.db.dao.AuntMapper;
 import org.linlinjava.litemall.db.domain.Aunt;
+import org.linlinjava.litemall.db.domain.Dict;
+import org.linlinjava.litemall.db.domain.LitemallAdmin;
 import org.linlinjava.litemall.db.service.AuntService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * @author honglei
@@ -36,6 +41,16 @@ public class AuntServiceImpl implements AuntService {
     public boolean removeById(Integer id) {
         auntMapper.deleteByPrimaryKey(id);
         return true;
+    }
+
+    @Override
+    public Integer insertBatch(MultipartFile file) {
+        return null;
+    }
+
+    @Override
+    public List<LitemallAdmin> getListPage(Integer page, Integer limit, Dict dict) {
+        return null;
     }
 }
 

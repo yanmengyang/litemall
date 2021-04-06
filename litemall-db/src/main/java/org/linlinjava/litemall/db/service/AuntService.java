@@ -1,6 +1,10 @@
 package org.linlinjava.litemall.db.service;
 import org.linlinjava.litemall.db.domain.Aunt;
+import org.linlinjava.litemall.db.domain.Dict;
+import org.linlinjava.litemall.db.domain.LitemallAdmin;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 /**
@@ -20,4 +24,6 @@ public interface AuntService {
     boolean removeById(Integer id);
 
     Integer insertBatch(MultipartFile file);
+
+    List<LitemallAdmin> getListPage(Integer page, Integer limit, Dict dict);
 }

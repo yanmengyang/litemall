@@ -1,9 +1,14 @@
 package org.linlinjava.litemall.db.service.Impl;
 
+import com.github.pagehelper.PageHelper;
 import org.linlinjava.litemall.db.dao.DictMapper;
 import org.linlinjava.litemall.db.domain.Dict;
+import org.linlinjava.litemall.db.domain.LitemallAdmin;
 import org.linlinjava.litemall.db.service.DictService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author honglei
@@ -13,6 +18,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DictServiceImpl  implements DictService {
+    @Autowired DictMapper dictMapper;
+
     @Override
     public Dict getById(Long id) {
         return null;
@@ -31,6 +38,13 @@ public class DictServiceImpl  implements DictService {
     @Override
     public boolean removeById(Long id) {
         return false;
+    }
+
+    @Override
+    public List<LitemallAdmin> getListPage(Integer page, Integer limit, Dict dict) {
+
+        PageHelper.startPage(page, limit);
+        return dictMapper.getList(dict);
     }
 }
 

@@ -44,7 +44,7 @@ public class DictController {
      * @return
      */
     @PostMapping(value = "/update")
-    public Object update(Dict bean){
+    public Object update(@RequestBody  Dict bean){
         return service.updateById(bean);
     }
 
@@ -55,7 +55,7 @@ public class DictController {
      * @return
      */
     @PostMapping(value = "/insert")
-    public Object insert(Dict bean){
+    public Object insert(@RequestBody  Dict bean){
         return service.save(bean);
     }
 

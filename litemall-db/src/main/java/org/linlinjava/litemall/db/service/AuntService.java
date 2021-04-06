@@ -1,5 +1,6 @@
 package org.linlinjava.litemall.db.service;
 import org.linlinjava.litemall.db.domain.Aunt;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -17,4 +18,6 @@ public interface AuntService {
     Integer save(Aunt bean);
 
     boolean removeById(Integer id);
+
+    Integer insertBatch(MultipartFile file);
 }

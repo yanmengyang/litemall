@@ -6,6 +6,7 @@ import org.linlinjava.litemall.db.domain.Aunt;
 import org.linlinjava.litemall.db.service.AuntService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,7 +45,7 @@ public class AuntController {
      * @return
      */
     @PostMapping(value = "/update")
-    public Object update(Aunt bean){
+    public Object update(@RequestBody  Aunt bean){
         return service.updateById(bean);
     }
 
@@ -54,8 +55,19 @@ public class AuntController {
      * @param bean
      * @return
      */
+    @PostMapping(value = "/insertBatich")
+    public Object insertBatch(MultipartFile file){
+        return service.insertBatch(file);
+    }
+
+
+    /**
+     * 新增
+     * @param bean
+     * @return
+     */
     @PostMapping(value = "/insert")
-    public Object insert(Aunt bean){
+    public Object insert(@RequestBody  Aunt bean){
         return service.save(bean);
     }
 

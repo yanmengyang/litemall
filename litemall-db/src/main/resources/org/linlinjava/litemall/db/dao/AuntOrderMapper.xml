@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.linlinjava.litemall.db.dao.AuntOrderMapper">
+  <resultMap id="BaseResultMap" type="org.linlinjava.litemall.db.domain.AuntOrder">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="pay_status" jdbcType="BOOLEAN" property="payStatus" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+    <result column="dispatch_status" jdbcType="BOOLEAN" property="dispatchStatus" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, addr, mobile, start_time, end_time, pay_status, `status`, dispatch_status, 
+    remark, creat_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from aunt_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from aunt_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.linlinjava.litemall.db.domain.AuntOrder" useGeneratedKeys="true">
+    insert into aunt_order (`name`, addr, mobile, 
+      start_time, end_time, pay_status, 
+      `status`, dispatch_status, remark, 
+      creat_time)
+    values (#{name,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{payStatus,jdbcType=BOOLEAN}, 
+      #{status,jdbcType=SMALLINT}, #{dispatchStatus,jdbcType=BOOLEAN}, #{remark,jdbcType=VARCHAR}, 
+      #{creatTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.linlinjava.litemall.db.domain.AuntOrder" useGeneratedKeys="true">
+    insert into aunt_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="addr != null">
+        addr,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="payStatus != null">
+        pay_status,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="dispatchStatus != null">
+        dispatch_status,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="creatTime != null">
+        creat_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payStatus != null">
+        #{payStatus,jdbcType=BOOLEAN},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="dispatchStatus != null">
+        #{dispatchStatus,jdbcType=BOOLEAN},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null">
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.linlinjava.litemall.db.domain.AuntOrder">
+    update aunt_order
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payStatus != null">
+        pay_status = #{payStatus,jdbcType=BOOLEAN},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="dispatchStatus != null">
+        dispatch_status = #{dispatchStatus,jdbcType=BOOLEAN},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null">
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.linlinjava.litemall.db.domain.AuntOrder">
+    update aunt_order
+    set `name` = #{name,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      pay_status = #{payStatus,jdbcType=BOOLEAN},
+      `status` = #{status,jdbcType=SMALLINT},
+      dispatch_status = #{dispatchStatus,jdbcType=BOOLEAN},
+      remark = #{remark,jdbcType=VARCHAR},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

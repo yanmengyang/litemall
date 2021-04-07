@@ -835,3 +835,63 @@ CREATE TABLE `litemall_user` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2019-12-16 23:12:57
+
+
+
+
+
+
+CREATE TABLE `litemall_aunt` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nick_name` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '昵称',
+  `sex` char(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '性别',
+  `head_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '头像',
+  `age` int(11) DEFAULT NULL COMMENT '年龄',
+  `birthday` date DEFAULT NULL COMMENT '出生日期',
+  `native_place` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '籍贯',
+  `experience` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '从业经验时长',
+  `expertin` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '擅长内容多个，区分，来源于字典',
+  `education` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '学历',
+  `des` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '简介',
+  `audit_status` tinyint(1) unsigned DEFAULT '0' COMMENT '审核状态',
+  `is_del` tinyint(1) unsigned DEFAULT '0' COMMENT '是否删除',
+  `sale_status` tinyint(1) unsigned DEFAULT '0' COMMENT '是否上架',
+  `real_status` tinyint(1) unsigned DEFAULT '0' COMMENT '认证状态',
+  `sign` char(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '属相',
+  `mobile` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `idcard` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sort` int(10) unsigned DEFAULT '0' COMMENT '排序',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `mobile` (`mobile`),
+  UNIQUE KEY `idcard` (`idcard`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE `litemall_dict` (
+  `id` bigint(20) NOT NULL COMMENT '字典主键ID',
+  `dict_name` varchar(32) NOT NULL COMMENT '字典名称',
+  `dict_value` varchar(32) NOT NULL COMMENT '字典值',
+  `dict_type` varchar(32) NOT NULL COMMENT '字典类型',
+  `dict_sequence` bigint(20) DEFAULT NULL COMMENT '排序',
+  `parent_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '上级字典ID',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `tenant_code` varchar(64) DEFAULT '10001' COMMENT '租户编码',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='字典表';
+
+CREATE TABLE `aunt_order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系人姓名',
+  `addr` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系地址',
+  `mobile` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '电话号',
+  `start_time` datetime DEFAULT NULL COMMENT '开始时间',
+  `end_time` datetime DEFAULT NULL COMMENT '结束时间',
+  `pay_status` tinyint(1) unsigned DEFAULT '0' COMMENT '支付状态',
+  `status` smallint(2) unsigned DEFAULT NULL COMMENT '订单状态',
+  `dispatch_status` tinyint(1) unsigned DEFAULT NULL COMMENT '调度状态',
+  `remark` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `creat_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='家政订单';
+

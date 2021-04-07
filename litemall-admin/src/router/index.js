@@ -284,6 +284,62 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/houseMg',
+    component: Layout,
+    redirect: 'noredirect',
+    alwaysShow: true,
+    name: 'goodsManage',
+    meta: {
+      title: '家政管理',
+      icon: 'chart'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/houseMg/list'),
+        name: 'goodsList',
+        meta: {
+          perms: ['GET /admin/goods/list', 'POST /admin/goods/delete'],
+          title: '阿姨列表',
+          noCache: true
+        }
+      },
+      {
+        path: 'create',
+        component: () => import('@/views/houseMg/create'),
+        name: 'goodsCreate',
+        meta: {
+          perms: ['POST /admin/goods/create'],
+          title: '添加阿姨',
+          noCache: true
+        },
+        hidden: true
+      },
+      {
+        path: 'edit',
+        component: () => import('@/views/houseMg/edit'),
+        name: 'goodsEdit',
+        meta: {
+          perms: ['GET /admin/goods/detail', 'POST /admin/goods/update', 'POST /admin/goods/catAndBrand'],
+          title: '阿姨编辑',
+          noCache: true
+        },
+        hidden: true
+      },
+      {
+        path: 'edit',
+        component: () => import('@/views/houseMg/uorder'),
+        name: 'goodsEdit',
+        meta: {
+          perms: ['GET /admin/goods/detail', 'POST /admin/goods/update', 'POST /admin/goods/catAndBrand'],
+          title: '预约管理',
+          noCache: true
+        },
+        hidden: false
+      }
+    ]
+  },
+  {
     path: '/promotion',
     component: Layout,
     redirect: 'noredirect',

@@ -23,8 +23,8 @@ import java.util.List;
  * @Description 服务实现层 
  */
 @RestController
-@RequestMapping("/api/aunt")
-public class AuntController {
+@RequestMapping("/api/uorder")
+public class AuntOrderController {
 
     @Autowired
     AuntService service;
@@ -32,8 +32,8 @@ public class AuntController {
 
 
 
-    @RequiresPermissions("admin:aunt:list")
-    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "查询")
+    @RequiresPermissions("admin:uorder:list")
+    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "查询")
     @GetMapping("/list")
     public Object list(String username,
                        @RequestParam(defaultValue = "1") Integer page,
@@ -52,8 +52,8 @@ public class AuntController {
      * @param id
      * @return
      */
-    @RequiresPermissions("admin:aunt:read")
-    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "详情")
+    @RequiresPermissions("admin:uorder:read")
+    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "详情")
     @GetMapping(value = "/read/{id}")
     public Object read(HttpServletRequest request, @PathVariable("id") Integer id){
         return service.selectById(id);
@@ -65,8 +65,8 @@ public class AuntController {
      * @param bean
      * @return
      */
-    @RequiresPermissions("admin:aunt:update")
-    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "编辑")
+    @RequiresPermissions("admin:uorder:update")
+    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "编辑")
     @PostMapping(value = "/update")
     public Object update(@RequestBody  Aunt bean){
         return service.updateById(bean);
@@ -78,8 +78,8 @@ public class AuntController {
      * @param bean
      * @return
      */
-    @RequiresPermissions("admin:aunt:insertBatich")
-    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "导入")
+    @RequiresPermissions("admin:uorder:insertBatich")
+    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "导入")
     @PostMapping(value = "/insertBatich")
     public Object insertBatch(MultipartFile file){
         return service.insertBatch(file);
@@ -91,8 +91,8 @@ public class AuntController {
      * @param bean
      * @return
      */
-    @RequiresPermissions("admin:aunt:create")
-    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "添加")
+    @RequiresPermissions("admin:uorder:create")
+    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "添加")
     @PostMapping(value = "/create")
     public Object create(@RequestBody  Aunt bean){
         return service.save(bean);
@@ -104,8 +104,8 @@ public class AuntController {
      * @param id
      * @return
      */
-    @RequiresPermissions("admin:aunt:delete")
-    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "删除")
+    @RequiresPermissions("admin:uorder:delete")
+    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "删除")
     @PostMapping(value = "/delete/{id}")
     public Object delete(HttpServletRequest request, @PathVariable("id") Integer id){
         return service.removeById(id);

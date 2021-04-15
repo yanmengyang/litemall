@@ -1,57 +1,35 @@
 <template>
   <div class="app-container">
     <el-card class="box-card">
-      <h3>添加阿姨</h3>
+      <h3>编辑字典</h3>
       <el-form ref="goods" :rules="rules" :model="goods" label-width="150px">
-        <el-form-item label="昵称" prop="nickName">
-          <el-input v-model="auntInfo.nickName" />
+
+        <el-form-item label="名称" prop="dictName">
+          <el-input v-model="dictInfo.dictName" />
         </el-form-item>
 
-        <el-form-item label="年龄" prop="age">
-          <el-input v-model="auntInfo.age" />
+        <el-form-item label="序列" prop="dictSequence">
+          <el-input v-model="dictInfo.dictSequence" />
         </el-form-item>
 
-        <el-form-item label="学历" prop="education">
-          <el-input v-model="auntInfo.education" />
+        <el-form-item label="类型" prop="dictType">
+          <el-input v-model="dictInfo.dictType" />
         </el-form-item>
 
         <el-form-item label="专业" prop="expertin">
-          <el-input v-model="auntInfo.expertin" />
+          <el-input v-model="dictInfo.expertin" />
         </el-form-item>
 
-        <el-form-item label="经验" prop="experience">
-          <el-input v-model="auntInfo.experience">
-            <template slot="append">年</template>
-          </el-input>
+        <el-form-item label="值" prop="dictValue">
+          <el-input v-model="dictInfo.dictValue" />
         </el-form-item>
 
-        <el-form-item label="所在地" prop="nativePlace">
-          <el-input v-model="auntInfo.nativePlace" />
+        <el-form-item label="父级id" prop="parentId">
+          <el-input v-model="dictInfo.parentId" />
         </el-form-item>
 
-        <el-form-item label="性别" prop="sex">
-          <el-radio-group v-model="auntInfo.sex">
-            <el-radio label="1">男</el-radio>
-            <el-radio label="0">女</el-radio>
-          </el-radio-group>
-        </el-form-item>
-
-        <el-form-item label="真实状态" prop="realStatus">
-          <el-radio-group v-model="auntInfo.realStatus">
-            <el-radio :label="true">是</el-radio>
-            <el-radio :label="false">否</el-radio>
-          </el-radio-group>
-        </el-form-item>
-
-        <el-form-item label="销售状况" prop="saleStatus">
-          <el-radio-group v-model="auntInfo.saleStatus">
-            <el-radio :label="true">是</el-radio>
-            <el-radio :label="false">否</el-radio>
-          </el-radio-group>
-        </el-form-item>
-
-        <el-form-item label="简介">
-          <editor v-model="auntInfo.des" :init="editorInit" />
+        <el-form-item label="租户编码" prop="tenantCode">
+          <el-input v-model="dictInfo.tenantCode" />
         </el-form-item>
 
       </el-form>
@@ -60,7 +38,7 @@
     <!-- dev -->
 
     <div class="op-container">
-      <el-button type="primary" @click="handleUpdate">更新</el-button>
+      <el-button type="primary" @click="handlePublish">提交</el-button>
     </div>
   </div>
 </template>
@@ -111,7 +89,7 @@
 </style>
 
 <script>
-import { editAunt, detailAunt } from '@/api/housemg'
+import { readDict, updateDict } from '@/api/dict'
 import { createStorage, uploadPath } from '@/api/storage'
 import Editor from '@tinymce/tinymce-vue'
 import { MessageBox } from 'element-ui'
@@ -123,20 +101,13 @@ export default {
 
   data() {
     return {
-      auntInfo: {
-        age: 30,
-        auditStatus: false,
-        birthday: '',
-        des: '',
-        education: '',
-        experience: '',
-        expertin: '',
-        isDel: false,
-        nativePlace: '',
-        nickName: '',
-        realStatus: false,
-        saleStatus: false,
-        sex: '0'
+      dictInfo: {
+        createTime: '2020-03-20T06:13:36.000+0000',
+        dictName: '流程设计',
+        dictSequence: 19,
+        dictType: 'button',
+        dictValue: 'design',
+        tenantCode: '10001'
       },
 
       uploadPath,
@@ -213,10 +184,10 @@ export default {
       if (this.$route.query.id == null) {
         return
       }
-      const auntId = this.$route.query.id
+      const dictId = this.$route.query.id
       const self = this
-      detailAunt(auntId).then(response => {
-        self.auntInfo = response.data.data
+      readDict(dictId).then(response => {
+        self.dictInfo = response.data.data
       }).catch(e => {
         console.error(e)
       })
@@ -229,14 +200,15 @@ export default {
       this.$store.dispatch('tagsView/delView', this.$route)
       this.$router.push({ path: '/goods/list' })
     },
-    handleUpdate: function() {
-      editAunt(this.auntInfo)
+    handlePublish: function() {
+      publishAunt(this.dictInfo)
         .then((response) => {
           this.$notify.success({
             title: '成功',
-            message: '更新成功'
+            message: '创建成功'
           })
-          this.$router.push({ path: '/houseMg/list' })
+          this.$store.dispatch('tagsView/delView', this.$route)
+          this.$router.push({ path: '/goods/list' })
         })
         .catch((response) => {
           MessageBox.alert('业务错误：' + response.data.errmsg, '警告', {

@@ -300,7 +300,7 @@ export const asyncRoutes = [
         name: 'goodsList',
         meta: {
           perms: ['GET /admin/goods/list', 'POST /admin/goods/delete'],
-          title: '阿姨列表',
+          title: '阿姨管理',
           noCache: true
         }
       },
@@ -327,15 +327,37 @@ export const asyncRoutes = [
         hidden: true
       },
       {
-        path: 'edit',
-        component: () => import('@/views/houseMg/uorder'),
+        path: 'dictlist',
+        component: () => import('@/views/dictMg/list'),
         name: 'goodsEdit',
         meta: {
           perms: ['GET /admin/goods/detail', 'POST /admin/goods/update', 'POST /admin/goods/catAndBrand'],
-          title: '预约管理',
+          title: '字典管理',
           noCache: true
         },
         hidden: false
+      },
+      {
+        path: 'dictedit',
+        component: () => import('@/views/dictMg/edit'),
+        name: 'dictEdit',
+        meta: {
+          perms: ['GET /admin/goods/detail', 'POST /admin/goods/update', 'POST /admin/goods/catAndBrand'],
+          title: '字典编辑',
+          noCache: true
+        },
+        hidden: true
+      },
+      {
+        path: 'dictcreate',
+        component: () => import('@/views/dictMg/create'),
+        name: 'dictEdit',
+        meta: {
+          perms: ['GET /admin/goods/detail', 'POST /admin/goods/update', 'POST /admin/goods/catAndBrand'],
+          title: '字典添加',
+          noCache: true
+        },
+        hidden: true
       }
     ]
   },

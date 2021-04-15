@@ -14,59 +14,16 @@
     <!-- 查询结果 -->
     <el-table v-loading="listLoading" :data="list" element-loading-text="正在查询中。。。" border fit highlight-current-row>
 
-      <el-table-column align="center" label="阿姨ID" prop="id" />
+      <el-table-column align="center" label="id" prop="id" />
+      <el-table-column align="center" label="创建时间" prop="createTime" />
+      <el-table-column align="center" label="名称" prop="dictName" />
+      <el-table-column align="center" label="序列" prop="dictSequence" />
+      <el-table-column align="center" label="类型" prop="dictType" />
+      <el-table-column align="center" label="值" prop="dictValue" />
+      <el-table-column align="center" label="父级id" prop="parentId" />
+      <el-table-column align="center" label="租户编码" prop="tenantCode" />
 
-      <el-table-column align="center" min-width="100" label="昵称" prop="nickName" />
-      <el-table-column align="center" label="年龄" prop="age" />
-      <el-table-column align="center" label="认证">
-        <template slot-scope="scope">
-          <span v-if="scope.row.auditStatus">是</span>
-          <span v-else>否</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="生日" prop="birthday" />
-
-      <el-table-column align="center" min-width="100" label="简介">
-        <template slot-scope="scope">
-          <span v-html="scope.row.des" />
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="学历" prop="education" />
-      <el-table-column align="center" label="经验" prop="experience" />
-      <el-table-column align="center" label="技能" prop="expertin" />
-      <el-table-column align="center" label="是否删除">
-        <template slot-scope="scope">
-          <span v-if="scope.row.isDel">是</span>
-          <span v-else>否</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="地址" prop="nativePlace" />
-
-      <el-table-column align="center" label="技能" prop="expertin" />
-
-      <el-table-column align="center" label="是否真实">
-        <template slot-scope="scope">
-          <span v-if="scope.row.realStatus">是</span>
-          <span v-else>否</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="是否售卖">
-        <template slot-scope="scope">
-          <span v-if="scope.row.saleStatus">是</span>
-          <span v-else>否</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="性别">
-        <template slot-scope="scope">
-          <span v-if="scope.row.sex == 1">男</span>
-          <span v-else>女</span>
-        </template>
-      </el-table-column>
-
+      <!-- 操作 -->
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
@@ -106,7 +63,7 @@
 </style>
 
 <script>
-import { listAunt, deleteAunt } from '@/api/housemg'
+import { listDict, deleteDict } from '@/api/dict'
 import BackToTop from '@/components/BackToTop'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
@@ -122,9 +79,9 @@ export default {
         page: 1,
         limit: 20,
         goodsSn: undefined,
-        name: undefined,
+        name: undefined
         // sort: 'add_time',
-        order: 'desc'
+        // order: 'desc'
       },
       goodsDetail: '',
       detailDialogVisible: false,
@@ -137,7 +94,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      listAunt(this.listQuery).then(response => {
+      listDict(this.listQuery).then(response => {
         this.list = response.data.data.list
         this.total = response.data.data.total
         this.listLoading = false
@@ -154,11 +111,11 @@ export default {
     },
 
     handleCreate() {
-      this.$router.push({ path: '/houseMg/create' })
+      this.$router.push({ path: '/houseMg/dictcreate' })
     },
 
     handleUpdate(row) {
-      this.$router.push({ path: '/houseMg/edit', query: { id: row.id }})
+      this.$router.push({ path: '/houseMg/dictedit', query: { id: row.id }})
     },
 
     showDetail(detail) {
@@ -172,7 +129,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteAunt(row.id).then(response => {
+        deleteDict(row.id).then(response => {
           this.$notify.success({
             title: '成功',
             message: '删除成功'

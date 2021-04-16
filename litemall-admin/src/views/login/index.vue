@@ -41,7 +41,7 @@
         />
       </el-form-item>
 
-      <el-form-item prop="code">
+      <el-form-item prop="code" v-if="0">
         <span class="svg-container">
           <svg-icon icon-class="lock" />
         </span>
@@ -69,7 +69,7 @@
         @click.native.prevent="handleLogin"
       >登录</el-button>
 
-      <div style="position:relative">
+      <div style="position:relative" v-if="0">
         <div class="tips">
           <span> 超级管理员用户名: admin123</span>
           <span> 超级管理员用户名：admin123</span>
@@ -141,9 +141,9 @@ export default {
   },
   methods: {
     getCode() {
-      getKaptcha().then((response) => {
-        this.codeImg = response.data.data;
-      });
+    //   getKaptcha().then((response) => {
+    //     this.codeImg = response.data.data;
+    //   });
     },
     handleLogin() {
       this.$refs.loginForm.validate((valid) => {

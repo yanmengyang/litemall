@@ -102,12 +102,12 @@ export default {
   data() {
     return {
       dictInfo: {
-        createTime: '2020-03-20T06:13:36.000+0000',
-        dictName: '流程设计',
-        dictSequence: 19,
-        dictType: 'button',
-        dictValue: 'design',
-        tenantCode: '10001'
+        createTime: '',
+        dictName: '',
+        dictSequence: 0,
+        dictType: '',
+        dictValue: '',
+        tenantCode: ''
       },
 
       uploadPath,

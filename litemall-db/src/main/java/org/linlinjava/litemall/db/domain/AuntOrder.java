@@ -54,17 +54,17 @@ public class AuntOrder implements Serializable {
     /**
      * 支付状态
      */
-    private Boolean payStatus;
+    private Integer payStatus;
 
     /**
      * 订单状态
      */
-    private Short status;
+    private Integer status;
 
     /**
      * 调度状态
      */
-    private Boolean dispatchStatus;
+    private Integer dispatchStatus;
 
     /**
      * 备注

@@ -8,9 +8,9 @@
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
-    <result column="pay_status" jdbcType="BOOLEAN" property="payStatus" />
+    <result column="pay_status" jdbcType="TINYINT" property="payStatus" />
     <result column="status" jdbcType="SMALLINT" property="status" />
-    <result column="dispatch_status" jdbcType="BOOLEAN" property="dispatchStatus" />
+    <result column="dispatch_status" jdbcType="TINYINT" property="dispatchStatus" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime" />
   </resultMap>

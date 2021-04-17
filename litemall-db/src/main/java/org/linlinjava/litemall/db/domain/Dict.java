@@ -13,7 +13,7 @@ public class Dict implements Serializable {
     /**
      * 字典主键ID
      */
-    private Long id;
+    private Integer id;
 
     /**
      * 字典名称
@@ -33,12 +33,12 @@ public class Dict implements Serializable {
     /**
      * 排序
      */
-    private Long dictSequence;
+    private Integer dictSequence;
 
     /**
      * 上级字典ID
      */
-    private Long parentId;
+    private Integer parentId;
 
     /**
      * 创建时间

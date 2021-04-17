@@ -13,10 +13,10 @@
     <result column="expertin" jdbcType="VARCHAR" property="expertin" />
     <result column="education" jdbcType="VARCHAR" property="education" />
     <result column="des" jdbcType="VARCHAR" property="des" />
-    <result column="audit_status" jdbcType="BOOLEAN" property="auditStatus" />
-    <result column="is_del" jdbcType="BOOLEAN" property="isDel" />
-    <result column="sale_status" jdbcType="BOOLEAN" property="saleStatus" />
-    <result column="real_status" jdbcType="BOOLEAN" property="realStatus" />
+    <result column="audit_status" jdbcType="INTEGER" property="auditStatus" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="sale_status" jdbcType="INTEGER" property="saleStatus" />
+    <result column="real_status" jdbcType="INTEGER" property="realStatus" />
     <result column="sign" jdbcType="CHAR" property="sign" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -43,8 +43,8 @@
     values (#{nickName,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{headUrl,jdbcType=VARCHAR},
       #{age,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, #{nativePlace,jdbcType=VARCHAR},
       #{experience,jdbcType=VARCHAR}, #{expertin,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR},
-      #{des,jdbcType=VARCHAR}, #{auditStatus,jdbcType=BOOLEAN}, #{isDel,jdbcType=BOOLEAN},
-      #{saleStatus,jdbcType=BOOLEAN}, #{realStatus,jdbcType=BOOLEAN}, #{sign,jdbcType=CHAR}
+      #{des,jdbcType=VARCHAR}, #{auditStatus}, #{isDel},
+      #{saleStatus}, #{realStatus}, #{sign,jdbcType=CHAR}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.linlinjava.litemall.db.domain.Aunt" useGeneratedKeys="true">
@@ -128,16 +128,16 @@
         #{des,jdbcType=VARCHAR},
       </if>
       <if test="auditStatus != null">
-        #{auditStatus,jdbcType=BOOLEAN},
+        #{auditStatus},
       </if>
       <if test="isDel != null">
-        #{isDel,jdbcType=BOOLEAN},
+        #{isDel},
       </if>
       <if test="saleStatus != null">
-        #{saleStatus,jdbcType=BOOLEAN},
+        #{saleStatus},
       </if>
       <if test="realStatus != null">
-        #{realStatus,jdbcType=BOOLEAN},
+        #{realStatus},
       </if>
       <if test="sign != null">
         #{sign,jdbcType=CHAR},
@@ -178,16 +178,16 @@
         des = #{des,jdbcType=VARCHAR},
       </if>
       <if test="auditStatus != null">
-        audit_status = #{auditStatus,jdbcType=BOOLEAN},
+        audit_status = #{auditStatus},
       </if>
       <if test="isDel != null">
-        is_del = #{isDel,jdbcType=BOOLEAN},
+        is_del = #{isDel},
       </if>
       <if test="saleStatus != null">
-        sale_status = #{saleStatus,jdbcType=BOOLEAN},
+        sale_status = #{saleStatus},
       </if>
       <if test="realStatus != null">
-        real_status = #{realStatus,jdbcType=BOOLEAN},
+        real_status = #{realStatus},
       </if>
       <if test="sign != null">
         sign = #{sign,jdbcType=CHAR},
@@ -207,10 +207,10 @@
       expertin = #{expertin,jdbcType=VARCHAR},
       education = #{education,jdbcType=VARCHAR},
       des = #{des,jdbcType=VARCHAR},
-      audit_status = #{auditStatus,jdbcType=BOOLEAN},
-      is_del = #{isDel,jdbcType=BOOLEAN},
-      sale_status = #{saleStatus,jdbcType=BOOLEAN},
-      real_status = #{realStatus,jdbcType=BOOLEAN},
+      audit_status = #{auditStatus},
+      is_del = #{isDel},
+      sale_status = #{saleStatus},
+      real_status = #{realStatus},
       sign = #{sign,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -246,16 +246,16 @@
     </if>
 
     <if test="auditStatus != null">
-      and audit_status = #{auditStatus,jdbcType=BOOLEAN}
+      and audit_status = #{auditStatus}
     </if>
     <if test="isDel != null">
-      and is_del = #{isDel,jdbcType=BOOLEAN}
+      and is_del = #{isDel}
     </if>
     <if test="saleStatus != null">
-      and sale_status = #{saleStatus,jdbcType=BOOLEAN}
+      and sale_status = #{saleStatus}
     </if>
     <if test="realStatus != null">
-      and real_status = #{realStatus,jdbcType=BOOLEAN}
+      and real_status = #{realStatus}
     </if>
     <if test="sign != null">
       and sign = #{sign,jdbcType=CHAR}

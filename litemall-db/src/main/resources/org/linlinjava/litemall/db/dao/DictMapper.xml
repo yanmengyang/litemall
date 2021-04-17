@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.linlinjava.litemall.db.dao.DictMapper">
   <resultMap id="BaseResultMap" type="org.linlinjava.litemall.db.domain.Dict">
-    <id column="id" jdbcType="BIGINT" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="dict_name" jdbcType="VARCHAR" property="dictName" />
     <result column="dict_value" jdbcType="VARCHAR" property="dictValue" />
     <result column="dict_type" jdbcType="VARCHAR" property="dictType" />
-    <result column="dict_sequence" jdbcType="BIGINT" property="dictSequence" />
-    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="dict_sequence" jdbcType="INTEGER" property="dictSequence" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="tenant_code" jdbcType="VARCHAR" property="tenantCode" />
@@ -20,7 +20,7 @@
     select
     <include refid="Base_Column_List" />
     from litemall_dict
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </select>
   <select id="getList" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
@@ -37,23 +37,23 @@
       AND dict_type = #{dictType,jdbcType=VARCHAR}
     </if>
     <if test="dictSequence != null">
-      AND dict_sequence = #{dictSequence,jdbcType=BIGINT}
+      AND dict_sequence = #{dictSequence}
     </if>
     <if test="parentId != null">
-      AND parent_id = #{parentId,jdbcType=BIGINT}
+      AND parent_id = #{parentId}
     </if>
 
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from litemall_dict
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.linlinjava.litemall.db.domain.Dict" useGeneratedKeys="true">
     insert into litemall_dict (dict_name, dict_value, dict_type,
       dict_sequence, parent_id, create_time,
       update_time, tenant_code)
     values (#{dictName,jdbcType=VARCHAR}, #{dictValue,jdbcType=VARCHAR}, #{dictType,jdbcType=VARCHAR},
-      #{dictSequence,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
+      #{dictSequence}, #{parentId}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP}, #{tenantCode,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.linlinjava.litemall.db.domain.Dict" useGeneratedKeys="true">
@@ -95,10 +95,10 @@
         #{dictType,jdbcType=VARCHAR},
       </if>
       <if test="dictSequence != null">
-        #{dictSequence,jdbcType=BIGINT},
+        #{dictSequence},
       </if>
       <if test="parentId != null">
-        #{parentId,jdbcType=BIGINT},
+        #{parentId},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -124,10 +124,10 @@
         dict_type = #{dictType,jdbcType=VARCHAR},
       </if>
       <if test="dictSequence != null">
-        dict_sequence = #{dictSequence,jdbcType=BIGINT},
+        dict_sequence = #{dictSequence},
       </if>
       <if test="parentId != null">
-        parent_id = #{parentId,jdbcType=BIGINT},
+        parent_id = #{parentId},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -139,18 +139,18 @@
         tenant_code = #{tenantCode,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </update>
   <update id="updateByPrimaryKey" parameterType="org.linlinjava.litemall.db.domain.Dict">
     update litemall_dict
     set dict_name = #{dictName,jdbcType=VARCHAR},
       dict_value = #{dictValue,jdbcType=VARCHAR},
       dict_type = #{dictType,jdbcType=VARCHAR},
-      dict_sequence = #{dictSequence,jdbcType=BIGINT},
-      parent_id = #{parentId,jdbcType=BIGINT},
+      dict_sequence = #{dictSequence},
+      parent_id = #{parentId},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       tenant_code = #{tenantCode,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </update>
 </mapper>

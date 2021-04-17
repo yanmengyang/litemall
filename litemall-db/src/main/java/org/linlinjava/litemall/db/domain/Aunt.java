@@ -10,6 +10,7 @@ import lombok.Data;
  */
 @Data
 public class Aunt implements Serializable {
+
     private Integer id;
 
     /**
@@ -65,22 +66,22 @@ public class Aunt implements Serializable {
     /**
      * 审核状态
      */
-    private Boolean auditStatus;
+    private Integer auditStatus;
 
     /**
      * 是否删除
      */
-    private Boolean isDel;
+    private Integer isDel;
 
     /**
      * 是否上架
      */
-    private Boolean saleStatus;
+    private Integer saleStatus;
 
     /**
      * 认证状态
      */
-    private Boolean realStatus;
+    private Integer realStatus;
 
     /**
      * 属相

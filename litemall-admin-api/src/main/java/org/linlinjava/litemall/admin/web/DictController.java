@@ -4,6 +4,7 @@ package org.linlinjava.litemall.admin.web;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.linlinjava.litemall.admin.annotation.RequiresPermissionsDesc;
+import org.linlinjava.litemall.admin.vo.DictVo;
 import org.linlinjava.litemall.core.util.ResponseUtil;
 import org.linlinjava.litemall.core.validator.Order;
 import org.linlinjava.litemall.core.validator.Sort;
@@ -23,7 +24,7 @@ import java.util.List;
  * @Description 服务实现层 字典表
  */
 @RestController
-@RequestMapping("/api/Dict")
+@RequestMapping("/admin/dict")
 public class DictController {
 
     @Autowired
@@ -31,15 +32,9 @@ public class DictController {
 
     @RequiresPermissions("admin:dict:list")
     @RequiresPermissionsDesc(menu = {"家政管理", "字典管理"}, button = "查询")
-    @GetMapping("/list")
-    public Object list(String username,
-                       @RequestParam(defaultValue = "1") Integer page,
-                       @RequestParam(defaultValue = "10") Integer limit,
-                       String dictType) {
-        Dict dict=new Dict();
-        dict.setDictType(dictType);
-        List<LitemallAdmin> adminList =service.getListPage(page,limit,dict);
-        return ResponseUtil.okList(adminList);
+    @PostMapping ("/list")
+    public Object list(@RequestBody  DictVo dictVo) {
+        return ResponseUtil.okList(service.getListPage(dictVo.getPage(),dictVo.getLimit(),dictVo));
     }
 
 
@@ -52,9 +47,9 @@ public class DictController {
      */
     @RequiresPermissions("admin:dict:read")
     @RequiresPermissionsDesc(menu = {"家政管理", "字典管理"}, button = "详情")
-    @GetMapping(value = "/get/{id}")
+    @PostMapping(value = "/read/{id}")
     public Object get(HttpServletRequest request, @PathVariable("id") Long id){
-        return service.getById(id);
+        return ResponseUtil.ok(service.getById(id));
     }
 
 
@@ -67,7 +62,7 @@ public class DictController {
     @RequiresPermissionsDesc(menu = {"家政管理", "字典管理"}, button = "编辑")
     @PostMapping(value = "/update")
     public Object update(@RequestBody  Dict bean){
-        return service.updateById(bean);
+        return ResponseUtil.ok(service.updateById(bean));
     }
 
 
@@ -78,9 +73,9 @@ public class DictController {
      */
     @RequiresPermissions("admin:dict:create")
     @RequiresPermissionsDesc(menu = {"家政管理", "字典管理"}, button = "添加")
-    @PostMapping(value = "/insert")
+      @PostMapping(value = "/create")
     public Object insert(@RequestBody  Dict bean){
-        return service.save(bean);
+        return ResponseUtil.ok(service.save(bean));
     }
 
  /***
@@ -91,9 +86,9 @@ public class DictController {
      */
  @RequiresPermissions("admin:dict:delete")
  @RequiresPermissionsDesc(menu = {"家政管理", "字典管理"}, button = "删除")
-    @PostMapping(value = "/del/{id}")
+    @PostMapping(value = "/delete/{id}")
     public Object del(HttpServletRequest request, @PathVariable("id") Long id){
-        return service.removeById(id);
+        return ResponseUtil.ok(service.removeById(id));
     }
 
 

@@ -4,10 +4,13 @@ package org.linlinjava.litemall.admin.web;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.linlinjava.litemall.admin.annotation.RequiresPermissionsDesc;
+import org.linlinjava.litemall.admin.vo.AuntOrderVo;
 import org.linlinjava.litemall.core.util.ResponseUtil;
 import org.linlinjava.litemall.db.domain.Aunt;
+import org.linlinjava.litemall.db.domain.AuntOrder;
 import org.linlinjava.litemall.db.domain.Dict;
 import org.linlinjava.litemall.db.domain.LitemallAdmin;
+import org.linlinjava.litemall.db.service.AuntOrderService;
 import org.linlinjava.litemall.db.service.AuntService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,26 +26,20 @@ import java.util.List;
  * @Description 服务实现层 
  */
 @RestController
-@RequestMapping("/api/uorder")
+@RequestMapping("/admin/uorder")
 public class AuntOrderController {
 
     @Autowired
-    AuntService service;
+    AuntOrderService  service;
 
 
 
 
     @RequiresPermissions("admin:uorder:list")
     @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "查询")
-    @GetMapping("/list")
-    public Object list(String username,
-                       @RequestParam(defaultValue = "1") Integer page,
-                       @RequestParam(defaultValue = "10") Integer limit,
-                       String dictType) {
-        Dict dict=new Dict();
-        dict.setDictType(dictType);
-        List<LitemallAdmin> adminList =service.getListPage(page,limit,dict);
-        return ResponseUtil.okList(adminList);
+    @PostMapping(value = "/list")
+    public Object list(@RequestBody AuntOrderVo order) {
+        return ResponseUtil.okList(service.getListPage( order.getPage(),order.getLimit(),  order));
     }
 
 
@@ -54,9 +51,9 @@ public class AuntOrderController {
      */
     @RequiresPermissions("admin:uorder:read")
     @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "详情")
-    @GetMapping(value = "/read/{id}")
+    @PostMapping(value = "/read/{id}")
     public Object read(HttpServletRequest request, @PathVariable("id") Integer id){
-        return service.selectById(id);
+        return ResponseUtil.ok(service.selectById(id));
     }
 
 
@@ -68,22 +65,11 @@ public class AuntOrderController {
     @RequiresPermissions("admin:uorder:update")
     @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "编辑")
     @PostMapping(value = "/update")
-    public Object update(@RequestBody  Aunt bean){
-        return service.updateById(bean);
+    public Object update(@RequestBody  AuntOrder bean){
+        return ResponseUtil.ok(service.updateById(bean));
     }
 
 
-    /**
-     * 新增
-     * @param bean
-     * @return
-     */
-    @RequiresPermissions("admin:uorder:insertBatich")
-    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "导入")
-    @PostMapping(value = "/insertBatich")
-    public Object insertBatch(MultipartFile file){
-        return service.insertBatch(file);
-    }
 
 
     /**
@@ -94,8 +80,8 @@ public class AuntOrderController {
     @RequiresPermissions("admin:uorder:create")
     @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "添加")
     @PostMapping(value = "/create")
-    public Object create(@RequestBody  Aunt bean){
-        return service.save(bean);
+    public Object create(@RequestBody  AuntOrder bean){
+        return ResponseUtil.ok(service.save(bean));
     }
 
  /***
@@ -108,7 +94,7 @@ public class AuntOrderController {
     @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "删除")
     @PostMapping(value = "/delete/{id}")
     public Object delete(HttpServletRequest request, @PathVariable("id") Integer id){
-        return service.removeById(id);
+        return ResponseUtil.ok(service.removeById(id));
     }
 
 

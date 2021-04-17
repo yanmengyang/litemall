@@ -98,10 +98,10 @@ public class AdminAuthController {
         }
 
         HttpSession session = request.getSession();
-        String kaptcha = (String)session.getAttribute("kaptcha");
-        if (Objects.requireNonNull(code).compareToIgnoreCase(kaptcha) != 0) {
-            return ResponseUtil.fail(ADMIN_INVALID_KAPTCHA, "验证码不正确", doKaptcha(request));
-        }
+//        String kaptcha = (String)session.getAttribute("kaptcha");
+//        if (Objects.requireNonNull(code).compareToIgnoreCase(kaptcha) != 0) {
+//            return ResponseUtil.fail(ADMIN_INVALID_KAPTCHA, "验证码不正确", doKaptcha(request));
+//        }
 
         Subject currentUser = SecurityUtils.getSubject();
         try {

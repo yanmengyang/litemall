@@ -13,11 +13,11 @@
     <result column="tenant_code" jdbcType="VARCHAR" property="tenantCode" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, dict_name, dict_value, dict_type, dict_sequence, parent_id, create_time, update_time, 
+    id, dict_name, dict_value, dict_type, dict_sequence, parent_id, create_time, update_time,
     tenant_code
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from litemall_dict
     where id = #{id,jdbcType=BIGINT}
@@ -49,11 +49,11 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.linlinjava.litemall.db.domain.Dict" useGeneratedKeys="true">
-    insert into litemall_dict (dict_name, dict_value, dict_type, 
-      dict_sequence, parent_id, create_time, 
+    insert into litemall_dict (dict_name, dict_value, dict_type,
+      dict_sequence, parent_id, create_time,
       update_time, tenant_code)
-    values (#{dictName,jdbcType=VARCHAR}, #{dictValue,jdbcType=VARCHAR}, #{dictType,jdbcType=VARCHAR}, 
-      #{dictSequence,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+    values (#{dictName,jdbcType=VARCHAR}, #{dictValue,jdbcType=VARCHAR}, #{dictType,jdbcType=VARCHAR},
+      #{dictSequence,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP}, #{tenantCode,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.linlinjava.litemall.db.domain.Dict" useGeneratedKeys="true">

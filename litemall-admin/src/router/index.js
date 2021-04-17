@@ -288,7 +288,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: 'noredirect',
     alwaysShow: true,
-    name: 'goodsManage',
+    name: 'houseManage',
     meta: {
       title: '家政管理',
       icon: 'chart'
@@ -297,9 +297,9 @@ export const asyncRoutes = [
       {
         path: 'list',
         component: () => import('@/views/houseMg/list'),
-        name: 'goodsList',
+        name: 'houseList',
         meta: {
-          perms: ['GET /admin/goods/list', 'POST /admin/goods/delete'],
+          perms: ['POST /admin/aunt/list', 'POST /admin/aunt/delete'],
           title: '阿姨管理',
           noCache: true
         }
@@ -307,9 +307,9 @@ export const asyncRoutes = [
       {
         path: 'create',
         component: () => import('@/views/houseMg/create'),
-        name: 'goodsCreate',
+        name: 'houseCreate',
         meta: {
-          perms: ['POST /admin/goods/create'],
+          perms: ['POST /admin/aunt/create'],
           title: '添加阿姨',
           noCache: true
         },
@@ -318,9 +318,9 @@ export const asyncRoutes = [
       {
         path: 'edit',
         component: () => import('@/views/houseMg/edit'),
-        name: 'goodsEdit',
+        name: 'houseEdit',
         meta: {
-          perms: ['GET /admin/goods/detail', 'POST /admin/goods/update', 'POST /admin/goods/catAndBrand'],
+          perms: ['POST /admin/aunt/update'],
           title: '阿姨编辑',
           noCache: true
         },
@@ -329,9 +329,9 @@ export const asyncRoutes = [
       {
         path: 'dictlist',
         component: () => import('@/views/dictMg/list'),
-        name: 'goodsEdit',
+        name: 'dictList',
         meta: {
-          perms: ['GET /admin/goods/detail', 'POST /admin/goods/update', 'POST /admin/goods/catAndBrand'],
+          perms: ['POST /admin/dict/list', 'POST /admin/dict/delete'],
           title: '字典管理',
           noCache: true
         },
@@ -342,7 +342,7 @@ export const asyncRoutes = [
         component: () => import('@/views/dictMg/edit'),
         name: 'dictEdit',
         meta: {
-          perms: ['GET /admin/goods/detail', 'POST /admin/goods/update', 'POST /admin/goods/catAndBrand'],
+          perms: ['POST /admin/dict/update'],
           title: '字典编辑',
           noCache: true
         },
@@ -351,9 +351,9 @@ export const asyncRoutes = [
       {
         path: 'dictcreate',
         component: () => import('@/views/dictMg/create'),
-        name: 'dictEdit',
+        name: 'dictCreate',
         meta: {
-          perms: ['GET /admin/goods/detail', 'POST /admin/goods/update', 'POST /admin/goods/catAndBrand'],
+          perms: ['POST /admin/dict/create'],
           title: '字典添加',
           noCache: true
         },

@@ -162,6 +162,7 @@ export const asyncRoutes = [
         component: () => import('@/views/mall/region'),
         name: 'region',
         meta: {
+          perms: ['GET /admin/region/list'],
           title: '行政区域',
           noCache: true
         }
@@ -624,6 +625,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: 'noredirect',
     alwaysShow: true,
+    hidden: true
     name: 'externalLink',
     meta: {
       title: '外链',

@@ -30,8 +30,8 @@ public class DictController {
     @Autowired
     DictService service;
 
-    @RequiresPermissions("admin:dict:list")
-    @RequiresPermissionsDesc(menu = {"家政管理", "字典管理"}, button = "查询")
+//    @RequiresPermissions("admin:dict:list")
+//    @RequiresPermissionsDesc(menu = {"家政管理", "字典管理"}, button = "查询")
     @PostMapping ("/list")
     public Object list(@RequestBody  DictVo dictVo) {
         return ResponseUtil.okList(service.getListPage(dictVo.getPage(),dictVo.getLimit(),dictVo));
@@ -45,8 +45,8 @@ public class DictController {
      * @param id
      * @return
      */
-    @RequiresPermissions("admin:dict:read")
-    @RequiresPermissionsDesc(menu = {"家政管理", "字典管理"}, button = "详情")
+//    @RequiresPermissions("admin:dict:read")
+//    @RequiresPermissionsDesc(menu = {"家政管理", "字典管理"}, button = "详情")
     @PostMapping(value = "/read/{id}")
     public Object get(HttpServletRequest request, @PathVariable("id") Long id){
         return ResponseUtil.ok(service.getById(id));
@@ -58,8 +58,8 @@ public class DictController {
      * @param bean
      * @return
      */
-    @RequiresPermissions("admin:dict:update")
-    @RequiresPermissionsDesc(menu = {"家政管理", "字典管理"}, button = "编辑")
+//    @RequiresPermissions("admin:dict:update")
+//    @RequiresPermissionsDesc(menu = {"家政管理", "字典管理"}, button = "编辑")
     @PostMapping(value = "/update")
     public Object update(@RequestBody  Dict bean){
         return ResponseUtil.ok(service.updateById(bean));
@@ -71,8 +71,8 @@ public class DictController {
      * @param bean
      * @return
      */
-    @RequiresPermissions("admin:dict:create")
-    @RequiresPermissionsDesc(menu = {"家政管理", "字典管理"}, button = "添加")
+//    @RequiresPermissions("admin:dict:create")
+//    @RequiresPermissionsDesc(menu = {"家政管理", "字典管理"}, button = "添加")
       @PostMapping(value = "/create")
     public Object insert(@RequestBody  Dict bean){
         return ResponseUtil.ok(service.save(bean));
@@ -84,8 +84,8 @@ public class DictController {
      * @param id
      * @return
      */
- @RequiresPermissions("admin:dict:delete")
- @RequiresPermissionsDesc(menu = {"家政管理", "字典管理"}, button = "删除")
+// @RequiresPermissions("admin:dict:delete")
+// @RequiresPermissionsDesc(menu = {"家政管理", "字典管理"}, button = "删除")
     @PostMapping(value = "/delete/{id}")
     public Object del(HttpServletRequest request, @PathVariable("id") Long id){
         return ResponseUtil.ok(service.removeById(id));

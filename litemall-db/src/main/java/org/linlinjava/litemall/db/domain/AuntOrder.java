@@ -14,12 +14,20 @@ import lombok.Data;
 public class AuntOrder implements Serializable {
     private Integer id;
 
-
+    /**
+     * 阿姨姓名
+     */
     private String auntName;
 
-    private Integer auntId;
-
+    /**
+     * 阿姨手机号
+     */
     private String auntMobile;
+
+    /**
+     * 阿姨id
+     */
+    private Integer auntId;
 
     private Integer userId;
 
@@ -72,6 +80,18 @@ public class AuntOrder implements Serializable {
     private String remark;
 
     private Date creatTime;
+
+    /**
+     * 支付流水号
+     */
+    private String payNo;
+
+    /**
+     * 支付流水
+     */
+    private String transactionCode;
+
+    private Integer isDel;
 
     private static final long serialVersionUID = 1L;
 }

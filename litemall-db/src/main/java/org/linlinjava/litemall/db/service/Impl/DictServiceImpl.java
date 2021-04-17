@@ -26,8 +26,8 @@ public class DictServiceImpl  implements DictService {
     }
 
     @Override
-    public boolean updateById(Dict bean) {
-        return false;
+    public Integer updateById(Dict bean) {
+        return dictMapper.updateByPrimaryKeySelective(bean);
     }
 
     @Override

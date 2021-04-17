@@ -36,8 +36,8 @@ public class AuntController {
 
 
 
-    @RequiresPermissions("admin:aunt:list")
-    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "查询")
+//    @RequiresPermissions("admin:aunt:list")
+//    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "查询")
     @PostMapping(value = "/list")
     public Object list(@RequestBody  AuntVo aunt) {
         return ResponseUtil.okList(service.getListPage(aunt.getPage(),aunt.getLimit(),aunt));
@@ -50,8 +50,8 @@ public class AuntController {
      * @param id
      * @return
      */
-    @RequiresPermissions("admin:aunt:read")
-    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "详情")
+//    @RequiresPermissions("admin:aunt:read")
+//    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "详情")
     @PostMapping(value = "/read/{id}")
     public Object read(HttpServletRequest request, @PathVariable("id") Integer id){
         return ResponseUtil.ok(service.selectById(id));
@@ -63,8 +63,8 @@ public class AuntController {
      * @param bean
      * @return
      */
-    @RequiresPermissions("admin:aunt:update")
-    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "编辑")
+//    @RequiresPermissions("admin:aunt:update")
+//    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "编辑")
     @PostMapping(value = "/update")
     public Object update(@RequestBody  Aunt bean){
         return ResponseUtil.ok(service.updateById(bean));
@@ -76,8 +76,8 @@ public class AuntController {
      * @param
      * @return
      */
-    @RequiresPermissions("admin:aunt:insertBatich")
-    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "导入")
+//    @RequiresPermissions("admin:aunt:insertBatich")
+//    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "导入")
     @PostMapping(value = "/insertBatich")
     public Object insertBatch(MultipartFile file){
         return ResponseUtil.ok(adminAuntService.insertBatch(file));
@@ -89,8 +89,8 @@ public class AuntController {
      * @param bean
      * @return
      */
-    @RequiresPermissions("admin:aunt:create")
-    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "添加")
+//    @RequiresPermissions("admin:aunt:create")
+//    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "添加")
     @PostMapping(value = "/create")
     public Object create(@RequestBody  Aunt bean){
         return ResponseUtil.ok(service.save(bean));
@@ -102,8 +102,8 @@ public class AuntController {
      * @param id
      * @return
      */
-    @RequiresPermissions("admin:aunt:delete")
-    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "删除")
+//    @RequiresPermissions("admin:aunt:delete")
+//    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "删除")
     @PostMapping(value = "/delete/{id}")
     public Object delete(HttpServletRequest request, @PathVariable("id") Integer id){
         return ResponseUtil.ok(service.removeById(id));

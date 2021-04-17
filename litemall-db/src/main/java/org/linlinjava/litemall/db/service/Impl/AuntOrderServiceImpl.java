@@ -27,7 +27,7 @@ public class AuntOrderServiceImpl implements AuntOrderService {
 
     @Override
     public boolean updateById(AuntOrder bean) {
-        orderMapper.updateByPrimaryKey(bean);
+        orderMapper.updateByPrimaryKeySelective(bean);
         return true;
     }
 
@@ -38,7 +38,9 @@ public class AuntOrderServiceImpl implements AuntOrderService {
 
     @Override
     public Integer removeById(Integer id) {
-        return orderMapper.deleteByPrimaryKey(id);
+        AuntOrder bean=selectById(id);
+        bean.setIsDel(1);
+        return orderMapper.updateByPrimaryKeySelective(bean);
     }
 
     @Override

@@ -3,158 +3,242 @@
 <mapper namespace="org.linlinjava.litemall.db.dao.AuntOrderMapper">
   <resultMap id="BaseResultMap" type="org.linlinjava.litemall.db.domain.AuntOrder">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="aunt_name" jdbcType="VARCHAR" property="auntName" />
+    <result column="aunt_mobile" jdbcType="VARCHAR" property="auntMobile" />
+    <result column="aunt_id" jdbcType="INTEGER" property="auntId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="addr" jdbcType="VARCHAR" property="addr" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
-    <result column="pay_status" jdbcType="TINYINT" property="payStatus" />
+    <result column="pay_status" jdbcType="INTEGER" property="payStatus" />
     <result column="status" jdbcType="SMALLINT" property="status" />
-    <result column="dispatch_status" jdbcType="TINYINT" property="dispatchStatus" />
+    <result column="dispatch_status" jdbcType="INTEGER" property="dispatchStatus" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime" />
+     <result column="pay_no" jdbcType="VARCHAR" property="payNo" />
+     <result column="transaction_code" jdbcType="VARCHAR" property="transactionCode" />
+     <result column="is_del" jdbcType="SMALLINT" property="isDel" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, `name`, addr, mobile, start_time, end_time, pay_status, `status`, dispatch_status, 
-    remark, creat_time
+      id, aunt_name, aunt_mobile, aunt_id, user_id, `name`, addr, mobile, start_time, end_time,
+      pay_status, `status`, dispatch_status, remark, creat_time, pay_no, transaction_code,
+      is_del
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from aunt_order
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from aunt_order
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.linlinjava.litemall.db.domain.AuntOrder" useGeneratedKeys="true">
-    insert into aunt_order (`name`, addr, mobile, 
-      start_time, end_time, pay_status, 
-      `status`, dispatch_status, remark, 
-      creat_time)
-    values (#{name,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
-      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{payStatus,jdbcType=BOOLEAN}, 
-      #{status,jdbcType=SMALLINT}, #{dispatchStatus,jdbcType=BOOLEAN}, #{remark,jdbcType=VARCHAR}, 
-      #{creatTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.linlinjava.litemall.db.domain.AuntOrder" useGeneratedKeys="true">
-    insert into aunt_order
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        `name`,
-      </if>
-      <if test="addr != null">
-        addr,
-      </if>
-      <if test="mobile != null">
-        mobile,
-      </if>
-      <if test="startTime != null">
-        start_time,
-      </if>
-      <if test="endTime != null">
-        end_time,
-      </if>
-      <if test="payStatus != null">
-        pay_status,
-      </if>
-      <if test="status != null">
-        `status`,
-      </if>
-      <if test="dispatchStatus != null">
-        dispatch_status,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-      <if test="creatTime != null">
-        creat_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="addr != null">
-        #{addr,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null">
-        #{mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="startTime != null">
-        #{startTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null">
-        #{endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="payStatus != null">
-        #{payStatus,jdbcType=BOOLEAN},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=SMALLINT},
-      </if>
-      <if test="dispatchStatus != null">
-        #{dispatchStatus,jdbcType=BOOLEAN},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="creatTime != null">
-        #{creatTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.linlinjava.litemall.db.domain.AuntOrder">
-    update aunt_order
-    <set>
-      <if test="name != null">
-        `name` = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="addr != null">
-        addr = #{addr,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null">
-        mobile = #{mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="startTime != null">
-        start_time = #{startTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null">
-        end_time = #{endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="payStatus != null">
-        pay_status = #{payStatus,jdbcType=BOOLEAN},
-      </if>
-      <if test="status != null">
-        `status` = #{status,jdbcType=SMALLINT},
-      </if>
-      <if test="dispatchStatus != null">
-        dispatch_status = #{dispatchStatus,jdbcType=BOOLEAN},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="creatTime != null">
-        creat_time = #{creatTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="org.linlinjava.litemall.db.domain.AuntOrder">
-    update aunt_order
-    set `name` = #{name,jdbcType=VARCHAR},
-      addr = #{addr,jdbcType=VARCHAR},
-      mobile = #{mobile,jdbcType=VARCHAR},
-      start_time = #{startTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP},
-      pay_status = #{payStatus,jdbcType=BOOLEAN},
-      `status` = #{status,jdbcType=SMALLINT},
-      dispatch_status = #{dispatchStatus,jdbcType=BOOLEAN},
-      remark = #{remark,jdbcType=VARCHAR},
-      creat_time = #{creatTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
+
+               <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+                 select
+                 <include refid="Base_Column_List" />
+                 from aunt_order
+                 where id = #{id,jdbcType=INTEGER}
+               </select>
+               <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+                 delete from aunt_order
+                 where id = #{id,jdbcType=INTEGER}
+               </delete>
+               <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.linlinjava.litemall.db.domain.AuntOrder" useGeneratedKeys="true">
+                 insert into aunt_order (aunt_name, aunt_mobile, aunt_id,
+                   user_id, `name`, addr,
+                   mobile, start_time, end_time,
+                   pay_status, `status`, dispatch_status,
+                   remark, creat_time, pay_no,
+                   transaction_code, is_del)
+                 values (#{auntName,jdbcType=VARCHAR}, #{auntMobile,jdbcType=VARCHAR}, #{auntId,jdbcType=INTEGER},
+                   #{userId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR},
+                   #{mobile,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
+                   #{payStatus}, #{status,jdbcType=SMALLINT}, #{dispatchStatus},
+                   #{remark,jdbcType=VARCHAR}, #{creatTime,jdbcType=TIMESTAMP}, #{payNo,jdbcType=VARCHAR},
+                   #{transactionCode,jdbcType=VARCHAR}, #{isDel})
+               </insert>
+               <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.linlinjava.litemall.db.domain.AuntOrder" useGeneratedKeys="true">
+                 insert into aunt_order
+                 <trim prefix="(" suffix=")" suffixOverrides=",">
+                   <if test="auntName != null">
+                     aunt_name,
+                   </if>
+                   <if test="auntMobile != null">
+                     aunt_mobile,
+                   </if>
+                   <if test="auntId != null">
+                     aunt_id,
+                   </if>
+                   <if test="userId != null">
+                     user_id,
+                   </if>
+                   <if test="name != null">
+                     `name`,
+                   </if>
+                   <if test="addr != null">
+                     addr,
+                   </if>
+                   <if test="mobile != null">
+                     mobile,
+                   </if>
+                   <if test="startTime != null">
+                     start_time,
+                   </if>
+                   <if test="endTime != null">
+                     end_time,
+                   </if>
+                   <if test="payStatus != null">
+                     pay_status,
+                   </if>
+                   <if test="status != null">
+                     `status`,
+                   </if>
+                   <if test="dispatchStatus != null">
+                     dispatch_status,
+                   </if>
+                   <if test="remark != null">
+                     remark,
+                   </if>
+                   <if test="creatTime != null">
+                     creat_time,
+                   </if>
+                   <if test="payNo != null">
+                     pay_no,
+                   </if>
+                   <if test="transactionCode != null">
+                     transaction_code,
+                   </if>
+                   <if test="isDel != null">
+                     is_del,
+                   </if>
+                 </trim>
+                 <trim prefix="values (" suffix=")" suffixOverrides=",">
+                   <if test="auntName != null">
+                     #{auntName,jdbcType=VARCHAR},
+                   </if>
+                   <if test="auntMobile != null">
+                     #{auntMobile,jdbcType=VARCHAR},
+                   </if>
+                   <if test="auntId != null">
+                     #{auntId,jdbcType=INTEGER},
+                   </if>
+                   <if test="userId != null">
+                     #{userId,jdbcType=INTEGER},
+                   </if>
+                   <if test="name != null">
+                     #{name,jdbcType=VARCHAR},
+                   </if>
+                   <if test="addr != null">
+                     #{addr,jdbcType=VARCHAR},
+                   </if>
+                   <if test="mobile != null">
+                     #{mobile,jdbcType=VARCHAR},
+                   </if>
+                   <if test="startTime != null">
+                     #{startTime,jdbcType=TIMESTAMP},
+                   </if>
+                   <if test="endTime != null">
+                     #{endTime,jdbcType=TIMESTAMP},
+                   </if>
+                   <if test="payStatus != null">
+                     #{payStatus},
+                   </if>
+                   <if test="status != null">
+                     #{status,jdbcType=SMALLINT},
+                   </if>
+                   <if test="dispatchStatus != null">
+                     #{dispatchStatus},
+                   </if>
+                   <if test="remark != null">
+                     #{remark,jdbcType=VARCHAR},
+                   </if>
+                   <if test="creatTime != null">
+                     #{creatTime,jdbcType=TIMESTAMP},
+                   </if>
+                   <if test="payNo != null">
+                     #{payNo,jdbcType=VARCHAR},
+                   </if>
+                   <if test="transactionCode != null">
+                     #{transactionCode,jdbcType=VARCHAR},
+                   </if>
+                   <if test="isDel != null">
+                     #{isDel},
+                   </if>
+                 </trim>
+               </insert>
+               <update id="updateByPrimaryKeySelective" parameterType="org.linlinjava.litemall.db.domain.AuntOrder">
+                 update aunt_order
+                 <set>
+                   <if test="auntName != null">
+                     aunt_name = #{auntName,jdbcType=VARCHAR},
+                   </if>
+                   <if test="auntMobile != null">
+                     aunt_mobile = #{auntMobile,jdbcType=VARCHAR},
+                   </if>
+                   <if test="auntId != null">
+                     aunt_id = #{auntId,jdbcType=INTEGER},
+                   </if>
+                   <if test="userId != null">
+                     user_id = #{userId,jdbcType=INTEGER},
+                   </if>
+                   <if test="name != null">
+                     `name` = #{name,jdbcType=VARCHAR},
+                   </if>
+                   <if test="addr != null">
+                     addr = #{addr,jdbcType=VARCHAR},
+                   </if>
+                   <if test="mobile != null">
+                     mobile = #{mobile,jdbcType=VARCHAR},
+                   </if>
+                   <if test="startTime != null">
+                     start_time = #{startTime,jdbcType=TIMESTAMP},
+                   </if>
+                   <if test="endTime != null">
+                     end_time = #{endTime,jdbcType=TIMESTAMP},
+                   </if>
+                   <if test="payStatus != null">
+                     pay_status = #{payStatus},
+                   </if>
+                   <if test="status != null">
+                     `status` = #{status,jdbcType=SMALLINT},
+                   </if>
+                   <if test="dispatchStatus != null">
+                     dispatch_status = #{dispatchStatus},
+                   </if>
+                   <if test="remark != null">
+                     remark = #{remark,jdbcType=VARCHAR},
+                   </if>
+                   <if test="creatTime != null">
+                     creat_time = #{creatTime,jdbcType=TIMESTAMP},
+                   </if>
+                   <if test="payNo != null">
+                     pay_no = #{payNo,jdbcType=VARCHAR},
+                   </if>
+                   <if test="transactionCode != null">
+                     transaction_code = #{transactionCode,jdbcType=VARCHAR},
+                   </if>
+                   <if test="isDel != null">
+                     is_del = #{isDel},
+                   </if>
+                 </set>
+                 where id = #{id,jdbcType=INTEGER}
+               </update>
+               <update id="updateByPrimaryKey" parameterType="org.linlinjava.litemall.db.domain.AuntOrder">
+                 update aunt_order
+                 set aunt_name = #{auntName,jdbcType=VARCHAR},
+                   aunt_mobile = #{auntMobile,jdbcType=VARCHAR},
+                   aunt_id = #{auntId,jdbcType=INTEGER},
+                   user_id = #{userId,jdbcType=INTEGER},
+                   `name` = #{name,jdbcType=VARCHAR},
+                   addr = #{addr,jdbcType=VARCHAR},
+                   mobile = #{mobile,jdbcType=VARCHAR},
+                   start_time = #{startTime,jdbcType=TIMESTAMP},
+                   end_time = #{endTime,jdbcType=TIMESTAMP},
+                   pay_status = #{payStatus},
+                   `status` = #{status,jdbcType=SMALLINT},
+                   dispatch_status = #{dispatchStatus},
+                   remark = #{remark,jdbcType=VARCHAR},
+                   creat_time = #{creatTime,jdbcType=TIMESTAMP},
+                   pay_no = #{payNo,jdbcType=VARCHAR},
+                   transaction_code = #{transactionCode,jdbcType=VARCHAR},
+                   is_del = #{isDel}
+                 where id = #{id,jdbcType=INTEGER}
+               </update>
 
 
   <select id="getList" parameterType="org.linlinjava.litemall.db.domain.AuntOrder" resultMap="BaseResultMap">
@@ -178,13 +262,13 @@
       and   end_time = #{endTime,jdbcType=TIMESTAMP}
     </if>
     <if test="payStatus != null">
-      and  pay_status = #{payStatus,jdbcType=BOOLEAN}
+      and  pay_status = #{payStatus}
     </if>
     <if test="status != null">
       and   `status` = #{status,jdbcType=SMALLINT}
     </if>
     <if test="dispatchStatus != null">
-      and   dispatch_status = #{dispatchStatus,jdbcType=BOOLEAN}
+      and   dispatch_status = #{dispatchStatus}
     </if>
     <if test="remark != null">
       and  remark = #{remark,jdbcType=VARCHAR}

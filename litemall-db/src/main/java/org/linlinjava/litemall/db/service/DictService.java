@@ -15,7 +15,7 @@ public interface DictService  {
 
     Dict getById(Long id);
 
-    boolean updateById(Dict bean);
+    Integer updateById(Dict bean);
 
     Integer save(Dict bean);
 

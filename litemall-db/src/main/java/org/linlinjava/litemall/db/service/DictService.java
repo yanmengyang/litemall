@@ -19,7 +19,7 @@ public interface DictService  {
 
     Integer save(Dict bean);
 
-    boolean removeById(Long id);
+    Integer removeById(Long id);
 
     List<LitemallAdmin> getListPage(Integer page, Integer limit, Dict dict);
 }

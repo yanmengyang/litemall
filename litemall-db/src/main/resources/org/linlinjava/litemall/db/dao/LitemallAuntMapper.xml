@@ -214,4 +214,53 @@
       sign = #{sign,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+  <select id="getList"  parameterType="org.linlinjava.litemall.db.domain.Aunt" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from litemall_aunt
+    where TRUE
+    <if test="nickName != null">
+      and nick_name LIKE CONCAT('%',#{nickName},'%')
+    </if>
+    <if test="sex != null">
+      and sex = #{sex}
+    </if>
+
+    <if test="age != null">
+      and  age = #{age,jdbcType=INTEGER}
+    </if>
+
+    <if test="nativePlace != null">
+      and native_place = #{nativePlace,jdbcType=VARCHAR}
+    </if>
+    <if test="experience != null">
+      and experience = #{experience,jdbcType=VARCHAR}
+    </if>
+    <if test="expertin != null">
+      and  expertin LIKE CONCAT('%',#{expertin},'%')
+    </if>
+    <if test="education != null">
+      and  education = #{education,jdbcType=VARCHAR}
+    </if>
+
+    <if test="auditStatus != null">
+      and audit_status = #{auditStatus,jdbcType=BOOLEAN}
+    </if>
+    <if test="isDel != null">
+      and is_del = #{isDel,jdbcType=BOOLEAN}
+    </if>
+    <if test="saleStatus != null">
+      and sale_status = #{saleStatus,jdbcType=BOOLEAN}
+    </if>
+    <if test="realStatus != null">
+      and real_status = #{realStatus,jdbcType=BOOLEAN}
+    </if>
+    <if test="sign != null">
+      and sign = #{sign,jdbcType=CHAR}
+    </if>
+    ORDER BY id
+  </select>
+
 </mapper>

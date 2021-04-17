@@ -22,7 +22,7 @@ public class DictServiceImpl  implements DictService {
 
     @Override
     public Dict getById(Long id) {
-        return null;
+        return dictMapper.selectByPrimaryKey(id);
     }
 
     @Override
@@ -32,12 +32,12 @@ public class DictServiceImpl  implements DictService {
 
     @Override
     public Integer save(Dict bean) {
-        return null;
+        return dictMapper.insertSelective(bean);
     }
 
     @Override
-    public boolean removeById(Long id) {
-        return false;
+    public Integer removeById(Long id) {
+        return dictMapper.deleteByPrimaryKey(id);
     }
 
     @Override

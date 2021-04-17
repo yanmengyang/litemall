@@ -155,4 +155,47 @@
       creat_time = #{creatTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+  <select id="getList" parameterType="org.linlinjava.litemall.db.domain.AuntOrder" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from aunt_order
+    where TRUE
+    <if test="name != null">
+      and  `name` = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="addr != null">
+      and  addr = #{addr,jdbcType=VARCHAR}
+    </if>
+    <if test="mobile != null">
+      and   mobile = #{mobile,jdbcType=VARCHAR}
+    </if>
+    <if test="startTime != null">
+      and  start_time = #{startTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="endTime != null">
+      and   end_time = #{endTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="payStatus != null">
+      and  pay_status = #{payStatus,jdbcType=BOOLEAN}
+    </if>
+    <if test="status != null">
+      and   `status` = #{status,jdbcType=SMALLINT}
+    </if>
+    <if test="dispatchStatus != null">
+      and   dispatch_status = #{dispatchStatus,jdbcType=BOOLEAN}
+    </if>
+    <if test="remark != null">
+      and  remark = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="creatTime != null">
+      and  creat_time = #{creatTime,jdbcType=TIMESTAMP}
+    </if>
+
+
+    ORDER BY  id
+  </select>
+
+
 </mapper>

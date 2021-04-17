@@ -5,6 +5,7 @@ import org.linlinjava.litemall.db.domain.LitemallAdmin;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -25,5 +26,5 @@ public interface AuntService {
 
     Integer insertBatch(MultipartFile file);
 
-    List<LitemallAdmin> getListPage(Integer page, Integer limit, Dict dict);
+    List<Aunt> getListPage(Integer page, Integer limit, Aunt dict);
 }

@@ -2,6 +2,8 @@ package org.linlinjava.litemall.db.dao;
 
 import org.linlinjava.litemall.db.domain.Aunt;
 
+import java.util.List;
+
 
 /**
  * @author honglei
@@ -24,6 +26,6 @@ public interface AuntMapper {
 
     int updateByPrimaryKey(Aunt record);
 
-
+    List<Aunt> getList(Aunt dict);
 }
 

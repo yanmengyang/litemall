@@ -22,11 +22,27 @@
     from litemall_dict
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="getList" resultType="org.linlinjava.litemall.db.domain.LitemallAdmin">
+  <select id="getList" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from litemall_dict
-    where id = #{id,jdbcType=BIGINT}
+    where TRUE
+    <if test="dictName != null">
+     AND dict_name = #{dictName,jdbcType=VARCHAR}
+    </if>
+    <if test="dictValue != null">
+      AND dict_value = #{dictValue,jdbcType=VARCHAR}
+    </if>
+    <if test="dictType != null">
+      AND dict_type = #{dictType,jdbcType=VARCHAR}
+    </if>
+    <if test="dictSequence != null">
+      AND dict_sequence = #{dictSequence,jdbcType=BIGINT}
+    </if>
+    <if test="parentId != null">
+      AND parent_id = #{parentId,jdbcType=BIGINT}
+    </if>
+
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from litemall_dict

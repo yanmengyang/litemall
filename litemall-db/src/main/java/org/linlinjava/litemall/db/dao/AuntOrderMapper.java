@@ -3,6 +3,8 @@ package org.linlinjava.litemall.db.dao;
 import org.linlinjava.litemall.db.domain.Aunt;
 import org.linlinjava.litemall.db.domain.AuntOrder;
 
+import java.util.List;
+
 public interface AuntOrderMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -15,4 +17,6 @@ public interface AuntOrderMapper {
     int updateByPrimaryKeySelective(AuntOrder record);
 
     int updateByPrimaryKey(AuntOrder record);
+
+    List<AuntOrder> getList(AuntOrder order);
 }

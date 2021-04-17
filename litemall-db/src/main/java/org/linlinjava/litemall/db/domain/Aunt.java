@@ -87,5 +87,7 @@ public class Aunt implements Serializable {
      */
     private String sign;
 
+    private String mobile;
+
     private static final long serialVersionUID = 1L;
 }

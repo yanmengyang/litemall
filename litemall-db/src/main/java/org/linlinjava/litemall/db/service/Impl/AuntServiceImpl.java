@@ -1,5 +1,6 @@
 package org.linlinjava.litemall.db.service.Impl;
 
+import com.github.pagehelper.PageHelper;
 import org.linlinjava.litemall.db.dao.AuntMapper;
 import org.linlinjava.litemall.db.domain.Aunt;
 import org.linlinjava.litemall.db.domain.Dict;
@@ -45,12 +46,17 @@ public class AuntServiceImpl implements AuntService {
 
     @Override
     public Integer insertBatch(MultipartFile file) {
+
         return null;
     }
 
     @Override
-    public List<LitemallAdmin> getListPage(Integer page, Integer limit, Dict dict) {
-        return null;
+    public List<Aunt> getListPage(Integer page, Integer limit, Aunt dict) {
+        PageHelper.startPage(page, limit);
+        List<Aunt> list= auntMapper.getList(dict);
+        return list;
     }
+
+
 }
 

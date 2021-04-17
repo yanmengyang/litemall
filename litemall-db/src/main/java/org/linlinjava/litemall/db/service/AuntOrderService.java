@@ -1,5 +1,8 @@
 package org.linlinjava.litemall.db.service;
 import org.linlinjava.litemall.db.domain.Aunt;
+import org.linlinjava.litemall.db.domain.AuntOrder;
+
+import java.util.List;
 
 
 /**
@@ -10,11 +13,13 @@ import org.linlinjava.litemall.db.domain.Aunt;
  */
 public interface AuntOrderService {
 
-    Aunt selectById(Long id);
+    AuntOrder selectById(Integer id);
 
-    boolean updateById(Aunt bean);
+    boolean updateById(AuntOrder bean);
 
-    Integer save(Aunt bean);
+    Integer save(AuntOrder bean);
 
-    boolean removeById(Long id);
+    Integer removeById(Integer id);
+
+    List<AuntOrder> getListPage(Integer page, Integer limit, AuntOrder order);
 }

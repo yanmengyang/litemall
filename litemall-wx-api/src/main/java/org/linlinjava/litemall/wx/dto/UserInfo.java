@@ -1,6 +1,10 @@
 package org.linlinjava.litemall.wx.dto;
 
+import lombok.Data;
+
+@Data
 public class UserInfo {
+    private Integer userId;
     private String nickName;
     private String avatarUrl;
     private String country;

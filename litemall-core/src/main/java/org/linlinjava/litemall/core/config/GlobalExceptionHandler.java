@@ -66,10 +66,5 @@ public class GlobalExceptionHandler {
         return ResponseUtil.badArgumentValue();
     }
 
-    @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public Object seriousHandler(Exception e) {
-        logger.error(e.getMessage(), e);
-        return ResponseUtil.serious();
-    }
+
 }

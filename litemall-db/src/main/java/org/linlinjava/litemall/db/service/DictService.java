@@ -1,6 +1,7 @@
 package org.linlinjava.litemall.db.service;
 import org.linlinjava.litemall.db.domain.Dict;
 import org.linlinjava.litemall.db.domain.LitemallAdmin;
+import org.linlinjava.litemall.db.exection.BizException;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface DictService  {
 
     Integer updateById(Dict bean);
 
-    Integer save(Dict bean);
+    Integer save(Dict bean) throws BizException;
 
     Integer removeById(Long id);
 

@@ -6,6 +6,9 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 /**
  * aunt_order
  * @author 
@@ -27,28 +30,34 @@ public class AuntOrder implements Serializable {
     /**
      * 阿姨id
      */
+
     private Integer auntId;
 
+    @NotNull(message = "用户id不能为空")
     private Integer userId;
 
     /**
      * 联系人姓名
      */
+    @NotEmpty(message = "联系人姓名不能为空")
     private String name;
 
     /**
      * 联系地址
      */
+    @NotEmpty(message = "联系地址不能为空")
     private String addr;
 
     /**
      * 电话号
      */
+    @NotEmpty(message = "电话不能为空")
     private String mobile;
 
     /**
      * 开始时间
      */
+    @NotEmpty(message = "预约时间不能为空")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private String startTime;
 

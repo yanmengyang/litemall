@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.AuthorizationException;
 import org.linlinjava.litemall.core.util.ResponseUtil;
+import org.linlinjava.litemall.db.exection.BizException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -29,6 +30,19 @@ public class ShiroExceptionHandler {
     public Object unauthorizedHandler(AuthorizationException e) {
         logger.warn(e.getMessage(), e);
         return ResponseUtil.unauthz();
+    }
+    @ExceptionHandler(BizException.class)
+    @ResponseBody
+    public Object bizExceptionHandler(BizException e) {
+        logger.warn(e.getMessage(), e);
+        return ResponseUtil.fail(50101,e.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public Object seriousHandler(Exception e) {
+        logger.error(e.getMessage(), e);
+        return ResponseUtil.serious();
     }
 
 }

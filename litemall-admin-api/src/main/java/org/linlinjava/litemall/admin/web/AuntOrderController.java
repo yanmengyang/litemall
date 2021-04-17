@@ -10,6 +10,7 @@ import org.linlinjava.litemall.db.domain.Aunt;
 import org.linlinjava.litemall.db.domain.AuntOrder;
 import org.linlinjava.litemall.db.domain.Dict;
 import org.linlinjava.litemall.db.domain.LitemallAdmin;
+import org.linlinjava.litemall.db.exection.BizException;
 import org.linlinjava.litemall.db.service.AuntOrderService;
 import org.linlinjava.litemall.db.service.AuntService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,8 @@ public class AuntOrderController {
 
 
 
-//    @RequiresPermissions("admin:uorder:list")
-//    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "查询")
+    @RequiresPermissions("admin:uorder:list")
+    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "查询")
     @PostMapping(value = "/list")
     public Object list(@RequestBody AuntOrderVo order) {
         return ResponseUtil.okList(service.getListPage( order.getPage(),order.getLimit(),  order));
@@ -49,8 +50,8 @@ public class AuntOrderController {
      * @param id
      * @return
      */
-//    @RequiresPermissions("admin:uorder:read")
-//    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "详情")
+    @RequiresPermissions("admin:uorder:read")
+    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "详情")
     @PostMapping(value = "/read/{id}")
     public Object read(HttpServletRequest request, @PathVariable("id") Integer id){
         return ResponseUtil.ok(service.selectById(id));
@@ -62,8 +63,8 @@ public class AuntOrderController {
      * @param bean
      * @return
      */
-//    @RequiresPermissions("admin:uorder:update")
-//    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "编辑")
+    @RequiresPermissions("admin:uorder:update")
+    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "编辑")
     @PostMapping(value = "/update")
     public Object update(@RequestBody  AuntOrder bean){
         return ResponseUtil.ok(service.updateById(bean));
@@ -77,10 +78,10 @@ public class AuntOrderController {
      * @param bean
      * @return
      */
-//    @RequiresPermissions("admin:uorder:create")
-//    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "添加")
+    @RequiresPermissions("admin:uorder:create")
+    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "添加")
     @PostMapping(value = "/create")
-    public Object create(@RequestBody  AuntOrder bean){
+    public Object create(@RequestBody  AuntOrder bean) throws BizException {
         return ResponseUtil.ok(service.save(bean));
     }
 
@@ -90,8 +91,8 @@ public class AuntOrderController {
      * @param id
      * @return
      */
-//    @RequiresPermissions("admin:uorder:delete")
-//    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "删除")
+    @RequiresPermissions("admin:uorder:delete")
+    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "删除")
     @PostMapping(value = "/delete/{id}")
     public Object delete(HttpServletRequest request, @PathVariable("id") Integer id){
         return ResponseUtil.ok(service.removeById(id));

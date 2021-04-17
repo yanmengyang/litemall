@@ -4,6 +4,8 @@ import com.github.pagehelper.PageHelper;
 import org.linlinjava.litemall.db.dao.AuntMapper;
 import org.linlinjava.litemall.db.dao.AuntOrderMapper;
 import org.linlinjava.litemall.db.domain.AuntOrder;
+import org.linlinjava.litemall.db.exection.BeanValidator;
+import org.linlinjava.litemall.db.exection.BizException;
 import org.linlinjava.litemall.db.service.AuntOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +34,8 @@ public class AuntOrderServiceImpl implements AuntOrderService {
     }
 
     @Override
-    public Integer save(AuntOrder bean) {
+    public Integer save(AuntOrder bean) throws BizException {
+        BeanValidator.check(bean);
         return orderMapper.insertSelective(bean);
     }
 

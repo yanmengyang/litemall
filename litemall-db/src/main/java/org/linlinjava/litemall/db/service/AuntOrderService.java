@@ -1,6 +1,7 @@
 package org.linlinjava.litemall.db.service;
 import org.linlinjava.litemall.db.domain.Aunt;
 import org.linlinjava.litemall.db.domain.AuntOrder;
+import org.linlinjava.litemall.db.exection.BizException;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface AuntOrderService {
 
     boolean updateById(AuntOrder bean);
 
-    Integer save(AuntOrder bean);
+    Integer save(AuntOrder bean) throws BizException;
 
     Integer removeById(Integer id);
 

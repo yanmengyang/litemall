@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+
 /**
  * litemall_dict
  * @author 
@@ -23,11 +25,13 @@ public class Dict implements Serializable {
     /**
      * 字典值
      */
+    @NotEmpty(message = "字典值不能为空")
     private String dictValue;
 
     /**
      * 字典类型
      */
+    @NotEmpty(message = "字典类型不能为空")
     private String dictType;
 
     /**

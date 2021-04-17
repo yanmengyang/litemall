@@ -2,6 +2,7 @@ package org.linlinjava.litemall.db.service;
 import org.linlinjava.litemall.db.domain.Aunt;
 import org.linlinjava.litemall.db.domain.Dict;
 import org.linlinjava.litemall.db.domain.LitemallAdmin;
+import org.linlinjava.litemall.db.exection.BizException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface AuntService {
 
     boolean updateById(Aunt bean);
 
-    Integer save(Aunt bean);
+    Integer save(Aunt bean) throws BizException;
 
     boolean removeById(Integer id);
 

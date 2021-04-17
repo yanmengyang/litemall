@@ -7,6 +7,7 @@ import org.linlinjava.litemall.core.util.*;
 import org.linlinjava.litemall.db.domain.Aunt;
 import org.linlinjava.litemall.db.domain.AuntOrder;
 import org.linlinjava.litemall.db.domain.Dict;
+import org.linlinjava.litemall.db.exection.BizException;
 import org.linlinjava.litemall.db.service.AuntOrderService;
 import org.linlinjava.litemall.db.service.AuntService;
 import org.linlinjava.litemall.db.service.DictService;
@@ -49,19 +50,14 @@ public class ApiAuntOrderController {
      * @return
      */
     @PostMapping("save")
-    public Object save(@RequestBody AuntOrder order) {
+    public Object save(@RequestBody AuntOrder order) throws BizException {
         if (null==order){
             return ResponseUtil.badArgument();
         }
         if (null==order.getAuntId()){
             return ResponseUtil.badArgument();
         }
-        if (null==order.getUserId()){
-            return ResponseUtil.badArgument();
-        }
-        if (StringUtils.isEmpty(order.getStartTime())){
-            return ResponseUtil.badArgument();
-        }
+
         Aunt aunt=auntService.selectById(order.getAuntId());
 
         order.setAuntMobile(aunt.getMobile());

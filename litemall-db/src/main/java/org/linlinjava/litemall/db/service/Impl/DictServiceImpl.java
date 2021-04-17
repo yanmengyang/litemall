@@ -4,6 +4,8 @@ import com.github.pagehelper.PageHelper;
 import org.linlinjava.litemall.db.dao.DictMapper;
 import org.linlinjava.litemall.db.domain.Dict;
 import org.linlinjava.litemall.db.domain.LitemallAdmin;
+import org.linlinjava.litemall.db.exection.BeanValidator;
+import org.linlinjava.litemall.db.exection.BizException;
 import org.linlinjava.litemall.db.service.DictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,8 @@ public class DictServiceImpl  implements DictService {
     }
 
     @Override
-    public Integer save(Dict bean) {
+    public Integer save(Dict bean) throws BizException {
+        BeanValidator.check(bean);
         return dictMapper.insertSelective(bean);
     }
 

@@ -5,6 +5,8 @@ import org.linlinjava.litemall.db.dao.AuntMapper;
 import org.linlinjava.litemall.db.domain.Aunt;
 import org.linlinjava.litemall.db.domain.Dict;
 import org.linlinjava.litemall.db.domain.LitemallAdmin;
+import org.linlinjava.litemall.db.exection.BeanValidator;
+import org.linlinjava.litemall.db.exection.BizException;
 import org.linlinjava.litemall.db.service.AuntService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +36,9 @@ public class AuntServiceImpl implements AuntService {
     }
 
     @Override
-    public Integer save(Aunt bean) {
+    public Integer save(Aunt bean) throws BizException {
+        BeanValidator.check(bean);
+
         return auntMapper.insertSelective(bean);
     }
 

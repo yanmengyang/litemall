@@ -1,8 +1,7 @@
 package org.linlinjava.litemall.db.service.Impl;
 
 import com.github.pagehelper.PageHelper;
-import org.linlinjava.litemall.db.dao.AuntMapper;
-import org.linlinjava.litemall.db.dao.AuntOrderMapper;
+import org.linlinjava.litemall.db.dao.AOrderMapper;
 import org.linlinjava.litemall.db.domain.AuntOrder;
 import org.linlinjava.litemall.db.exection.BeanValidator;
 import org.linlinjava.litemall.db.exection.BizException;
@@ -20,7 +19,7 @@ import java.util.List;
 @Service
 public class AuntOrderServiceImpl implements AuntOrderService {
     @Autowired
-    AuntOrderMapper orderMapper;
+    AOrderMapper orderMapper;
 
     @Override
     public AuntOrder selectById(Integer id) {

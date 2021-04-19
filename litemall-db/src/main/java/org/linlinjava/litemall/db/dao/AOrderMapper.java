@@ -5,7 +5,7 @@ import org.linlinjava.litemall.db.domain.AuntOrder;
 
 import java.util.List;
 
-public interface AuntOrderMapper {
+public interface AOrderMapper {
     int deleteByPrimaryKey(Integer id);
 
     int insert(AuntOrder record);

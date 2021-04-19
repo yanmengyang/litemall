@@ -82,11 +82,13 @@ public class Aunt implements Serializable {
     /**
      * 是否上架
      */
+    @Deprecated
     private Integer saleStatus;
 
     /**
      * 认证状态
      */
+    @Deprecated
     private Integer realStatus;
 
     /**

@@ -4,32 +4,20 @@
       <h3>编辑字典</h3>
       <el-form ref="goods" :rules="rules" :model="goods" label-width="150px">
 
-        <el-form-item label="名称" prop="dictName">
+        <el-form-item label="属性名称" prop="dictName">
           <el-input v-model="dictInfo.dictName" />
         </el-form-item>
 
-        <el-form-item label="序列" prop="dictSequence">
-          <el-input v-model="dictInfo.dictSequence" />
+        <el-form-item label="属性值" prop="dictValue">
+          <el-input v-model="dictInfo.dictValue" />
         </el-form-item>
 
         <el-form-item label="类型" prop="dictType">
           <el-input v-model="dictInfo.dictType" />
         </el-form-item>
 
-        <el-form-item label="专业" prop="expertin">
-          <el-input v-model="dictInfo.expertin" />
-        </el-form-item>
-
-        <el-form-item label="值" prop="dictValue">
-          <el-input v-model="dictInfo.dictValue" />
-        </el-form-item>
-
         <el-form-item label="父级id" prop="parentId">
           <el-input v-model="dictInfo.parentId" />
-        </el-form-item>
-
-        <el-form-item label="租户编码" prop="tenantCode">
-          <el-input v-model="dictInfo.tenantCode" />
         </el-form-item>
 
       </el-form>

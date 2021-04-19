@@ -3,30 +3,8 @@
     <el-card class="box-card">
       <h3>编辑阿姨</h3>
       <el-form ref="goods" :rules="rules" :model="goods" label-width="150px">
-        <el-form-item label="昵称" prop="nickName">
+        <el-form-item label="称呼" prop="nickName">
           <el-input v-model="auntInfo.nickName" />
-        </el-form-item>
-
-        <el-form-item label="年龄" prop="age">
-          <el-input v-model="auntInfo.age" />
-        </el-form-item>
-
-        <el-form-item label="学历" prop="education">
-          <el-input v-model="auntInfo.education" />
-        </el-form-item>
-
-        <el-form-item label="专业" prop="expertin">
-          <el-input v-model="auntInfo.expertin" />
-        </el-form-item>
-
-        <el-form-item label="经验" prop="experience">
-          <el-input v-model="auntInfo.experience">
-            <template slot="append">年</template>
-          </el-input>
-        </el-form-item>
-
-        <el-form-item label="所在地" prop="nativePlace">
-          <el-input v-model="auntInfo.nativePlace" />
         </el-form-item>
 
         <el-form-item label="性别" prop="sex">
@@ -36,18 +14,82 @@
           </el-radio-group>
         </el-form-item>
 
-        <el-form-item label="真实状态" prop="realStatus">
-          <el-radio-group v-model="auntInfo.realStatus">
-            <el-radio :label="true">是</el-radio>
-            <el-radio :label="false">否</el-radio>
+        <el-form-item label="年龄" prop="age">
+          <el-input v-model="auntInfo.age" />
+        </el-form-item>
+
+        <el-form-item label="生日" prop="birthday">
+          <el-input v-model="auntInfo.age" />
+        </el-form-item>
+
+        <el-form-item label="籍贯" prop="nativePlace">
+          <el-input v-model="auntInfo.nativePlace" />
+        </el-form-item>
+
+        <el-form-item label="从业时长" prop="experience">
+          <el-input v-model="auntInfo.experience">
+            <template slot="append">年</template>
+          </el-input>
+        </el-form-item>
+
+        <el-form-item label="学历" prop="education">
+          <el-input v-model="auntInfo.education" />
+        </el-form-item>
+
+        <el-form-item label="审核状态" prop="auditStatus">
+          <el-input v-model="auntInfo.auditStatus" />
+        </el-form-item>
+
+        <el-form-item label="是否删除" prop="isDel">
+          <el-radio-group v-model="auntInfo.isDel">
+            <el-radio :label="1">是</el-radio>
+            <el-radio :label="0">否</el-radio>
           </el-radio-group>
         </el-form-item>
 
-        <el-form-item label="销售状况" prop="saleStatus">
+        <el-form-item label="是否展示" prop="saleStatus">
           <el-radio-group v-model="auntInfo.saleStatus">
-            <el-radio :label="true">是</el-radio>
-            <el-radio :label="false">否</el-radio>
+            <el-radio :label="1">是</el-radio>
+            <el-radio :label="0">否</el-radio>
           </el-radio-group>
+        </el-form-item>
+
+        <el-form-item label="认证状态" prop="realStatus">
+          <el-radio-group v-model="auntInfo.realStatus">
+            <el-radio :label="1">认证成功</el-radio>
+            <el-radio :label="0">认证失败</el-radio>
+          </el-radio-group>
+        </el-form-item>
+
+        <el-form-item label="矩阵类型" prop="type">
+          <el-select v-model="auntInfo.type" value-key="" placeholder="请选择" clearable filterable>
+            <el-option
+              v-for="item in 3"
+              :key="item"
+              :label="item"
+              :value="item"
+            />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="电话" prop="mobile">
+          <el-input v-model="auntInfo.mobile" />
+        </el-form-item>
+
+        <el-form-item label="证件号" prop="idcard">
+          <el-input v-model="auntInfo.idcard" />
+        </el-form-item>
+
+        <el-form-item label="擅长内容" prop="expertin">
+          <el-input v-model="auntInfo.expertin" />
+        </el-form-item>
+
+        <el-form-item label="类别" prop="type">
+          <el-input v-model="auntInfo.type" />
+        </el-form-item>
+
+        <el-form-item label="标签" prop="flag">
+          <el-input v-model="auntInfo.flag" />
         </el-form-item>
 
         <el-form-item label="简介">
@@ -125,7 +167,7 @@ export default {
     return {
       auntInfo: {
         age: 30,
-        auditStatus: false,
+        auditStatus: 0,
         birthday: '',
         des: '',
         education: '',

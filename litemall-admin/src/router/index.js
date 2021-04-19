@@ -147,6 +147,34 @@ export const asyncRoutes = [
   },
 
   {
+    path: '/order',
+    component: Layout,
+    alwaysShow: true,
+    meta: {
+      title: '订单管理',
+      icon: 'chart'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/orderMg/list'),
+        meta: {
+          title: '订单列表'
+        },
+        hidden: false
+      },
+      {
+        path: 'edit',
+        component: () => import('@/views/mall/order'),
+        meta: {
+          title: '订单编辑'
+        },
+        hidden: false
+      }
+    ]
+  },
+
+  {
     path: '/mall',
     component: Layout,
     redirect: 'noredirect',

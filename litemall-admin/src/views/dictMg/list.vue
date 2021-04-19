@@ -14,7 +14,11 @@
     <!-- 查询结果 -->
     <el-table v-loading="listLoading" :data="list" element-loading-text="正在查询中。。。" border fit highlight-current-row>
 
-      <el-table-column align="center" label="id" prop="id" />
+      <el-table-column align="center" label="id">
+        <template slot-scope="scope">
+          <span>{{ String(scope.row.id) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="创建时间" prop="createTime" />
       <el-table-column align="center" label="名称" prop="dictName" />
       <el-table-column align="center" label="序列" prop="dictSequence" />

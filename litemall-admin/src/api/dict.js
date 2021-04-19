@@ -11,7 +11,7 @@ export function listDict(data) {
 export function readDict(query) {
   return request({
     url: '/dict/read/' + query,
-    method: 'get'
+    method: 'post'
   })
 }
 

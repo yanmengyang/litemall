@@ -20,11 +20,12 @@
      <result column="pay_no" jdbcType="VARCHAR" property="payNo" />
      <result column="transaction_code" jdbcType="VARCHAR" property="transactionCode" />
      <result column="is_del" jdbcType="INTEGER" property="isDel" />
+   <result column="blance" jdbcType="DECIMAL" property="blance" />
    </resultMap>
    <sql id="Base_Column_List">
      id, aunt_name, aunt_mobile, aunt_id, user_id, `name`, addr, mobile, start_time, end_time,
      pay_status, `status`, dispatch_status, remark, creat_time, pay_no, transaction_code,
-     is_del
+     is_del, deleted, blance
    </sql>
    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
      select
@@ -42,13 +43,13 @@
        mobile, start_time, end_time,
        pay_status, `status`, dispatch_status,
        remark, creat_time, pay_no,
-       transaction_code, is_del)
+       transaction_code, blance)
      values (#{auntName,jdbcType=VARCHAR}, #{auntMobile,jdbcType=VARCHAR}, #{auntId,jdbcType=INTEGER},
        #{userId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR},
        #{mobile,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
        #{payStatus}, #{status,jdbcType=SMALLINT}, #{dispatchStatus},
        #{remark,jdbcType=VARCHAR}, #{creatTime,jdbcType=TIMESTAMP}, #{payNo,jdbcType=VARCHAR},
-       #{transactionCode,jdbcType=VARCHAR}, #{isDel})
+       #{transactionCode,jdbcType=VARCHAR}, #{isDel}, #{blance,jdbcType=DECIMAL})
    </insert>
    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.linlinjava.litemall.db.domain.AuntOrder" useGeneratedKeys="true">
      insert into aunt_order
@@ -104,6 +105,9 @@
        <if test="isDel != null">
          is_del,
        </if>
+       <if test="blance != null">
+         blance,
+       </if>
      </trim>
      <trim prefix="values (" suffix=")" suffixOverrides=",">
        <if test="auntName != null">
@@ -156,6 +160,9 @@
        </if>
        <if test="isDel != null">
          #{isDel},
+       </if>
+       <if test="blance != null">
+         #{blance,jdbcType=DECIMAL},
        </if>
      </trim>
    </insert>
@@ -213,6 +220,9 @@
        <if test="isDel != null">
          is_del = #{isDel},
        </if>
+       <if test="blance != null">
+         blance = #{blance,jdbcType=DECIMAL},
+       </if>
      </set>
      where id = #{id,jdbcType=INTEGER}
    </update>
@@ -234,7 +244,8 @@
        creat_time = #{creatTime,jdbcType=TIMESTAMP},
        pay_no = #{payNo,jdbcType=VARCHAR},
        transaction_code = #{transactionCode,jdbcType=VARCHAR},
-       is_del = #{isDel}
+       is_del = #{isDel},
+        blance = #{blance,jdbcType=DECIMAL}
      where id = #{id,jdbcType=INTEGER}
    </update>
   

@@ -1,6 +1,7 @@
 package org.linlinjava.litemall.db.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -104,6 +105,8 @@ public class AuntOrder implements Serializable {
      * 是否删除
      */
     private Integer isDel;
+
+    private BigDecimal blance;
 
     private static final long serialVersionUID = 1L;
 }

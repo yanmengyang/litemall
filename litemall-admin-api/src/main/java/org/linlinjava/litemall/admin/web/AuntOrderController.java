@@ -95,6 +95,13 @@ public class AuntOrderController {
     @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "删除")
     @PostMapping(value = "/delete/{id}")
     public Object delete(HttpServletRequest request, @PathVariable("id") Integer id){
+        AuntOrder auntOrder = service.selectById(id);
+        if (auntOrder == null){
+            return ResponseUtil.fail(-1,"该订单不存在");
+        }
+        if (auntOrder.getPayStatus() == 1){
+            return ResponseUtil.fail(-1,"该订单状态不允许删除");
+        }
         return ResponseUtil.ok(service.removeById(id));
     }
 

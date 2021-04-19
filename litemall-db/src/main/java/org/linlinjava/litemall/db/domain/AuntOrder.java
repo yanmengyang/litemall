@@ -100,6 +100,9 @@ public class AuntOrder implements Serializable {
      */
     private String transactionCode;
 
+    /**
+     * 是否删除
+     */
     private Integer isDel;
 
     private static final long serialVersionUID = 1L;

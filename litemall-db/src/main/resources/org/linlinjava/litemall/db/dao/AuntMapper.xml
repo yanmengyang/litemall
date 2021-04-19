@@ -13,21 +13,37 @@
     <result column="expertin" jdbcType="VARCHAR" property="expertin" />
     <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="zodiac" jdbcType="VARCHAR" property="zodiac" />
+    <result column="nation" jdbcType="VARCHAR" property="nation" />
+    <result column="constellation" jdbcType="VARCHAR" property="constellation" />
     <result column="des" jdbcType="VARCHAR" property="des" />
-    <result column="audit_status" jdbcType="INTEGER" property="auditStatus" />
-    <result column="is_del" jdbcType="INTEGER" property="isDel" />
-    <result column="sale_status" jdbcType="INTEGER" property="saleStatus" />
-    <result column="real_status" jdbcType="INTEGER" property="realStatus" />
+    <result column="audit_status" jdbcType="BIT" property="auditStatus" />
+    <result column="is_del" jdbcType="BIT" property="isDel" />
+    <result column="sale_status" jdbcType="BIT" property="saleStatus" />
+    <result column="real_status" jdbcType="BIT" property="realStatus" />
     <result column="sign" jdbcType="CHAR" property="sign" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="idcard" jdbcType="VARCHAR" property="idcard" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="flag" jdbcType="VARCHAR" property="flag" />
+    <result column="identity_approve" jdbcType="VARCHAR" property="identityApprove" />
+    <result column="skill_approve" jdbcType="VARCHAR" property="skillApprove" />
+    <result column="background_approve" jdbcType="VARCHAR" property="backgroundApprove" />
+    <result column="train_approve" jdbcType="VARCHAR" property="trainApprove" />
+    <result column="resume_approve" jdbcType="VARCHAR" property="resumeApprove" />
+    <result column="examination_approve" jdbcType="VARCHAR" property="examinationApprove" />
+    <result column="insurance_approve" jdbcType="VARCHAR" property="insuranceApprove" />
+    <result column="self_introduction" jdbcType="VARCHAR" property="selfIntroduction" />
+    <result column="job_intention" jdbcType="VARCHAR" property="jobIntention" />
+    <result column="work_experience" jdbcType="VARCHAR" property="workExperience" />
+    <result column="personal_presentation" jdbcType="VARCHAR" property="personalPresentation" />
   </resultMap>
   <sql id="Base_Column_List">
     id, nick_name, sex, head_url, age, birthday, native_place, experience, expertin,
-    `type`, education, des, audit_status, is_del, sale_status, real_status, sign, mobile,
-    idcard, sort, flag
+    type, education, zodiac, nation, constellation, des, audit_status, is_del, sale_status,
+    real_status, sign, mobile, idcard, sort, flag, identity_approve, skill_approve, background_approve,
+    train_approve, resume_approve, examination_approve, insurance_approve, self_introduction,
+    job_intention, work_experience, personal_presentation
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -40,20 +56,30 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.linlinjava.litemall.db.domain.Aunt" useGeneratedKeys="true">
-    insert into litemall_aunt (nick_name, sex, head_url,
-    age, birthday, native_place,
-    experience, expertin, `type`,
-    education, des, audit_status,
-    is_del, sale_status, real_status,
-    sign, mobile, idcard,
-    sort, flag)
-    values (#{nickName,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{headUrl,jdbcType=VARCHAR},
-    #{age,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, #{nativePlace,jdbcType=VARCHAR},
-    #{experience,jdbcType=VARCHAR}, #{expertin,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
-    #{education,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}, #{auditStatus},
-    #{isDel}, #{saleStatus}, #{realStatus},
-    #{sign,jdbcType=CHAR}, #{mobile,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR},
-    #{sort,jdbcType=INTEGER}, #{flag,jdbcType=VARCHAR})
+    insert into litemall_aunt (id, nick_name, sex,
+      head_url, age, birthday,
+      native_place, experience, expertin,
+      type, education, zodiac,
+      nation, constellation, des,
+      audit_status, is_del, sale_status,
+      real_status, sign, mobile,
+      idcard, sort, flag,
+      identity_approve, skill_approve, background_approve,
+      train_approve, resume_approve, examination_approve,
+      insurance_approve, self_introduction, job_intention,
+      work_experience, personal_presentation)
+    values (#{id,jdbcType=INTEGER}, #{nickName,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR},
+      #{headUrl,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{birthday,jdbcType=DATE},
+      #{nativePlace,jdbcType=VARCHAR}, #{experience,jdbcType=VARCHAR}, #{expertin,jdbcType=VARCHAR},
+      #{type,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, #{zodiac,jdbcType=VARCHAR},
+      #{nation,jdbcType=VARCHAR}, #{constellation,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR},
+      #{auditStatus,jdbcType=BIT}, #{isDel,jdbcType=BIT}, #{saleStatus,jdbcType=BIT},
+      #{realStatus,jdbcType=BIT}, #{sign,jdbcType=CHAR}, #{mobile,jdbcType=VARCHAR},
+      #{idcard,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{flag,jdbcType=VARCHAR},
+      #{identityApprove,jdbcType=VARCHAR}, #{skillApprove,jdbcType=VARCHAR}, #{backgroundApprove,jdbcType=VARCHAR},
+      #{trainApprove,jdbcType=VARCHAR}, #{resumeApprove,jdbcType=VARCHAR}, #{examinationApprove,jdbcType=VARCHAR},
+      #{insuranceApprove,jdbcType=VARCHAR}, #{selfIntroduction,jdbcType=VARCHAR}, #{jobIntention,jdbcType=VARCHAR},
+      #{workExperience,jdbcType=VARCHAR}, #{personalPresentation,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.linlinjava.litemall.db.domain.Aunt" useGeneratedKeys="true">
     insert into litemall_aunt
@@ -83,10 +109,19 @@
         expertin,
       </if>
       <if test="type != null">
-        `type`,
+        type,
       </if>
       <if test="education != null">
         education,
+      </if>
+      <if test="zodiac != null">
+        zodiac,
+      </if>
+      <if test="nation != null">
+        nation,
+      </if>
+      <if test="constellation != null">
+        constellation,
       </if>
       <if test="des != null">
         des,
@@ -118,8 +153,44 @@
       <if test="flag != null">
         flag,
       </if>
+      <if test="identityApprove != null">
+        identity_approve,
+      </if>
+      <if test="skillApprove != null">
+        skill_approve,
+      </if>
+      <if test="backgroundApprove != null">
+        background_approve,
+      </if>
+      <if test="trainApprove != null">
+        train_approve,
+      </if>
+      <if test="resumeApprove != null">
+        resume_approve,
+      </if>
+      <if test="examinationApprove != null">
+        examination_approve,
+      </if>
+      <if test="insuranceApprove != null">
+        insurance_approve,
+      </if>
+      <if test="selfIntroduction != null">
+        self_introduction,
+      </if>
+      <if test="jobIntention != null">
+        job_intention,
+      </if>
+      <if test="workExperience != null">
+        work_experience,
+      </if>
+      <if test="personalPresentation != null">
+        personal_presentation,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="nickName != null">
         #{nickName,jdbcType=VARCHAR},
       </if>
@@ -150,20 +221,29 @@
       <if test="education != null">
         #{education,jdbcType=VARCHAR},
       </if>
+      <if test="zodiac != null">
+        #{zodiac,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null">
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="constellation != null">
+        #{constellation,jdbcType=VARCHAR},
+      </if>
       <if test="des != null">
         #{des,jdbcType=VARCHAR},
       </if>
       <if test="auditStatus != null">
-        #{auditStatus},
+        #{auditStatus,jdbcType=BIT},
       </if>
       <if test="isDel != null">
-        #{isDel},
+        #{isDel,jdbcType=BIT},
       </if>
       <if test="saleStatus != null">
-        #{saleStatus},
+        #{saleStatus,jdbcType=BIT},
       </if>
       <if test="realStatus != null">
-        #{realStatus},
+        #{realStatus,jdbcType=BIT},
       </if>
       <if test="sign != null">
         #{sign,jdbcType=CHAR},
@@ -179,6 +259,39 @@
       </if>
       <if test="flag != null">
         #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="identityApprove != null">
+        #{identityApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="skillApprove != null">
+        #{skillApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="backgroundApprove != null">
+        #{backgroundApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="trainApprove != null">
+        #{trainApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeApprove != null">
+        #{resumeApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="examinationApprove != null">
+        #{examinationApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceApprove != null">
+        #{insuranceApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="selfIntroduction != null">
+        #{selfIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="jobIntention != null">
+        #{jobIntention,jdbcType=VARCHAR},
+      </if>
+      <if test="workExperience != null">
+        #{workExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="personalPresentation != null">
+        #{personalPresentation,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -210,25 +323,34 @@
         expertin = #{expertin,jdbcType=VARCHAR},
       </if>
       <if test="type != null">
-        `type` = #{type,jdbcType=VARCHAR},
+        type = #{type,jdbcType=VARCHAR},
       </if>
       <if test="education != null">
         education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="zodiac != null">
+        zodiac = #{zodiac,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null">
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="constellation != null">
+        constellation = #{constellation,jdbcType=VARCHAR},
       </if>
       <if test="des != null">
         des = #{des,jdbcType=VARCHAR},
       </if>
       <if test="auditStatus != null">
-        audit_status = #{auditStatus},
+        audit_status = #{auditStatus,jdbcType=BIT},
       </if>
       <if test="isDel != null">
-        is_del = #{isDel},
+        is_del = #{isDel,jdbcType=BIT},
       </if>
       <if test="saleStatus != null">
-        sale_status = #{saleStatus},
+        sale_status = #{saleStatus,jdbcType=BIT},
       </if>
       <if test="realStatus != null">
-        real_status = #{realStatus},
+        real_status = #{realStatus,jdbcType=BIT},
       </if>
       <if test="sign != null">
         sign = #{sign,jdbcType=CHAR},
@@ -245,31 +367,78 @@
       <if test="flag != null">
         flag = #{flag,jdbcType=VARCHAR},
       </if>
+      <if test="identityApprove != null">
+        identity_approve = #{identityApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="skillApprove != null">
+        skill_approve = #{skillApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="backgroundApprove != null">
+        background_approve = #{backgroundApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="trainApprove != null">
+        train_approve = #{trainApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeApprove != null">
+        resume_approve = #{resumeApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="examinationApprove != null">
+        examination_approve = #{examinationApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceApprove != null">
+        insurance_approve = #{insuranceApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="selfIntroduction != null">
+        self_introduction = #{selfIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="jobIntention != null">
+        job_intention = #{jobIntention,jdbcType=VARCHAR},
+      </if>
+      <if test="workExperience != null">
+        work_experience = #{workExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="personalPresentation != null">
+        personal_presentation = #{personalPresentation,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="org.linlinjava.litemall.db.domain.Aunt">
     update litemall_aunt
     set nick_name = #{nickName,jdbcType=VARCHAR},
-    sex = #{sex,jdbcType=CHAR},
-    head_url = #{headUrl,jdbcType=VARCHAR},
-    age = #{age,jdbcType=INTEGER},
-    birthday = #{birthday,jdbcType=DATE},
-    native_place = #{nativePlace,jdbcType=VARCHAR},
-    experience = #{experience,jdbcType=VARCHAR},
-    expertin = #{expertin,jdbcType=VARCHAR},
-    `type` = #{type,jdbcType=VARCHAR},
-    education = #{education,jdbcType=VARCHAR},
-    des = #{des,jdbcType=VARCHAR},
-    audit_status = #{auditStatus},
-    is_del = #{isDel},
-    sale_status = #{saleStatus},
-    real_status = #{realStatus},
-    sign = #{sign,jdbcType=CHAR},
-    mobile = #{mobile,jdbcType=VARCHAR},
-    idcard = #{idcard,jdbcType=VARCHAR},
-    sort = #{sort,jdbcType=INTEGER},
-    flag = #{flag,jdbcType=VARCHAR}
+      sex = #{sex,jdbcType=CHAR},
+      head_url = #{headUrl,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=DATE},
+      native_place = #{nativePlace,jdbcType=VARCHAR},
+      experience = #{experience,jdbcType=VARCHAR},
+      expertin = #{expertin,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      zodiac = #{zodiac,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      constellation = #{constellation,jdbcType=VARCHAR},
+      des = #{des,jdbcType=VARCHAR},
+      audit_status = #{auditStatus,jdbcType=BIT},
+      is_del = #{isDel,jdbcType=BIT},
+      sale_status = #{saleStatus,jdbcType=BIT},
+      real_status = #{realStatus,jdbcType=BIT},
+      sign = #{sign,jdbcType=CHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      idcard = #{idcard,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=VARCHAR},
+      identity_approve = #{identityApprove,jdbcType=VARCHAR},
+      skill_approve = #{skillApprove,jdbcType=VARCHAR},
+      background_approve = #{backgroundApprove,jdbcType=VARCHAR},
+      train_approve = #{trainApprove,jdbcType=VARCHAR},
+      resume_approve = #{resumeApprove,jdbcType=VARCHAR},
+      examination_approve = #{examinationApprove,jdbcType=VARCHAR},
+      insurance_approve = #{insuranceApprove,jdbcType=VARCHAR},
+      self_introduction = #{selfIntroduction,jdbcType=VARCHAR},
+      job_intention = #{jobIntention,jdbcType=VARCHAR},
+      work_experience = #{workExperience,jdbcType=VARCHAR},
+      personal_presentation = #{personalPresentation,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

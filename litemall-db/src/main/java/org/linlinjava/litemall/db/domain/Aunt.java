@@ -98,6 +98,33 @@ public class Aunt implements Serializable {
 
     private String mobile;
 
+    private String zodiac;
+
+    private String nation;
+
+    private String constellation;
+
+    private String identityApprove;
+
+    private String skillApprove;
+
+    private String backgroundApprove;
+
+    private String trainApprove;
+
+    private String resumeApprove;
+
+    private String examinationApprove;
+
+    private String insuranceApprove;
+
+    private String selfIntroduction;
+
+    private String jobIntention;
+
+    private String workExperience;
+
+    private String personalPresentation;
 
     private String idcard;
 

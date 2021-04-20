@@ -312,6 +312,7 @@ export const asyncRoutes = [
       }
     ]
   },
+
   {
     path: '/houseMg',
     component: Layout,
@@ -324,32 +325,33 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'list',
+        path: 'auntlist',
         component: () => import('@/views/houseMg/list'),
         name: 'houseList',
         meta: {
-          perms: ['POST /admin/aunt/list', 'POST /admin/aunt/delete'],
+          // perms: ['POST /admin/aunt/list', 'POST /admin/aunt/delete'],
           title: '阿姨管理',
           noCache: true
-        }
+        },
+        hidden:false
       },
       {
-        path: 'create',
+        path: 'auntcreate',
         component: () => import('@/views/houseMg/create'),
         name: 'houseCreate',
         meta: {
-          perms: ['POST /admin/aunt/create'],
+          // perms: ['POST /admin/aunt/create'],
           title: '添加阿姨',
           noCache: true
         },
         hidden: true
       },
       {
-        path: 'edit',
+        path: 'auntedit',
         component: () => import('@/views/houseMg/edit'),
         name: 'houseEdit',
         meta: {
-          perms: ['POST /admin/aunt/update'],
+          // perms: ['POST /admin/aunt/update'],
           title: '阿姨编辑',
           noCache: true
         },
@@ -390,6 +392,7 @@ export const asyncRoutes = [
       }
     ]
   },
+
   {
     path: '/promotion',
     component: Layout,
@@ -648,6 +651,7 @@ export const asyncRoutes = [
       }
     ]
   },
+
   {
     path: 'external-link',
     component: Layout,
@@ -690,6 +694,7 @@ export const asyncRoutes = [
       }
     ]
   },
+
   {
     path: '/profile',
     component: Layout,

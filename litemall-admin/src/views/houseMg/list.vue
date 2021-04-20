@@ -170,11 +170,11 @@ export default {
     },
 
     handleCreate() {
-      this.$router.push({ path: '/houseMg/create' })
+      this.$router.push({ path: '/houseMg/auntcreate' })
     },
 
     handleUpdate(row) {
-      this.$router.push({ path: '/houseMg/edit', query: { id: row.id }})
+      this.$router.push({ path: '/houseMg/auntedit', query: { id: row.id }})
     },
 
     showDetail(detail) {

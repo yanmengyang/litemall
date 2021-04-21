@@ -41,10 +41,9 @@
 
       <el-table-column align="center" label="学历" prop="education" />
 
-      <el-table-column align="center" label="审核状态">
+      <el-table-column align="center" label="审核状态" prop="auditStatus">
         <template slot-scope="scope">
-          <span v-if="scope.row.auditStatus==1">审核通过</span>
-          <span v-else>审核失败</span>
+          <el-tag :type="scope.row.auditStatus ? '1' : '0' ">{{ scope.row.auditStatus ? '审核通过' : '审核失败' }}</el-tag>
         </template>
       </el-table-column>
 
@@ -78,10 +77,9 @@
       <!--</template>-->
       <!--</el-table-column>-->
 
-      <el-table-column align="center" label="是否展示">
+      <el-table-column align="center" label="是否展示" prop="saleStatus">
         <template slot-scope="scope">
-          <span v-if="scope.row.saleStatus">展示</span>
-          <span v-else>不展示</span>
+          <el-tag :type="scope.row.saleStatus ? '1' : '0' ">{{ scope.row.saleStatus ? '展示' : '不展示' }}</el-tag>
         </template>
       </el-table-column>
 

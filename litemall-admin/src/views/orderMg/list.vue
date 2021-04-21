@@ -83,13 +83,17 @@
       <!--<el-table-column align="center" label="支付单号" prop="payNo" />-->
       <!--<el-table-column align="center" label="支付流水" prop="transactionCode" />-->
       <el-table-column align="center" label="支付状态" prop="payStatus" />
-      <el-table-column align="center" label="订单状态" prop="status" />
       <!--<el-table-column align="center" label="调度状态" prop="dispatchStatus" />-->
       <!--<el-table-column align="center" label="是否删除" prop="isDel" />-->
 
       <el-table-column align="center" label="调度状态" prop="dispatchStatus">
         <template slot-scope="scope">
           <el-tag :type="scope.row.dispatchStatus ? '1' : '0' ">{{ scope.row.dispatchStatus ? '已调度' : '待调度' }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="订单状态" prop="status">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.status ? '1' : '0' ">{{ scope.row.status ? '已完成' : '未完成' }}</el-tag>
         </template>
       </el-table-column>
 

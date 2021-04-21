@@ -112,31 +112,11 @@
 
       <el-table-column align="center" label="操作" width="250" class-name="oper">
         <template slot-scope="scope">
-          <el-button
-            type="primary"
-            size="mini"
-            @click="handleDetail(scope.row)"
-          >详情</el-button>
-          <el-button
-            type="danger"
-            size="mini"
-            @click="handleDelete(scope.row)"
-          >删除</el-button>
-          <el-button
-            type="warning"
-            size="mini"
-            @click="handlePay(scope.row)"
-          >收款</el-button>
-          <el-button
-            type="primary"
-            size="mini"
-            @click="handleShip(scope.row)"
-          >发货</el-button>
-          <el-button
-            type="danger"
-            size="mini"
-            @click="handleRefund(scope.row)"
-          >退款</el-button>
+
+          <el-button type="primary" size="mini" @click="handleBackOrder(scope.row)" >退单</el-button>
+          <el-button type="primary" size="mini" @click="handleSendOrder(scope.row)" >派单</el-button>
+          <el-button type="danger" size="mini" @click="handleDeleteOrder(scope.row)" >删除</el-button>
+
         </template>
       </el-table-column>
     </el-table>
@@ -226,12 +206,7 @@
     </el-dialog>
 
     <!-- 收款对话框 -->
-    <el-dialog
-      :visible.sync="payDialogVisible"
-      title="订单收款"
-      width="40%"
-      center
-    >
+    <el-dialog :visible.sync="payDialogVisible" title="订单收款" width="40%" center>
       <el-form
         ref="payForm"
         :model="payForm"
@@ -322,6 +297,11 @@
         <el-button type="primary" @click="confirmRefund">确定</el-button>
       </div>
     </el-dialog>
+
+
+    
+
+
   </div>
 </template>
 
@@ -410,15 +390,15 @@ export default {
       total: 0,
       listLoading: false,
       listQuery: {
-        page: 1,
-        limit: 20,
-        nickname: undefined,
-        consignee: undefined,
-        orderSn: undefined,
-        timeArray: [],
-        orderStatusArray: [],
-        sort: 'add_time',
-        order: 'desc'
+        // page: 1,
+        // limit: 20,
+        // nickname: undefined,
+        // consignee: undefined,
+        // orderSn: undefined,
+        // timeArray: [],
+        // orderStatusArray: [],
+        // sort: 'add_time',
+        // order: 'desc'
       },
       pickerOptions: {
         shortcuts: [
@@ -482,49 +462,107 @@ export default {
     }
   },
   created() {
-    // this.getList()
+    this.getList()
     // this.getChannel()
   },
   methods: {
     checkPermission,
     getList() {
       this.listLoading = true
-      if (this.listQuery.timeArray && this.listQuery.timeArray.length === 2) {
-        this.listQuery.start = this.listQuery.timeArray[0]
-        this.listQuery.end = this.listQuery.timeArray[1]
-      } else {
-        this.listQuery.start = null
-        this.listQuery.end = null
-      }
-      if (this.listQuery.orderId) {
-        detailOrder(this.listQuery.orderId)
+      let self = this
+
+      console.log("+++++++++++++++++++")
+      console.log(this.listQuery)
+
+      listOrder(this.listQuery)
           .then((response) => {
-            this.list = []
-            if (response.data.data.order) {
-              this.list.push(response.data.data.order)
-              this.total = 1
-              this.listLoading = false
-            }
+            self.list = response.data.data.list
+            self.total = response.data.data.total
+            self.listLoading = false
           })
           .catch(() => {
-            this.list = []
-            this.total = 0
-            this.listLoading = false
+            self.list = []
+            self.total = 0
+            self.listLoading = false
           })
-      } else {
-        listOrder(this.listQuery)
-          .then((response) => {
-            this.list = response.data.data.list
-            this.total = response.data.data.total
-            this.listLoading = false
-          })
-          .catch(() => {
-            this.list = []
-            this.total = 0
-            this.listLoading = false
-          })
-      }
+
+        //   return;
+
+
+    //   if (this.listQuery.timeArray && this.listQuery.timeArray.length === 2) {
+    //     this.listQuery.start = this.listQuery.timeArray[0]
+    //     this.listQuery.end = this.listQuery.timeArray[1]
+    //   } else {
+    //     this.listQuery.start = null
+    //     this.listQuery.end = null
+    //   }
+    //   if (this.listQuery.orderId) {
+    //     detailOrder(this.listQuery.orderId)
+    //       .then((response) => {
+    //         this.list = []
+    //         if (response.data.data.order) {
+    //           this.list.push(response.data.data.order)
+    //           this.total = 1
+    //           this.listLoading = false
+    //         }
+    //       })
+    //       .catch(() => {
+    //         this.list = []
+    //         this.total = 0
+    //         this.listLoading = false
+    //       })
+    //   } else {
+    //     listOrder(this.listQuery)
+    //       .then((response) => {
+    //         this.list = response.data.data.list
+    //         this.total = response.data.data.total
+    //         this.listLoading = false
+    //       })
+    //       .catch(() => {
+    //         this.list = []
+    //         this.total = 0
+    //         this.listLoading = false
+    //       })
+    //   }
     },
+
+
+    /// 退单
+    handleBackOrder(row) {
+ this.$confirm('确定操作这条记录吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteAunt(row.id).then(response => {
+          this.$notify.success({
+            title: '成功',
+            message: '删除成功'
+          })
+          this.getList()
+        }).catch(response => {
+          this.$notify.error({
+            title: '失败',
+            message: response.data.errmsg
+          })
+        })
+      }).catch(() => {
+
+      })
+    },
+    
+    
+    /// 派单
+    handleSendOrder(row) {
+
+    },
+
+    /// 删除订单
+    handleDeleteOrder(row) {
+
+    },
+
+
     getChannel() {
       listChannel().then((response) => {
         this.channels = response.data.data
@@ -691,5 +729,6 @@ export default {
       this.orderDialogVisible = false
     }
   }
+
 }
 </script>

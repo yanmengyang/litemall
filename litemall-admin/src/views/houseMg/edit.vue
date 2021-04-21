@@ -154,6 +154,8 @@
 
 <script>
 import { editAunt, detailAunt } from '@/api/housemg'
+import {listDict} from "@/api/dict";
+
 import { createStorage, uploadPath } from '@/api/storage'
 import Editor from '@tinymce/tinymce-vue'
 import { MessageBox } from 'element-ui'

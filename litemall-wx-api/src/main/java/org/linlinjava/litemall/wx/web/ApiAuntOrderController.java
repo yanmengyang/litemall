@@ -12,6 +12,8 @@ import org.linlinjava.litemall.db.service.AuntOrderService;
 import org.linlinjava.litemall.db.service.AuntService;
 import org.linlinjava.litemall.db.service.DictService;
 import org.linlinjava.litemall.db.service.LitemallUserService;
+import org.linlinjava.litemall.wx.annotation.LoginUser;
+import org.linlinjava.litemall.wx.service.WxUOrderService;
 import org.linlinjava.litemall.wx.vo.AuntOrderVo;
 import org.linlinjava.litemall.wx.vo.AuntVo;
 import org.linlinjava.litemall.wx.vo.DictVo;
@@ -19,6 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 阿姨-订单服务
@@ -43,6 +48,8 @@ public class ApiAuntOrderController {
 
     @Autowired
     private DictService dictService;
+    @Autowired
+    WxUOrderService wxUOrderService;
 
     /**
      * 预约下单
@@ -98,6 +105,63 @@ public class ApiAuntOrderController {
     public Object orderList(@RequestBody DictVo dict) {
         return ResponseUtil.okList(dictService.getListPage(dict.getPage(),dict.getLimit(),dict));
     }
+
+
+
+
+
+
+    /**
+     * 付款订单的预支付会话标识
+     *
+     * @param userId 用户ID
+     * @param body   订单信息，{ orderId：xxx }
+     * @return 支付订单ID
+     */
+    @PostMapping("prepay")
+    public Object prepay(@RequestBody AuntOrder order,HttpServletRequest request) {
+        return wxUOrderService.prepay(order, request);
+    }
+
+    /**
+     * 微信H5支付
+     * @param userId
+     * @param body
+     * @param request
+     * @return
+     */
+    @PostMapping("h5pay")
+    public Object h5pay(@RequestBody AuntOrder order,HttpServletRequest request) {
+        return wxUOrderService.h5pay(order, request);
+    }
+
+    /**
+     * 微信付款成功或失败回调接口
+     * <p>
+     *  TODO
+     *  注意，这里pay-notify是示例地址，建议开发者应该设立一个隐蔽的回调地址
+     *
+     * @param request 请求内容
+     * @param response 响应内容
+     * @return 操作结果
+     */
+    @PostMapping("pay-notify")
+    public Object payNotify(HttpServletRequest request, HttpServletResponse response) {
+        return wxUOrderService.payNotify(request, response);
+    }
+
+    /**
+     * 订单申请退款
+     *
+     * @param userId 用户ID
+     * @param body   订单信息，{ orderId：xxx }
+     * @return 订单退款操作结果
+     */
+    @PostMapping("refund")
+    public Object refund(@RequestBody AuntOrder order,HttpServletRequest request) {
+        return wxUOrderService.refund(order, request);
+    }
+
 
 
 

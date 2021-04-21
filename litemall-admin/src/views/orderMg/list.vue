@@ -336,12 +336,13 @@
 
 <script>
 import {
-  detailOrder,
   listOrder,
+  deleteOrder,
+  updateOrder,
+  detailOrder,
   listChannel,
   refundOrder,
   payOrder,
-  deleteOrder,
   shipOrder
 } from '@/api/order'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -510,15 +511,21 @@ export default {
 
     // / 退单
     handleBackOrder(row) {
+      if (row.payStatus != 0) {
+        this.$alert('订单已支付，不能退', '提示')
+        return
+      }
+
       this.$confirm('确定操作这条记录吗?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteAunt(row.id).then(response => {
+        row.payStatus = '3'
+        updateOrder(row).then(response => {
           this.$notify.success({
             title: '成功',
-            message: '删除成功'
+            message: '退单成功'
           })
           this.getList()
         }).catch(response => {
@@ -534,12 +541,51 @@ export default {
 
     // / 派单
     handleSendOrder(row) {
+      this.$confirm('确定操作这条记录吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        row.dispatchStatus = '1'
+        updateOrder(row).then(response => {
+          this.$notify.success({
+            title: '提示',
+            message: '派单成功'
+          })
+          this.getList()
+        }).catch(response => {
+          this.$notify.error({
+            title: '失败',
+            message: response.data.errmsg
+          })
+        })
+      }).catch(() => {
 
+      })
     },
 
     // / 删除订单
     handleDeleteOrder(row) {
+      this.$confirm('确定操作这条记录吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteOrder(row.id).then(response => {
+          this.$notify.success({
+            title: '成功',
+            message: '删除成功'
+          })
+          this.getList()
+        }).catch(response => {
+          this.$notify.error({
+            title: '失败',
+            message: response.data.errmsg
+          })
+        })
+      }).catch(() => {
 
+      })
     },
 
     getChannel() {

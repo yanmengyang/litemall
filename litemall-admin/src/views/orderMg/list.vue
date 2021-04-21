@@ -7,15 +7,9 @@
         clearable
         class="filter-item"
         style="width: 160px"
-        placeholder="请输入用户昵称"
+        placeholder="联系电话"
       />
-      <el-input
-        v-model="listQuery.consignee"
-        clearable
-        class="filter-item"
-        style="width: 160px"
-        placeholder="请输入收货人名称"
-      />
+
       <el-input
         v-model="listQuery.orderSn"
         clearable
@@ -72,50 +66,39 @@
       fit
       highlight-current-row
     >
-      <el-table-column type="expand">
-        <template slot-scope="props">
-          <div
-            v-for="item in props.row.goodsVoList"
-            :key="item.id"
-            class="order-goods"
-          >
-            <div class="picture">
-              <img :src="item.picUrl" width="40">
-            </div>
-            <div class="name">商品名称：{{ item.goodsName }}</div>
-            <div class="spec">规格：{{ item.specifications.join("-") }}</div>
-            <div class="price">单价：{{ item.price }} 元</div>
-            <div class="num">数量：{{ item.number }} 件</div>
-            <div class="price">小计：{{ item.price * item.number }} 元</div>
-          </div>
-        </template>
-      </el-table-column>
 
+      <el-table-column align="center" label="订单编号" prop="id" />
       <el-table-column align="center" label="阿姨姓名" prop="auntName" />
       <el-table-column align="center" label="阿姨电话" prop="auntMobile" />
-      <el-table-column align="center" label="阿姨id" prop="auntId" />
-      <el-table-column align="center" label="客户id" prop="userId" />
+      <el-table-column align="center" label="阿姨编号" prop="auntId" />
+      <!--<el-table-column align="center" label="客户id" prop="userId" />-->
       <el-table-column align="center" label="联系人" prop="name" />
       <el-table-column align="center" label="地址" prop="addr" />
-      <el-table-column align="center" label="电话" prop="mobile" />
+      <el-table-column align="center" label="联系电话" prop="mobile" />
       <el-table-column align="center" label="预约时间" prop="startTime" />
       <el-table-column align="center" label="截止时间" prop="endTime" />
       <el-table-column align="center" label="金额" prop="blance" />
       <el-table-column align="center" label="备注" prop="remark" />
       <el-table-column align="center" label="下单时间" prop="creatTime" />
-      <el-table-column align="center" label="支付单号" prop="payNo" />
-      <el-table-column align="center" label="支付流水" prop="transactionCode" />
+      <!--<el-table-column align="center" label="支付单号" prop="payNo" />-->
+      <!--<el-table-column align="center" label="支付流水" prop="transactionCode" />-->
       <el-table-column align="center" label="支付状态" prop="payStatus" />
       <el-table-column align="center" label="订单状态" prop="status" />
-      <el-table-column align="center" label="调度状态" prop="dispatchStatus" />
-      <el-table-column align="center" label="是否删除" prop="isDel" />
+      <!--<el-table-column align="center" label="调度状态" prop="dispatchStatus" />-->
+      <!--<el-table-column align="center" label="是否删除" prop="isDel" />-->
+
+      <el-table-column align="center" label="调度状态" prop="dispatchStatus">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.dispatchStatus ? '1' : '0' ">{{ scope.row.dispatchStatus ? '已调度' : '待调度' }}</el-tag>
+        </template>
+      </el-table-column>
 
       <el-table-column align="center" label="操作" width="250" class-name="oper">
         <template slot-scope="scope">
 
-          <el-button type="primary" size="mini" @click="handleBackOrder(scope.row)" >退单</el-button>
-          <el-button type="primary" size="mini" @click="handleSendOrder(scope.row)" >派单</el-button>
-          <el-button type="danger" size="mini" @click="handleDeleteOrder(scope.row)" >删除</el-button>
+          <el-button type="primary" size="mini" @click="handleBackOrder(scope.row)">退单</el-button>
+          <el-button type="primary" size="mini" @click="handleSendOrder(scope.row)">派单</el-button>
+          <el-button type="danger" size="mini" @click="handleDeleteOrder(scope.row)">删除</el-button>
 
         </template>
       </el-table-column>
@@ -298,10 +281,6 @@
       </div>
     </el-dialog>
 
-
-    
-
-
   </div>
 </template>
 
@@ -469,25 +448,24 @@ export default {
     checkPermission,
     getList() {
       this.listLoading = true
-      let self = this
+      const self = this
 
-      console.log("+++++++++++++++++++")
+      console.log('+++++++++++++++++++')
       console.log(this.listQuery)
 
       listOrder(this.listQuery)
-          .then((response) => {
-            self.list = response.data.data.list
-            self.total = response.data.data.total
-            self.listLoading = false
-          })
-          .catch(() => {
-            self.list = []
-            self.total = 0
-            self.listLoading = false
-          })
+        .then((response) => {
+          self.list = response.data.data.list
+          self.total = response.data.data.total
+          self.listLoading = false
+        })
+        .catch(() => {
+          self.list = []
+          self.total = 0
+          self.listLoading = false
+        })
 
-        //   return;
-
+      //   return;
 
     //   if (this.listQuery.timeArray && this.listQuery.timeArray.length === 2) {
     //     this.listQuery.start = this.listQuery.timeArray[0]
@@ -526,10 +504,9 @@ export default {
     //   }
     },
 
-
-    /// 退单
+    // / 退单
     handleBackOrder(row) {
- this.$confirm('确定操作这条记录吗?', '提示', {
+      this.$confirm('确定操作这条记录吗?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -550,18 +527,16 @@ export default {
 
       })
     },
-    
-    
-    /// 派单
+
+    // / 派单
     handleSendOrder(row) {
 
     },
 
-    /// 删除订单
+    // / 删除订单
     handleDeleteOrder(row) {
 
     },
-
 
     getChannel() {
       listChannel().then((response) => {

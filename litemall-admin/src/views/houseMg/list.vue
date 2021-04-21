@@ -6,8 +6,10 @@
       <!--<el-input v-model="listQuery.goodsId" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨ID" />-->
       <el-input v-model="listQuery.goodsSn" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨编号" />
       <el-input v-model="listQuery.name" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨名称" />
+      <el-input v-model="listQuery.name" clearable class="filter-item" style="width: 160px;" placeholder="请输入矩阵类型" />
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
+      <el-button v-if="0" :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导入</el-button>
       <el-button v-if="0" :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button>
     </div>
 
@@ -24,10 +26,10 @@
       </el-table-column>
 
       <!--<el-table-column align="center" label="性别">-->
-        <!--<template slot-scope="scope">-->
-          <!--<span v-if="scope.row.sex == 1">男</span>-->
-          <!--<span v-else>女</span>-->
-        <!--</template>-->
+      <!--<template slot-scope="scope">-->
+      <!--<span v-if="scope.row.sex == 1">男</span>-->
+      <!--<span v-else>女</span>-->
+      <!--</template>-->
       <!--</el-table-column>-->
       <el-table-column align="center" label="年龄" prop="age" />
 
@@ -47,19 +49,17 @@
       </el-table-column>
 
       <!--<el-table-column align="center" label="是否删除">-->
-        <!--<template slot-scope="scope">-->
-          <!--<span v-if="scope.row.isDel">是</span>-->
-          <!--<span v-else>否</span>-->
-        <!--</template>-->
+      <!--<template slot-scope="scope">-->
+      <!--<span v-if="scope.row.isDel">是</span>-->
+      <!--<span v-else>否</span>-->
+      <!--</template>-->
       <!--</el-table-column>-->
 
-
-
       <!--<el-table-column align="center" label="认证状态">-->
-        <!--<template slot-scope="scope">-->
-          <!--<span v-if="scope.row.realStatus">已认证</span>-->
-          <!--<span v-else>未认证</span>-->
-        <!--</template>-->
+      <!--<template slot-scope="scope">-->
+      <!--<span v-if="scope.row.realStatus">已认证</span>-->
+      <!--<span v-else>未认证</span>-->
+      <!--</template>-->
       <!--</el-table-column>-->
 
       <el-table-column align="center" min-width="92" label="电话" prop="mobile" />
@@ -73,9 +73,9 @@
       <!--<el-table-column align="center" label="标签" prop="flag" />-->
 
       <!--<el-table-column align="center" min-width="100" label="简介">-->
-        <!--<template slot-scope="scope">-->
-          <!--<span v-html="scope.row.des" />-->
-        <!--</template>-->
+      <!--<template slot-scope="scope">-->
+      <!--<span v-html="scope.row.des" />-->
+      <!--</template>-->
       <!--</el-table-column>-->
 
       <el-table-column align="center" label="是否展示">

@@ -23,4 +23,6 @@ public interface AuntOrderService {
     Integer removeById(Integer id);
 
     List<AuntOrder> getListPage(Integer page, Integer limit, AuntOrder order);
+
+    AuntOrder findBySn(String orderSn);
 }

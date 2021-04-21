@@ -1,11 +1,11 @@
 litemall:
   # 开发者应该设置成自己的wx相关信息
   wx:
-    app-id: wxa5b486c6b918ecfb
-    app-secret: e04004829d4c383b4db7769d88dfbca1
-    mch-id: 111111
+    app-id: wxe4099dc35be239a2
+    app-secret: 42308c357087d780631fd6572e159378
+    mch-id: 1608680136
     mch-key: xxxxxx
-    notify-url: http://www.example.com/wx/order/pay-notify
+    notify-url: http://aimajiazheng.com/api/wx/aunt/uorder/pay-notify
     # 商户证书文件路径
     # 请参考“商户证书”一节 https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3
     key-path: xxxxx
@@ -24,16 +24,16 @@ litemall:
     # 短消息模版通知配置
     # 短信息用于通知客户，例如发货短信通知，注意配置格式；template-name，template-templateId 请参考 NotifyType 枚举值
     sms:
-      enable: false
+      enable: true
       # 如果是腾讯云短信，则设置active的值tencent
       # 如果是阿里云短信，则设置active的值aliyun
-      active: tencent
+      active: aliyun
       sign: litemall
       template:
       - name: paySucceed
         templateId: 156349
       - name: captcha
-        templateId: 156433
+        templateId: SMS_202415323
       - name: ship
         templateId: 158002
       - name: refund
@@ -43,8 +43,8 @@ litemall:
         appkey: xxxxxxxxxxxxxx
       aliyun:
         regionId: xxx
-        accessKeyId: xxx
-        accessKeySecret: xxx
+        accessKeyId: LTAI4GHF9fbEicViCDPtv6VA
+        accessKeySecret: vcF8U9hwlVMPTcgRuEOuGa91oBvVbL
 
   # 快鸟物流查询配置
   express:

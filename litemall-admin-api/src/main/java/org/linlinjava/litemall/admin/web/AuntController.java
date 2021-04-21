@@ -37,8 +37,8 @@ public class AuntController {
 
 
 
-    @RequiresPermissions("admin:aunt:list")
-    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "查询")
+//    @RequiresPermissions("admin:aunt:list")
+//    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "查询")
     @PostMapping(value = "/list")
     public Object list(@RequestBody  AuntVo aunt) {
         return ResponseUtil.okList(service.getListPage(aunt.getPage(),aunt.getLimit(),aunt));

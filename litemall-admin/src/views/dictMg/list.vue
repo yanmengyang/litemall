@@ -3,9 +3,9 @@
 
     <!-- 查询和其他操作 -->
     <div class="filter-container">
-      <el-input v-model="listQuery.goodsId" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨ID" />
-      <el-input v-model="listQuery.goodsSn" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨编号" />
-      <el-input v-model="listQuery.name" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨名称" />
+      <el-input v-model="listQuery.goodsId" clearable class="filter-item" style="width: 160px;" placeholder="类型值" />
+      <!--<el-input v-model="listQuery.goodsSn" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨编号" />-->
+      <!--<el-input v-model="listQuery.name" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨名称" />-->
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
       <el-button v-if="0" :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button>
@@ -19,13 +19,13 @@
           <span>{{ String(scope.row.id) }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="创建时间" prop="createTime" />
-      <el-table-column align="center" label="名称" prop="dictName" />
-      <el-table-column align="center" label="序列" prop="dictSequence" />
-      <el-table-column align="center" label="类型" prop="dictType" />
-      <el-table-column align="center" label="值" prop="dictValue" />
-      <el-table-column align="center" label="父级id" prop="parentId" />
-      <el-table-column align="center" label="租户编码" prop="tenantCode" />
+      <!--<el-table-column align="center" label="创建时间" prop="createTime" />-->
+      <el-table-column align="center" label="类型值" prop="dictType" />
+      <el-table-column align="center" label="类型名称" prop="dictName" />
+      <!--<el-table-column align="center" label="序列" prop="dictSequence" />-->
+      <el-table-column align="center" label="属性值" prop="dictValue" />
+      <!--<el-table-column align="center" label="父级id" prop="parentId" />-->
+      <!--<el-table-column align="center" label="租户编码" prop="tenantCode" />-->
 
       <!-- 操作 -->
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">

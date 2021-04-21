@@ -3,7 +3,7 @@
 
     <!-- 查询和其他操作 -->
     <div class="filter-container">
-      <el-input v-model="listQuery.goodsId" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨ID" />
+      <!--<el-input v-model="listQuery.goodsId" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨ID" />-->
       <el-input v-model="listQuery.goodsSn" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨编号" />
       <el-input v-model="listQuery.name" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨名称" />
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
@@ -14,7 +14,7 @@
     <!-- 查询结果 -->
     <el-table v-loading="listLoading" :data="list" element-loading-text="正在查询中。。。" border fit highlight-current-row>
 
-      <el-table-column align="center" label="阿姨ID" prop="id" />
+      <el-table-column align="center" label="阿姨编号" prop="id" />
 
       <el-table-column align="center" min-width="100" label="称呼" prop="nickName" />
       <el-table-column align="center" min-width="120" label="头像">
@@ -23,15 +23,15 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="性别">
-        <template slot-scope="scope">
-          <span v-if="scope.row.sex == 1">男</span>
-          <span v-else>女</span>
-        </template>
-      </el-table-column>
+      <!--<el-table-column align="center" label="性别">-->
+        <!--<template slot-scope="scope">-->
+          <!--<span v-if="scope.row.sex == 1">男</span>-->
+          <!--<span v-else>女</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
       <el-table-column align="center" label="年龄" prop="age" />
 
-      <el-table-column align="center" width="100" label="出生日期" prop="birthday" />
+      <!--<el-table-column align="center" width="100" label="出生日期" prop="birthday" />-->
 
       <el-table-column align="center" label="籍贯" prop="nativePlace" />
 
@@ -46,26 +46,21 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="是否删除">
-        <template slot-scope="scope">
-          <span v-if="scope.row.isDel">是</span>
-          <span v-else>否</span>
-        </template>
-      </el-table-column>
+      <!--<el-table-column align="center" label="是否删除">-->
+        <!--<template slot-scope="scope">-->
+          <!--<span v-if="scope.row.isDel">是</span>-->
+          <!--<span v-else>否</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
 
-      <el-table-column align="center" label="是否展示">
-        <template slot-scope="scope">
-          <span v-if="scope.row.saleStatus">展示</span>
-          <span v-else>不展示</span>
-        </template>
-      </el-table-column>
 
-      <el-table-column align="center" label="认证状态">
-        <template slot-scope="scope">
-          <span v-if="scope.row.realStatus">已认证</span>
-          <span v-else>未认证</span>
-        </template>
-      </el-table-column>
+
+      <!--<el-table-column align="center" label="认证状态">-->
+        <!--<template slot-scope="scope">-->
+          <!--<span v-if="scope.row.realStatus">已认证</span>-->
+          <!--<span v-else>未认证</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
 
       <el-table-column align="center" min-width="92" label="电话" prop="mobile" />
 
@@ -75,11 +70,18 @@
 
       <el-table-column align="center" label="矩阵类型" prop="type" />
 
-      <el-table-column align="center" label="标签" prop="flag" />
+      <!--<el-table-column align="center" label="标签" prop="flag" />-->
 
-      <el-table-column align="center" min-width="100" label="简介">
+      <!--<el-table-column align="center" min-width="100" label="简介">-->
+        <!--<template slot-scope="scope">-->
+          <!--<span v-html="scope.row.des" />-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+
+      <el-table-column align="center" label="是否展示">
         <template slot-scope="scope">
-          <span v-html="scope.row.des" />
+          <span v-if="scope.row.saleStatus">展示</span>
+          <span v-else>不展示</span>
         </template>
       </el-table-column>
 

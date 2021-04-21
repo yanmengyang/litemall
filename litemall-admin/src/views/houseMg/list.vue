@@ -16,47 +16,10 @@
 
       <el-table-column align="center" label="阿姨ID" prop="id" />
 
-      <el-table-column align="center" min-width="100" label="昵称" prop="nickName" />
-      <el-table-column align="center" label="年龄" prop="age" />
-      <el-table-column align="center" label="认证">
+      <el-table-column align="center" min-width="100" label="称呼" prop="nickName" />
+      <el-table-column align="center" min-width="120" label="头像">
         <template slot-scope="scope">
-          <span v-if="scope.row.auditStatus">是</span>
-          <span v-else>否</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="生日" prop="birthday" />
-
-      <el-table-column align="center" min-width="100" label="简介">
-        <template slot-scope="scope">
-          <span v-html="scope.row.des" />
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="学历" prop="education" />
-      <el-table-column align="center" label="经验" prop="experience" />
-      <el-table-column align="center" label="技能" prop="expertin" />
-      <el-table-column align="center" label="是否删除">
-        <template slot-scope="scope">
-          <span v-if="scope.row.isDel">是</span>
-          <span v-else>否</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="地址" prop="nativePlace" />
-
-      <el-table-column align="center" label="技能" prop="expertin" />
-
-      <el-table-column align="center" label="是否真实">
-        <template slot-scope="scope">
-          <span v-if="scope.row.realStatus">是</span>
-          <span v-else>否</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="是否售卖">
-        <template slot-scope="scope">
-          <span v-if="scope.row.saleStatus">是</span>
-          <span v-else>否</span>
+          <el-image :src="scope.row.headUrl" fit="fill" :lazy="true" style="width: 100px; height: 100px" />
         </template>
       </el-table-column>
 
@@ -64,6 +27,59 @@
         <template slot-scope="scope">
           <span v-if="scope.row.sex == 1">男</span>
           <span v-else>女</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="年龄" prop="age" />
+
+      <el-table-column align="center" width="100" label="出生日期" prop="birthday" />
+
+      <el-table-column align="center" label="籍贯" prop="nativePlace" />
+
+      <el-table-column align="center" label="从业时间" prop="experience" />
+
+      <el-table-column align="center" label="学历" prop="education" />
+
+      <el-table-column align="center" label="审核状态">
+        <template slot-scope="scope">
+          <span v-if="scope.row.auditStatus==1">审核通过</span>
+          <span v-else>审核失败</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="是否删除">
+        <template slot-scope="scope">
+          <span v-if="scope.row.isDel">是</span>
+          <span v-else>否</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="是否展示">
+        <template slot-scope="scope">
+          <span v-if="scope.row.saleStatus">展示</span>
+          <span v-else>不展示</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="认证状态">
+        <template slot-scope="scope">
+          <span v-if="scope.row.realStatus">已认证</span>
+          <span v-else>未认证</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="92" label="电话" prop="mobile" />
+
+      <el-table-column align="center" label="证件号" prop="idcard" />
+
+      <el-table-column align="center" label="主要技能" prop="expertin" />
+
+      <el-table-column align="center" label="矩阵类型" prop="type" />
+
+      <el-table-column align="center" label="标签" prop="flag" />
+
+      <el-table-column align="center" min-width="100" label="简介">
+        <template slot-scope="scope">
+          <span v-html="scope.row.des" />
         </template>
       </el-table-column>
 
@@ -154,11 +170,11 @@ export default {
     },
 
     handleCreate() {
-      this.$router.push({ path: '/houseMg/create' })
+      this.$router.push({ path: '/houseMg/auntcreate' })
     },
 
     handleUpdate(row) {
-      this.$router.push({ path: '/houseMg/edit', query: { id: row.id }})
+      this.$router.push({ path: '/houseMg/auntedit', query: { id: row.id }})
     },
 
     showDetail(detail) {

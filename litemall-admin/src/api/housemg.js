@@ -12,7 +12,7 @@ export function detailAunt(query) {
   debugger
   return request({
     url: '/aunt/read/' + query,
-    method: 'get'
+    method: 'post'
   })
 }
 

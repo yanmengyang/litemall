@@ -28,7 +28,7 @@ litemall:
       # 如果是腾讯云短信，则设置active的值tencent
       # 如果是阿里云短信，则设置active的值aliyun
       active: aliyun
-      sign: litemall
+      sign: 百泓毕业聘
       template:
       - name: paySucceed
         templateId: 156349

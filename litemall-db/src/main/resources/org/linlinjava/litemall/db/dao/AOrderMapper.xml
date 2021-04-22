@@ -256,6 +256,15 @@
     <include refid="Base_Column_List" />
     from aunt_order
     where TRUE
+    <if test="id != null">
+      and  `id` = #{id}
+    </if>
+    <if test="payNo != null">
+      and  `pay_no` = #{payNo}
+    </if>
+    <if test="transactionCode != null">
+      and  `transaction_code` = #{transactionCode}
+    </if>
     <if test="name != null">
       and  `name` = #{name,jdbcType=VARCHAR}
     </if>

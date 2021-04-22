@@ -236,14 +236,14 @@ public class ApiAuntAuthController {
             return ResponseUtil.badArgumentValue();
         }
 
-//        if (!notifyService.isSmsEnable()) {
-//            return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "小程序后台验证码服务不支持");
-//        }
+        if (!notifyService.isSmsEnable()) {
+            return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "小程序后台验证码服务不支持");
+        }
         String code = CharUtil.getRandomNum(6);
         boolean successful = CaptchaCodeManager.addToCache(phoneNumber, code);
-        if (!successful) {
-            return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时1分钟，不能发送");
-        }
+//        if (!successful) {
+//            return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时1分钟，不能发送");
+//        }
         notifyService.notifySmsTemplate(phoneNumber, NotifyType.CAPTCHA, new String[]{code});
 
         return ResponseUtil.ok(code);
@@ -370,190 +370,8 @@ public class ApiAuntAuthController {
         return ResponseUtil.ok(result);
     }
 
-    /**
-     * 请求验证码
-     *
-     * TODO
-     * 这里需要一定机制防止短信验证码被滥用
-     *
-     * @param body 手机号码 { mobile: xxx, type: xxx }
-     * @return
-     */
-    @PostMapping("captcha")
-    public Object captcha(@LoginUser Integer userId, @RequestBody String body) {
-        if(userId == null){
-            return ResponseUtil.unlogin();
-        }
-        String phoneNumber = JacksonUtil.parseString(body, "mobile");
-        String captchaType = JacksonUtil.parseString(body, "type");
-        if (StringUtils.isEmpty(phoneNumber)) {
-            return ResponseUtil.badArgument();
-        }
-        if (!RegexUtil.isMobileExact(phoneNumber)) {
-            return ResponseUtil.badArgumentValue();
-        }
-        if (StringUtils.isEmpty(captchaType)) {
-            return ResponseUtil.badArgument();
-        }
 
-        if (!notifyService.isSmsEnable()) {
-            return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "小程序后台验证码服务不支持");
-        }
-        String code = CharUtil.getRandomNum(6);
-        boolean successful = CaptchaCodeManager.addToCache(phoneNumber, code);
-        if (!successful) {
-            return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时1分钟，不能发送");
-        }
-        notifyService.notifySmsTemplate(phoneNumber, NotifyType.CAPTCHA, new String[]{code});
 
-        return ResponseUtil.ok();
-    }
-
-    /**
-     * 账号密码重置
-     *
-     * @param body    请求内容
-     *                {
-     *                password: xxx,
-     *                mobile: xxx
-     *                code: xxx
-     *                }
-     *                其中code是手机验证码，目前还不支持手机短信验证码
-     * @param request 请求对象
-     * @return 登录结果
-     * 成功则 { errno: 0, errmsg: '成功' }
-     * 失败则 { errno: XXX, errmsg: XXX }
-     */
-    @PostMapping("reset")
-    public Object reset(@RequestBody String body, HttpServletRequest request) {
-        String password = JacksonUtil.parseString(body, "password");
-        String mobile = JacksonUtil.parseString(body, "mobile");
-        String code = JacksonUtil.parseString(body, "code");
-
-        if (mobile == null || code == null || password == null) {
-            return ResponseUtil.badArgument();
-        }
-
-        //判断验证码是否正确
-        String cacheCode = CaptchaCodeManager.getCachedCaptcha(mobile);
-        if (cacheCode == null || cacheCode.isEmpty() || !cacheCode.equals(code))
-            return ResponseUtil.fail(AUTH_CAPTCHA_UNMATCH, "验证码错误");
-
-        List<LitemallUser> userList = userService.queryByMobile(mobile);
-        LitemallUser user = null;
-        if (userList.size() > 1) {
-            return ResponseUtil.serious();
-        } else if (userList.size() == 0) {
-            return ResponseUtil.fail(AUTH_MOBILE_UNREGISTERED, "手机号未注册");
-        } else {
-            user = userList.get(0);
-        }
-
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encodedPassword = encoder.encode(password);
-        user.setPassword(encodedPassword);
-
-        if (userService.updateById(user) == 0) {
-            return ResponseUtil.updatedDataFailed();
-        }
-
-        return ResponseUtil.ok();
-    }
-
-    /**
-     * 账号手机号码重置
-     *
-     * @param body    请求内容
-     *                {
-     *                password: xxx,
-     *                mobile: xxx
-     *                code: xxx
-     *                }
-     *                其中code是手机验证码，目前还不支持手机短信验证码
-     * @param request 请求对象
-     * @return 登录结果
-     * 成功则 { errno: 0, errmsg: '成功' }
-     * 失败则 { errno: XXX, errmsg: XXX }
-     */
-    @PostMapping("resetPhone")
-    public Object resetPhone(@LoginUser Integer userId, @RequestBody String body, HttpServletRequest request) {
-        if(userId == null){
-            return ResponseUtil.unlogin();
-        }
-        String password = JacksonUtil.parseString(body, "password");
-        String mobile = JacksonUtil.parseString(body, "mobile");
-        String code = JacksonUtil.parseString(body, "code");
-
-        if (mobile == null || code == null || password == null) {
-            return ResponseUtil.badArgument();
-        }
-
-        //判断验证码是否正确
-        String cacheCode = CaptchaCodeManager.getCachedCaptcha(mobile);
-        if (cacheCode == null || cacheCode.isEmpty() || !cacheCode.equals(code))
-            return ResponseUtil.fail(AUTH_CAPTCHA_UNMATCH, "验证码错误");
-
-        List<LitemallUser> userList = userService.queryByMobile(mobile);
-        LitemallUser user = null;
-        if (userList.size() > 1) {
-            return ResponseUtil.fail(AUTH_MOBILE_REGISTERED, "手机号已注册");
-        }
-        user = userService.findById(userId);
-
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        if (!encoder.matches(password, user.getPassword())) {
-            return ResponseUtil.fail(AUTH_INVALID_ACCOUNT, "账号密码不对");
-        }
-
-        user.setMobile(mobile);
-        if (userService.updateById(user) == 0) {
-            return ResponseUtil.updatedDataFailed();
-        }
-
-        return ResponseUtil.ok();
-    }
-
-    /**
-     * 账号信息更新
-     *
-     * @param body    请求内容
-     *                {
-     *                password: xxx,
-     *                mobile: xxx
-     *                code: xxx
-     *                }
-     *                其中code是手机验证码，目前还不支持手机短信验证码
-     * @param request 请求对象
-     * @return 登录结果
-     * 成功则 { errno: 0, errmsg: '成功' }
-     * 失败则 { errno: XXX, errmsg: XXX }
-     */
-    @PostMapping("profile")
-    public Object profile(@LoginUser Integer userId, @RequestBody String body, HttpServletRequest request) {
-        if(userId == null){
-            return ResponseUtil.unlogin();
-        }
-        String avatar = JacksonUtil.parseString(body, "avatar");
-        Byte gender = JacksonUtil.parseByte(body, "gender");
-        String nickname = JacksonUtil.parseString(body, "nickname");
-
-        LitemallUser user = userService.findById(userId);
-        if(!StringUtils.isEmpty(avatar)){
-            user.setAvatar(avatar);
-        }
-        if(gender != null){
-            user.setGender(gender);
-        }
-        if(!StringUtils.isEmpty(nickname)){
-            user.setNickname(nickname);
-        }
-
-        if (userService.updateById(user) == 0) {
-            return ResponseUtil.updatedDataFailed();
-        }
-
-        return ResponseUtil.ok();
-    }
 
     /**
      * 微信手机号码绑定

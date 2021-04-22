@@ -8,6 +8,7 @@ import org.linlinjava.litemall.db.exection.BizException;
 import org.linlinjava.litemall.db.service.AuntOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -24,6 +25,17 @@ public class AuntOrderServiceImpl implements AuntOrderService {
     @Override
     public AuntOrder selectById(Integer id) {
         return orderMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public AuntOrder findBySn(String orderSn) {
+        AuntOrder order=new AuntOrder();
+        order.setTransactionCode(orderSn);
+        List<AuntOrder> orderList= orderMapper.getList(order);
+        if (!CollectionUtils.isEmpty(orderList)){
+            order=orderList.get(0);
+        }
+        return order;
     }
 
     @Override
@@ -50,4 +62,6 @@ public class AuntOrderServiceImpl implements AuntOrderService {
         PageHelper.startPage(page, limit);
         return orderMapper.getList(order);
     }
+
+
 }

@@ -2,110 +2,274 @@
   <div class="app-container">
     <el-card class="box-card">
       <h3>编辑阿姨</h3>
-      <el-form ref="goods" :rules="rules" :model="goods" label-width="150px">
-        <el-form-item label="称呼" prop="nickName">
-          <el-input v-model="auntInfo.nickName" />
-        </el-form-item>
+      <el-form ref="goods" :rules="rules" :model="auntInfo" label-width="150px">
+        <el-row>
+          <el-form-item label="头像" prop="headUrl">
+            <el-upload
+              class="avatar-uploader"
+              action="https://aimajiazheng.com/api/wx/storage/create"
+              :show-file-list="false"
+              name="file"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+            >
+              <img v-if="auntInfo.headUrl" :src="auntInfo.headUrl" class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
+        </el-row>
 
-        <el-form-item label="性别" prop="sex">
-          <el-radio-group v-model="auntInfo.sex">
-            <el-radio label="1">男</el-radio>
-            <el-radio label="0">女</el-radio>
-          </el-radio-group>
-        </el-form-item>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="姓名" prop="nickName">
+              <el-input v-model="auntInfo.nickName" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="民族" prop="flag">
+              <el-select placeholder="请选择状态" v-model="auntInfo.nation">
+                <el-option
+                  v-for="(item, idx) in minzuList"
+                  :key="idx"
+                  :label="item.name"
+                  :value="item.name"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-        <el-form-item label="年龄" prop="age">
-          <el-input v-model="auntInfo.age" />
-        </el-form-item>
+        <el-row>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="籍贯" prop="nativePlace">
+              <el-select
+                placeholder="请选择状态"
+                v-model="auntInfo.nativePlace"
+              >
+                <el-option
+                  v-for="(item, idx) in shenfenList"
+                  :key="idx"
+                  :label="item.name"
+                  :value="item.name"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="年龄" prop="age">
+              <el-input v-model="auntInfo.age" />
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-        <el-form-item label="生日" prop="birthday">
-          <el-input v-model="auntInfo.age" />
-        </el-form-item>
+        <el-row>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="生肖" prop="zodiac">
+              <el-select placeholder="请选择状态" v-model="auntInfo.zodiac">
+                <el-option
+                  v-for="(item, idx) in shuxiangList"
+                  :key="idx"
+                  :label="item"
+                  :value="item"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
 
-        <el-form-item label="籍贯" prop="nativePlace">
-          <el-input v-model="auntInfo.nativePlace" />
-        </el-form-item>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="星座" prop="flag">
+              <el-select
+                placeholder="请选择状态"
+                v-model="auntInfo.constellation"
+              >
+                <el-option
+                  v-for="(item, idx) in xingzuoList"
+                  :key="idx"
+                  :label="item"
+                  :value="item"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-        <el-form-item label="从业时长" prop="experience">
-          <el-input v-model="auntInfo.experience">
-            <template slot="append">年</template>
-          </el-input>
-        </el-form-item>
+        <el-row>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="学历" prop="education">
+              <el-select placeholder="请选择状态" v-model="auntInfo.education">
+                <el-option
+                  v-for="(item, idx) in xueliList"
+                  :key="idx"
+                  :label="item"
+                  :value="item"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="电话" prop="mobile">
+              <el-input v-model="auntInfo.mobile" />
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-        <el-form-item label="学历" prop="education">
-          <el-input v-model="auntInfo.education" />
-        </el-form-item>
+        <el-row>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="从业时长" prop="experience">
+              <el-input v-model="auntInfo.experience">
+                <template slot="append">年</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
 
-        <el-form-item label="审核状态" prop="auditStatus">
-          <el-input v-model="auntInfo.auditStatus" />
-        </el-form-item>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="出生日期" prop="birthday">
+               <el-date-picker v-model="auntInfo.birthday" type="date" placeholder="选择日期" /> 
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-        <el-form-item label="是否删除" prop="isDel">
-          <el-radio-group v-model="auntInfo.isDel">
-            <el-radio :label="1">是</el-radio>
-            <el-radio :label="0">否</el-radio>
-          </el-radio-group>
-        </el-form-item>
+        <el-row>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="证件号" prop="idcard">
+              <el-input v-model="auntInfo.idcard" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="性别" prop="sex">
+              <el-radio-group v-model="auntInfo.sex">
+                <el-radio label="1">男</el-radio>
+                <el-radio label="0">女</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-        <el-form-item label="是否展示" prop="saleStatus">
-          <el-radio-group v-model="auntInfo.saleStatus">
-            <el-radio :label="1">是</el-radio>
-            <el-radio :label="0">否</el-radio>
-          </el-radio-group>
-        </el-form-item>
+        <el-row>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="审核状态" prop="auditStatus">
+              <el-radio-group v-model="auntInfo.auditStatus">
+                <el-radio :label="1">通过</el-radio>
+                <el-radio :label="0">拒绝</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
 
-        <el-form-item label="认证状态" prop="realStatus">
-          <el-radio-group v-model="auntInfo.realStatus">
-            <el-radio :label="1">认证成功</el-radio>
-            <el-radio :label="0">认证失败</el-radio>
-          </el-radio-group>
-        </el-form-item>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="认证状态" prop="realStatus">
+              <el-radio-group v-model="auntInfo.realStatus">
+                <el-radio :label="1">已认证</el-radio>
+                <el-radio :label="0">未认证</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-        <el-form-item label="矩阵类型" prop="type">
-          <el-select v-model="auntInfo.type" value-key="" placeholder="请选择" clearable filterable>
+        <el-row>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="是否展示" prop="saleStatus">
+              <el-radio-group v-model="auntInfo.saleStatus">
+                <el-radio :label=1>是</el-radio>
+                <el-radio :label=0>否</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="矩阵类别" prop="type">
+              <el-select placeholder="请选择状态" v-model="auntInfo.type">
+                <el-option
+                  v-for="(item, idx) in dictType1List"
+                  :key="idx"
+                  :label="item.dictValue"
+                  :value="item.dictValue"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-form-item label="主要技能" prop="expertin">
+          <el-select placeholder="请选择状态" v-model="auntInfo.expertin">
             <el-option
-              v-for="item in 3"
-              :key="item"
-              :label="item"
-              :value="item"
+              v-for="(item, idx) in dictType2List"
+              :key="idx"
+              :label="item.dictValue"
+              :value="item.dictValue"
             />
           </el-select>
         </el-form-item>
 
-        <el-form-item label="电话" prop="mobile">
-          <el-input v-model="auntInfo.mobile" />
+        <el-form-item label="个性标签" prop="flag">
+          <el-checkbox-group v-model="flagList">
+            <el-checkbox
+              :label="obj.dictValue"
+              v-for="(obj, idx) in dictType3List"
+              :key="idx"
+            ></el-checkbox>
+          </el-checkbox-group>
         </el-form-item>
 
-        <el-form-item label="证件号" prop="idcard">
-          <el-input v-model="auntInfo.idcard" />
+        <el-form-item label="身份认证" prop="identityApprove">
+          <el-input v-model="auntInfo.identityApprove" />
+        </el-form-item>
+        <el-form-item label="技能认证" prop="skillApprove">
+          <el-input v-model="auntInfo.skillApprove" />
+        </el-form-item>
+        <el-form-item label="背景调查" prop="backgroundApprove">
+          <el-input v-model="auntInfo.backgroundApprove" />
+        </el-form-item>
+        <el-form-item label="职业培训" prop="">
+          <el-input placeholder="缺少字段" />
+        </el-form-item>
+        <el-form-item label="简历真实" prop="insuranceApprove">
+          <el-input v-model="auntInfo.insuranceApprove" />
+        </el-form-item>
+        <el-form-item label="上户保险" prop="insuranceApprove">
+          <el-input v-model="auntInfo.insuranceApprove" />
         </el-form-item>
 
-        <el-form-item label="擅长内容" prop="expertin">
-          <el-input v-model="auntInfo.expertin" />
+        <el-form-item label="求职意向">
+          <el-input
+            v-model="auntInfo.jobIntention"
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 4 }"
+          />
+        </el-form-item>
+        <el-form-item label="自我介绍">
+          <el-input
+            v-model="auntInfo.selfIntroduction"
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 4 }"
+          />
+        </el-form-item>
+        <el-form-item label="工作经历(富文本）">
+          <editor v-model="auntInfo.workExperience" :init="editorInit" />
+        </el-form-item>
+        <el-form-item label="培训经历(富文本)">
+          <editor v-model="auntInfo.trainApprove" :init="editorInit" />
         </el-form-item>
 
-        <el-form-item label="类别" prop="type">
-          <el-input v-model="auntInfo.type" />
+        <el-form-item label="个人展示" prop="nativePlace">
+          <el-upload
+            action="https://aimajiazheng.com/api/wx/storage/create"
+            :file-list="personalPresentationList"
+            list-type="picture-card"
+            :on-remove="handlePersonShowRemove"
+            :on-success="handlePersonShowSuccess"
+            name="file"
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
         </el-form-item>
-
-        <el-form-item label="标签" prop="flag">
-          <el-input v-model="auntInfo.flag" />
-        </el-form-item>
-
-        <el-form-item label="简介">
-          <editor v-model="auntInfo.des" :init="editorInit" />
-        </el-form-item>
-
       </el-form>
     </el-card>
-
     <!-- dev -->
-
     <div class="op-container">
       <el-button type="primary" @click="handleUpdate">更新</el-button>
     </div>
   </div>
 </template>
+
 
 <style>
 .el-card {
@@ -154,7 +318,11 @@
 
 <script>
 import { editAunt, detailAunt } from '@/api/housemg'
-import {listDict} from "@/api/dict";
+import { listDict } from "@/api/dict";
+
+import MINZUArr from "@/minzu.js";
+import SHENFENArr from "@/shenfen.js";
+
 
 import { createStorage, uploadPath } from '@/api/storage'
 import Editor from '@tinymce/tinymce-vue'
@@ -167,55 +335,36 @@ export default {
 
   data() {
     return {
+       xueliList: [ "小学", "初中", "高中", "大专", "本科", "研究生", "博士", "博士后", ],
+      xingzuoList: [ "白羊座", "金牛座", "双子座", "巨蟹座", "狮子座", "处女座", "天秤座", "天蝎座", "射手座", "摩羯座", "水瓶座", "双鱼座", ],
+      shuxiangList: [ "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪", ],
+      shenfenList: [],
+      minzuList: [],
+      dictType1List: [],
+      dictType2List: [],
+      dictType3List: [],
       auntInfo: {
         age: 30,
+        headUrl: "",
         auditStatus: 0,
-        birthday: '',
-        des: '',
-        education: '',
-        experience: '',
-        expertin: '',
-        isDel: false,
-        nativePlace: '',
-        nickName: '',
-        realStatus: false,
-        saleStatus: false,
-        sex: '0'
+        birthday: "",
+        des: "",
+        education: "",
+        experience: "",
+        expertin: "",
+        isDel: 0,
+        nativePlace: "",
+        nickName: "",
+        realStatus: 0,
+        saleStatus: 0,
+        sex: "0",
+        flag: [],
+        nation: "",
+        personalPresentation:'',//个人照片  都好隔开
       },
-
-      uploadPath,
-      newKeywordVisible: false,
-      newKeyword: '',
-      keywords: [],
-      categoryList: [],
-      brandList: [],
-      goods: {
-        picUrl: '',
-        gallery: [],
-        isHot: false,
-        isNew: true,
-        isOnSale: true
-      },
-      specVisiable: false,
-      specForm: { specification: '', value: '', picUrl: '' },
-      multipleSpec: false,
-      specifications: [{ specification: '规格', value: '标准', picUrl: '' }],
-      productVisiable: false,
-      productForm: {
-        id: 0,
-        specifications: [],
-        price: 0.0,
-        number: 0,
-        url: ''
-      },
-      products: [{ id: 0, specifications: ['标准'], price: 0.0, number: 0, url: '' }],
-      attributeVisiable: false,
-      attributeForm: { attribute: '', value: '' },
-      attributes: [],
-      rules: {
-        goodsSn: [{ required: true, message: '阿姨编号不能为空', trigger: 'blur' }],
-        name: [{ required: true, message: '阿姨名称不能为空', trigger: 'blur' }]
-      },
+        personalPresentationList:[],//个人照片
+        flagList:[],
+      
       editorInit: {
         language: 'zh_CN',
         height: 500,
@@ -250,6 +399,13 @@ export default {
   },
   created() {
     this.init()
+    this.shenfenList = SHENFENArr;
+    this.minzuList = MINZUArr;
+
+    this.netFetchDictType1();
+    this.netFetchDictType2();
+    this.netFetchDictType3();
+
   },
 
   methods: {
@@ -261,26 +417,32 @@ export default {
       const self = this
       detailAunt(auntId).then(response => {
         self.auntInfo = response.data.data
+        let list = self.auntInfo.personalPresentation.split(",")
+        self.personalPresentationList = []
+        list.map((url,idx)=>{
+          self.personalPresentationList.push({url})
+        })
+        self.flagList = self.auntInfo.flag.split(",")
       }).catch(e => {
         console.error(e)
       })
     },
 
-    handleCategoryChange(value) {
-      this.goods.categoryId = value[value.length - 1]
-    },
-    handleCancel: function() {
-      this.$store.dispatch('tagsView/delView', this.$route)
-      this.$router.push({ path: '/goods/list' })
-    },
+
     handleUpdate: function() {
+      let list = []
+      this.personalPresentationList.forEach(e=>{
+        list.push(e.url)
+      })
+      this.auntInfo.flag = this.flagList.toString();
+      this.auntInfo.personalPresentation = list.toString();
       editAunt(this.auntInfo)
         .then((response) => {
           this.$notify.success({
             title: '成功',
             message: '更新成功'
           })
-          this.$router.push({ path: '/houseMg/list' })
+          this.$router.push({ path: '/houseMg/auntlist' })
         })
         .catch((response) => {
           MessageBox.alert('业务错误：' + response.data.errmsg, '警告', {
@@ -289,204 +451,42 @@ export default {
           })
         })
     },
-    handleClose(tag) {
-      this.keywords.splice(this.keywords.indexOf(tag), 1)
-      this.goods.keywords = this.keywords.toString()
-    },
-    showInput() {
-      this.newKeywordVisible = true
-      this.$nextTick((_) => {
-        this.$refs.newKeywordInput.$refs.input.focus()
-      })
-    },
-    handleInputConfirm() {
-      const newKeyword = this.newKeyword
-      if (newKeyword) {
-        this.keywords.push(newKeyword)
-        this.goods.keywords = this.keywords.toString()
-      }
-      this.newKeywordVisible = false
-      this.newKeyword = ''
-    },
-    uploadPicUrl: function(response) {
-      this.goods.picUrl = response.data.url
-    },
-    uploadOverrun: function() {
-      this.$message({
-        type: 'error',
-        message: '上传文件个数超出限制!最多上传5张图片!'
-      })
-    },
-    handleGalleryUrl(response, file, fileList) {
-      if (response.errno === 0) {
-        this.goods.gallery.push(response.data.url)
-      }
-    },
-    handleRemove: function(file, fileList) {
-      for (var i = 0; i < this.goods.gallery.length; i++) {
-        // 这里存在两种情况
-        // 1. 如果所删除图片是刚刚上传的图片，那么图片地址是file.response.data.url
-        //    此时的file.url虽然存在，但是是本机地址，而不是远程地址。
-        // 2. 如果所删除图片是后台返回的已有图片，那么图片地址是file.url
-        var url
-        if (file.response === undefined) {
-          url = file.url
-        } else {
-          url = file.response.data.url
-        }
 
-        if (this.goods.gallery[i] === url) {
-          this.goods.gallery.splice(i, 1)
-        }
-      }
+    netFetchDictType1() {
+      listDict({ dictType: 3 })
+        .then((response) => {
+          this.dictType1List = response.data.data.list;
+        })
+        .catch(() => {});
     },
-    specChanged: function(label) {
-      if (label === false) {
-        this.specifications = [{ specification: '规格', value: '标准', picUrl: '' }]
-        this.products = [
-          { id: 0, specifications: ['标准'], price: 0.0, number: 0, url: '' }
-        ]
-      } else {
-        this.specifications = []
-        this.products = []
-      }
-    },
-    uploadSpecPicUrl: function(response) {
-      this.specForm.picUrl = response.data.url
-    },
-    handleSpecificationShow() {
-      this.specForm = { specification: '', value: '', picUrl: '' }
-      this.specVisiable = true
-    },
-    handleSpecificationAdd() {
-      var index = this.specifications.length - 1
-      for (var i = 0; i < this.specifications.length; i++) {
-        const v = this.specifications[i]
-        if (v.specification === this.specForm.specification) {
-          if (v.value === this.specForm.value) {
-            this.$message({
-              type: 'warning',
-              message: '已经存在规格值:' + v.value
-            })
-            this.specForm = {}
-            this.specVisiable = false
-            return
-          } else {
-            index = i
-          }
-        }
-      }
 
-      this.specifications.splice(index + 1, 0, this.specForm)
-      this.specVisiable = false
+    netFetchDictType2() {
+      listDict({ dictType: 2 }).then((res) => {
+        this.dictType2List = res.data.data.list;
+      });
+    },
+    netFetchDictType3() {
+      listDict({ dictType: 3 }).then((res) => {
+        this.dictType3List = res.data.data.list;
+      });
+    },
 
-      this.specToProduct()
+    handleAvatarSuccess(res, file) {
+      this.auntInfo.headUrl = res.data.url;
     },
-    handleSpecificationDelete(row) {
-      const index = this.specifications.indexOf(row)
-      this.specifications.splice(index, 1)
-      this.specToProduct()
-    },
-    specToProduct() {
-      if (this.specifications.length === 0) {
-        return
-      }
-      // 根据specifications创建临时规格列表
-      var specValues = []
-      var spec = this.specifications[0].specification
-      var values = []
-      values.push(0)
 
-      for (var i = 1; i < this.specifications.length; i++) {
-        const aspec = this.specifications[i].specification
+    handlePersonShowRemove(file, fileList) {//移除图片传给后台的数据
+        this.personalPresentationList=[];
+        fileList.map((obj,idx)=>{
+            this.personalPresentationList.push(obj.response.data.url)
+        })
 
-        if (aspec === spec) {
-          values.push(i)
-        } else {
-          specValues.push(values)
-          spec = aspec
-          values = []
-          values.push(i)
-        }
-      }
-      specValues.push(values)
-
-      // 根据临时规格列表生产货品规格
-      // 算法基于 https://blog.csdn.net/tyhj_sf/article/details/53893125
-      var productsIndex = 0
-      var products = []
-      var combination = []
-      var n = specValues.length
-      for (var s = 0; s < n; s++) {
-        combination[s] = 0
-      }
-      var index = 0
-      var isContinue = false
-      do {
-        var specifications = []
-        for (var x = 0; x < n; x++) {
-          var z = specValues[x][combination[x]]
-          specifications.push(this.specifications[z].value)
-        }
-        products[productsIndex] = {
-          id: productsIndex,
-          specifications: specifications,
-          price: 0.0,
-          number: 0,
-          url: ''
-        }
-        productsIndex++
-
-        index++
-        combination[n - 1] = index
-        for (var j = n - 1; j >= 0; j--) {
-          if (combination[j] >= specValues[j].length) {
-            combination[j] = 0
-            index = 0
-            if (j - 1 >= 0) {
-              combination[j - 1] = combination[j - 1] + 1
-            }
-          }
-        }
-        isContinue = false
-        for (var p = 0; p < n; p++) {
-          if (combination[p] !== 0) {
-            isContinue = true
-          }
-        }
-      } while (isContinue)
-
-      this.products = products
+        console.log(this.personalPresentationList);
     },
-    handleProductShow(row) {
-      this.productForm = Object.assign({}, row)
-      this.productVisiable = true
+    handlePersonShowSuccess(res, file) {
+      this.personalPresentationList.push({url:res.data.url});
     },
-    uploadProductUrl: function(response) {
-      this.productForm.url = response.data.url
-    },
-    handleProductEdit() {
-      for (var i = 0; i < this.products.length; i++) {
-        const v = this.products[i]
-        if (v.id === this.productForm.id) {
-          this.products.splice(i, 1, this.productForm)
-          break
-        }
-      }
-      this.productVisiable = false
-    },
-    handleAttributeShow() {
-      this.attributeForm = {}
-      this.attributeVisiable = true
-    },
-    handleAttributeAdd() {
-      this.attributes.unshift(this.attributeForm)
-      this.attributeVisiable = false
-    },
-    handleAttributeDelete(row) {
-      const index = this.attributes.indexOf(row)
-      this.attributes.splice(index, 1)
-    }
+   
   }
 }
 </script>

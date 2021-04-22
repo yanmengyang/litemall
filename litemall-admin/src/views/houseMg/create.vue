@@ -1,230 +1,274 @@
 <template>
-    <div class="app-container">
-        <el-card class="box-card">
-            <h3>添加阿姨</h3>
-            <el-form ref="goods" :rules="rules" :model="auntInfo" label-width="150px">
+  <div class="app-container">
+    <el-card class="box-card">
+      <h3>添加阿姨</h3>
+      <el-form ref="goods" :rules="rules" :model="auntInfo" label-width="150px">
+        <el-row>
+          <el-form-item label="头像" prop="headUrl">
+            <el-upload
+              class="avatar-uploader"
+              action="https://aimajiazheng.com/api/wx/storage/create"
+              :show-file-list="false"
+              name="file"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+            >
+              <img v-if="auntInfo.headUrl" :src="auntInfo.headUrl" class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
+        </el-row>
 
-                <el-row>
-                    <el-form-item label="头像" prop="headUrl">
-                        <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-                            <img v-if="imageUrl" :src="imageUrl" class="avatar"/>
-                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                        </el-upload>
-                    </el-form-item>
-                </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="姓名" prop="nickName">
+              <el-input v-model="auntInfo.nickName" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="民族" prop="flag">
+              <el-select placeholder="请选择状态" v-model="auntInfo.nation">
+                <el-option
+                  v-for="(item, idx) in minzuList"
+                  :key="idx"
+                  :label="item.name"
+                  :value="item.name"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-                <el-row>
-                    <el-col :span="12">
-                        <el-form-item label="姓名" prop="nickName">
-                            <el-input v-model="auntInfo.nickName" />
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
+        <el-row>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="籍贯" prop="nativePlace">
+              <el-select
+                placeholder="请选择状态"
+                v-model="auntInfo.nativePlace"
+              >
+                <el-option
+                  v-for="(item, idx) in shenfenList"
+                  :key="idx"
+                  :label="item.name"
+                  :value="item.name"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="年龄" prop="age">
+              <el-input v-model="auntInfo.age" />
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-                        <el-form-item label="民族" prop="flag">
-                            <el-select placeholder="请选择状态" v-model="auntInfo.national">
-                                <el-option v-for="(item,idx) in minzuList" :key="idx" :label="item.name" :value="item.name" />
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
+        <el-row>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="生肖" prop="zodiac">
+              <el-select placeholder="请选择状态" v-model="auntInfo.zodiac">
+                <el-option
+                  v-for="(item, idx) in shuxiangList"
+                  :key="idx"
+                  :label="item"
+                  :value="item"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
 
+          <el-col :span="12" :offset="0">
+            <el-form-item label="星座" prop="flag">
+              <el-select
+                placeholder="请选择状态"
+                v-model="auntInfo.constellation"
+              >
+                <el-option
+                  v-for="(item, idx) in xingzuoList"
+                  :key="idx"
+                  :label="item"
+                  :value="item"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-                <el-row>
-                    <el-col :span="12" :offset="0">
-                        <el-form-item label="籍贯" prop="nativePlace">
-                            <el-select placeholder="请选择状态" v-model="auntInfo.nativePlace">
-                                <el-option v-for="(item,idx) in shenfenList" :key="idx" :label="item.name" :value="item.name" />
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12" :offset="0">
-                        <el-form-item label="年龄" prop="age">
-                            <el-input v-model="auntInfo.age" />
-                        </el-form-item>
-                    </el-col>
-                </el-row>
+        <el-row>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="学历" prop="education">
+              <el-select placeholder="请选择状态" v-model="auntInfo.education">
+                <el-option
+                  v-for="(item, idx) in xueliList"
+                  :key="idx"
+                  :label="item"
+                  :value="item"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="电话" prop="mobile">
+              <el-input v-model="auntInfo.mobile" />
+            </el-form-item>
+          </el-col>
+        </el-row>
 
+        <el-row>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="从业时长" prop="experience">
+              <el-input v-model="auntInfo.experience">
+                <template slot="append">年</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
 
+          <el-col :span="12" :offset="0">
+            <el-form-item label="出生日期" prop="birthday">
+               <el-date-picker v-model="auntInfo.birthday" type="date" placeholder="选择日期" /> 
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-                <el-row >
-                    <el-col :span="12" :offset="0">
-                        <el-form-item label="生肖" prop="zodiac">
-                            <el-select placeholder="请选择状态" v-model="auntInfo.zodiac">
-                                <el-option v-for="(item,idx) in shuxiangList" :key="idx" :label="item" :value="item" />
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
+        <el-row>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="证件号" prop="idcard">
+              <el-input v-model="auntInfo.idcard" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="性别" prop="sex">
+              <el-radio-group v-model="auntInfo.sex">
+                <el-radio label="1">男</el-radio>
+                <el-radio label="0">女</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-                    <el-col :span="12" :offset="0">
-                        <el-form-item label="星座" prop="flag">
-                            <el-select placeholder="请选择状态" v-model="auntInfo.constellation">
-                                <el-option v-for="(item,idx) in xingzuoList" :key="idx" :label="item" :value="item" />
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
+        <el-row>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="审核状态" prop="auditStatus">
+              <el-radio-group v-model="auntInfo.auditStatus">
+                <el-radio :label="1">通过</el-radio>
+                <el-radio :label="0">拒绝</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
 
+          <el-col :span="12" :offset="0">
+            <el-form-item label="认证状态" prop="realStatus">
+              <el-radio-group v-model="auntInfo.realStatus">
+                <el-radio :label="1">已认证</el-radio>
+                <el-radio :label="0">未认证</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-                <el-row>
-                    <el-col :span="12" :offset="0">
+        <el-row>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="是否展示" prop="saleStatus">
+              <el-radio-group v-model="auntInfo.saleStatus">
+                <el-radio :label=1>是</el-radio>
+                <el-radio :label=0>否</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" :offset="0">
+            <el-form-item label="矩阵类别" prop="type">
+              <el-select placeholder="请选择状态" v-model="auntInfo.type">
+                <el-option
+                  v-for="(item, idx) in dictType1List"
+                  :key="idx"
+                  :label="item.dictValue"
+                  :value="item.dictValue"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-                        <el-form-item label="学历" prop="education">
-                            <el-select placeholder="请选择状态" v-model="auntInfo.education">
-                                <el-option v-for="(item,idx) in xueliList" :key="idx" :label="item" :value="item" />
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12" :offset="0">
+        <el-form-item label="主要技能" prop="expertin">
+          <el-select placeholder="请选择状态" v-model="auntInfo.expertin">
+            <el-option
+              v-for="(item, idx) in dictType2List"
+              :key="idx"
+              :label="item.dictValue"
+              :value="item.dictValue"
+            />
+          </el-select>
+        </el-form-item>
 
-                        <el-form-item label="电话" prop="mobile">
-                            <el-input v-model="auntInfo.mobile" />
-                        </el-form-item>
-                    </el-col>
-                </el-row>
+        <el-form-item label="个性标签" prop="flag">
+          <el-checkbox-group v-model="flagList">
+            <el-checkbox
+              :label="obj.dictValue"
+              v-for="(obj, idx) in dictType3List"
+              :key="idx"
+            ></el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
 
+        <el-form-item label="身份认证" prop="identityApprove">
+          <el-input v-model="auntInfo.identityApprove" />
+        </el-form-item>
+        <el-form-item label="技能认证" prop="skillApprove">
+          <el-input v-model="auntInfo.skillApprove" />
+        </el-form-item>
+        <el-form-item label="背景调查" prop="backgroundApprove">
+          <el-input v-model="auntInfo.backgroundApprove" />
+        </el-form-item>
+        <el-form-item label="职业培训" prop="">
+          <el-input placeholder="缺少字段" />
+        </el-form-item>
+        <el-form-item label="简历真实" prop="insuranceApprove">
+          <el-input v-model="auntInfo.insuranceApprove" />
+        </el-form-item>
+        <el-form-item label="上户保险" prop="insuranceApprove">
+          <el-input v-model="auntInfo.insuranceApprove" />
+        </el-form-item>
 
+        <el-form-item label="求职意向">
+          <el-input
+            v-model="auntInfo.jobIntention"
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 4 }"
+          />
+        </el-form-item>
+        <el-form-item label="自我介绍">
+          <el-input
+            v-model="auntInfo.selfIntroduction"
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 4 }"
+          />
+        </el-form-item>
+        <el-form-item label="工作经历(富文本）">
+          <editor v-model="auntInfo.workExperience" :init="editorInit" />
+        </el-form-item>
+        <el-form-item label="培训经历(富文本)">
+          <editor v-model="auntInfo.trainApprove" :init="editorInit" />
+        </el-form-item>
 
-
-                <el-row>
-                    <el-col :span="12" :offset="0">
-                        <el-form-item label="从业时长" prop="experience">
-                            <el-input v-model="auntInfo.experience">
-                                <template slot="append">年</template>
-                            </el-input>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="12" :offset="0">
-                        <el-form-item label="出生日期" prop="birthday">
-                            <el-input v-model="auntInfo.birthday" />
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-
-
-                <el-row>
-                    <el-col :span="12" :offset="0">
-                        <el-form-item label="证件号" prop="idcard">
-                            <el-input v-model="auntInfo.idcard" />
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12" :offset="0">
-
-
-                        <el-form-item label="性别" prop="sex">
-                            <el-radio-group v-model="auntInfo.sex">
-                                <el-radio label="1">男</el-radio>
-                                <el-radio label="0">女</el-radio>
-                            </el-radio-group>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-
-                <el-row>
-                    <el-col :span="12" :offset="0">
-                        <el-form-item label="审核状态" prop="auditStatus">
-                            <el-radio-group v-model="auntInfo.auditStatus">
-                                <el-radio label="1">通过</el-radio>
-                                <el-radio label="0">拒绝</el-radio>
-                            </el-radio-group>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="12" :offset="0">
-                        <el-form-item label="认证状态" prop="realStatus">
-                            <el-radio-group v-model="auntInfo.realStatus">
-                                <el-radio label="1">已认证</el-radio>
-                                <el-radio label="0">未认证</el-radio>
-                            </el-radio-group>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-
-                <el-row>
-                    <el-col :span="12" :offset="0">
-                        <el-form-item label="是否展示" prop="saleStatus">
-                            <el-radio-group v-model="auntInfo.saleStatus">
-                                <el-radio label="1">是</el-radio>
-                                <el-radio label="0">否</el-radio>
-                            </el-radio-group>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12" :offset="0">
-
-                        <el-form-item label="矩阵类别" prop="type">
-                            <el-select placeholder="请选择状态" v-model="auntInfo.type">
-                                <el-option v-for="(item,idx) in dictType1List" :key="item" :label="item.dictValue" :value="item.dictValue" />
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-
-                <el-form-item label="主要技能" prop="expertin">
-                    <el-select placeholder="请选择状态" v-model="auntInfo.expertin">
-                        <el-option v-for="(item,idx) in dictType2List" :key="item" :label="item.dictValue" :value="item.dictValue" />
-                    </el-select>
-                </el-form-item>
-
-                <el-form-item label="个性标签" prop="flag">
-                    <el-checkbox-group v-model="auntInfo.flag">
-                        <el-checkbox :label="obj.dictValue" v-for="(obj,idx) in dictType3List" :key="idx"></el-checkbox>
-                    </el-checkbox-group>
-                </el-form-item>
-
-                <el-form-item label="身份认证" prop="idcard">
-                    <el-input v-model="auntInfo.idcard" />
-                </el-form-item>
-                <el-form-item label="技能认证" prop="skillApprove">
-                    <el-input v-model="auntInfo.skillApprove" />
-                </el-form-item>
-                <el-form-item label="背景调查" prop="backgroundApprove">
-                    <el-input v-model="auntInfo.backgroundApprove" />
-                </el-form-item>
-                <el-form-item label="职业培训" prop="jobIntention">
-                    <el-input v-model="auntInfo.jobIntention" />
-                </el-form-item>
-                <el-form-item label="简历真实" prop="insuranceApprove">
-                    <el-input v-model="auntInfo.insuranceApprove" />
-                </el-form-item>
-                <el-form-item label="上户保险" prop="selfIntroduction">
-                    <el-input v-model="auntInfo.selfIntroduction" />
-                </el-form-item>
-
-                <el-form-item label="求职意向">
-                    <el-input v-model="auntInfo.jobIntention" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" />
-                </el-form-item>
-                <el-form-item label="自我介绍">
-                    <el-input v-model="auntInfo.des" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" />
-                </el-form-item>
-                <el-form-item label="工作经历(富文本）">
-                    <editor v-model="auntInfo.workExperience" :init="editorInit" />
-                </el-form-item>
-                <el-form-item label="培训经历(富文本)">
-                    <editor v-model="auntInfo.des" :init="editorInit" />
-                </el-form-item>
-
-                <el-form-item label="个人展示" prop="nativePlace">
-                    <el-upload action="https://jsonplaceholder.typicode.com/posts/" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
-                        <i class="el-icon-plus"></i>
-                    </el-upload>
-                </el-form-item>
-
-            </el-form>
-        </el-card>
-        <!-- dev -->
-        <div class="op-container">
-            <el-button type="primary" @click="handleAddAunt">提交</el-button>
-        </div>
+        <el-form-item label="个人展示" prop="nativePlace">
+          <el-upload
+            action="https://aimajiazheng.com/api/wx/storage/create"
+            :file-list="personalPresentationList"
+            list-type="picture-card"
+            :on-remove="handlePersonShowRemove"
+            :on-success="handlePersonShowSuccess"
+            name="file"
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
+        </el-form-item>
+      </el-form>
+    </el-card>
+    <!-- dev -->
+    <div class="op-container">
+      <el-button type="primary" @click="handleAddAunt">提交</el-button>
     </div>
+  </div>
 </template>
-
-
-
 
 
 
@@ -276,7 +320,7 @@
 
 <script>
 import { editAunt, addAunt } from "@/api/housemg";
-import {listDict} from "@/api/dict"
+import { listDict } from "@/api/dict";
 import { createStorage, uploadPath } from "@/api/storage";
 import Editor from "@tinymce/tinymce-vue";
 import { MessageBox } from "element-ui";
@@ -302,7 +346,7 @@ export default {
 
       auntInfo: {
         age: 30,
-        headUrl:"",
+        headUrl: "",
         auditStatus: 0,
         birthday: "",
         des: "",
@@ -315,9 +359,12 @@ export default {
         realStatus: 0,
         saleStatus: 0,
         sex: "0",
-        flag:[],
-        national:'',
+        flag: [],
+        nation: "",
+        personalPresentation:'',//个人照片  都好隔开
       },
+        personalPresentationList:[],//个人照片
+        flagList:[],
       editorInit: {
         language: "zh_CN",
         max_height: 350,
@@ -355,40 +402,19 @@ export default {
     this.init();
     this.shenfenList = SHENFENArr;
     this.minzuList = MINZUArr;
-    this.netFetchDictType1()
-    this.netFetchDictType2()
-    this.netFetchDictType3()
   },
 
   methods: {
     init: function () {
-      if (this.$route.query.id == null) {
-        return;
-      }
-      const auntId = this.$route.query.id;
-      const self = this;
-      detailAunt(auntId)
-        .then((response) => {
-          self.auntInfo = response.data.data;
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    },
-
-    handleCategoryChange(value) {
-      this.goods.categoryId = value[value.length - 1];
-    },
-
-    handleCancel: function () {
-      this.$store.dispatch("tagsView/delView", this.$route);
-      this.$router.push({ path: "/goods/list" });
+        this.netFetchDictType1();
+        this.netFetchDictType2();
+        this.netFetchDictType3();
     },
 
     handleAddAunt: function () {
-        let flag = this.auntInfo.flag.toString() //数组转字符串 逗号隔开
-        this.auntInfo.flag = flag;
-          addAunt(this.auntInfo)
+      this.auntInfo.flag = this.flagList.toString();
+      this.auntInfo.personalPresentation = this.personalPresentationList.toString();
+      addAunt(this.auntInfo)
         .then((response) => {
           this.$notify.success({
             title: "成功",
@@ -405,21 +431,39 @@ export default {
     },
 
     netFetchDictType1() {
-           listDict({dictType:3}).then(response => {
-          this.dictType1List = response.data.data.list
-        }).catch(() => {
+      listDict({ dictType: 3 })
+        .then((response) => {
+          this.dictType1List = response.data.data.list;
         })
+        .catch(() => {});
     },
 
     netFetchDictType2() {
-      listDict({dictType:2}).then((res)=>{
-                  this.dictType2List = res.data.data.list
-              })
+      listDict({ dictType: 2 }).then((res) => {
+        this.dictType2List = res.data.data.list;
+      });
     },
     netFetchDictType3() {
-      listDict({dictType:3}).then((res)=>{
-                  this.dictType3List = res.data.data.list
-              })
+      listDict({ dictType: 3 }).then((res) => {
+        this.dictType3List = res.data.data.list;
+      });
+    },
+
+    handleAvatarSuccess(res, file) {
+      this.auntInfo.headUrl = res.data.url;
+    },
+
+    handlePersonShowRemove(file, fileList) {//移除图片传给后台的数据
+        this.personalPresentationList=[];
+        fileList.map((obj,idx)=>{
+            this.personalPresentationList.push(obj.response.data.url)
+        })
+
+        console.log(this.personalPresentationList);
+    },
+    handlePersonShowSuccess(res, file) {
+      this.personalPresentationList.push(res.data.url);
+      console.log(this.personalPresentationList);
     },
   },
 };

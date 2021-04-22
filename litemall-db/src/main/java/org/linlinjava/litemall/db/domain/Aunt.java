@@ -43,7 +43,7 @@ public class Aunt implements Serializable {
     /**
      * 出生日期
      */
-    @NotEmpty(message = "出生日期不能为空 例2021-01-01")
+//    @NotEmpty(message = "出生日期不能为空 例2021-01-01")
     private String birthday;
 
     /**
@@ -94,7 +94,7 @@ public class Aunt implements Serializable {
     /**
      * 属相
      */
-    @NotEmpty(message = "属相不能为空")
+//    @NotEmpty(message = "属相不能为空")
     private String sign;
 
 

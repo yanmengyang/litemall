@@ -301,9 +301,7 @@ public class WxUOrderService {
         if (null==order.getId()) {
             return ResponseUtil.badArgument();
         }
-        if (null==order.getUserId()) {
-            return ResponseUtil.badArgument();
-        }
+
         AuntOrder dbOrder = uOrderService.selectById(order.getId());
         if (dbOrder == null) {
             return ResponseUtil.badArgumentValue();

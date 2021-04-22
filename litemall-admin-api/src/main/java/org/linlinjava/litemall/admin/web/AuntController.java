@@ -90,8 +90,8 @@ public class AuntController {
      * @param bean
      * @return
      */
-    @RequiresPermissions("admin:aunt:create")
-    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "添加")
+//    @RequiresPermissions("admin:aunt:create")
+//    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "添加")
     @PostMapping(value = "/create")
     public Object create(@RequestBody  Aunt bean) throws BizException {
         return ResponseUtil.ok(service.save(bean));

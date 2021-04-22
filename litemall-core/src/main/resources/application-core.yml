@@ -4,11 +4,11 @@ litemall:
     app-id: wxe4099dc35be239a2
     app-secret: 42308c357087d780631fd6572e159378
     mch-id: 1608680136
-    mch-key: xxxxxx
-    notify-url: http://aimajiazheng.com/api/wx/aunt/uorder/pay-notify
+    mch-key: hrwz53vkUgywyF4MiaMdGvVTTm1mAY19
+    notify-url: https://aimajiazheng.com/api/wx/aunt/uorder/pay-notify
     # 商户证书文件路径
     # 请参考“商户证书”一节 https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3
-    key-path: xxxxx
+    key-path: classpath:apiclient_cert.p12
 
   #通知相关配置
   notify:

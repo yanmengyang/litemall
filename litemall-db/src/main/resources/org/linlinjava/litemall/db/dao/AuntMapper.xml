@@ -96,7 +96,7 @@
       <if test="age != null">
         age,
       </if>
-      <if test="birthday != null">
+      <if test="birthday != null and birthday != ''">
         birthday,
       </if>
       <if test="nativePlace != null">

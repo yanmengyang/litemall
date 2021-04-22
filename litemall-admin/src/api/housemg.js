@@ -16,7 +16,7 @@ export function detailAunt(query) {
   })
 }
 
-export function publishAunt(data) {
+export function addAunt(data) {
   return request({
     url: '/aunt/create',
     method: 'post',

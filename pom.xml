@@ -99,7 +99,7 @@
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-pay</artifactId>
-                <version>3.9.4.B</version>
+                <version>3.7.0</version>
             </dependency>
 
             <dependency>

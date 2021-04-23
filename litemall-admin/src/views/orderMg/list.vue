@@ -100,7 +100,7 @@
       <el-table-column align="center" label="操作" width="250" class-name="oper">
         <template slot-scope="scope">
 
-          <el-button type="primary" size="mini" @click="handleBackOrder(scope.row)">退单</el-button>
+          <el-button type="primary" size="mini" @click="handleBackOrder(scope.row)">退款</el-button>
           <el-button type="primary" size="mini" @click="handleSendOrder(scope.row)">派单</el-button>
           <el-button type="danger" size="mini" @click="handleDeleteOrder(scope.row)">删除</el-button>
 
@@ -525,7 +525,7 @@ export default {
         updateOrder(row).then(response => {
           this.$notify.success({
             title: '成功',
-            message: '退单成功'
+            message: '退单款申请成功'
           })
           this.getList()
         }).catch(response => {

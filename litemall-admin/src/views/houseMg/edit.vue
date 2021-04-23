@@ -15,14 +15,18 @@
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="姓名" prop="nickName">
-                            <el-input v-model="auntInfo.nickName" />
+                            <el-col :span="16">
+                                <el-input v-model="auntInfo.nickName" />
+                            </el-col>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="民族" prop="nation">
-                            <el-select placeholder="请选择状态" v-model="auntInfo.nation">
+                            <el-col :span="16">
+                            <el-select placeholder="请选择状态" v-model="auntInfo.nation" style="width:100%;">
                                 <el-option v-for="(item, idx) in minzuList" :key="idx" :label="item.name" :value="item.name" />
                             </el-select>
+                            </el-col>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -30,14 +34,18 @@
                 <el-row>
                     <el-col :span="12" :offset="0">
                         <el-form-item label="籍贯" prop="nativePlace">
-                            <el-select placeholder="请选择状态" v-model="auntInfo.nativePlace">
+                            <el-col :span="16">
+                            <el-select placeholder="请选择状态" v-model="auntInfo.nativePlace" style="width:100%;">
                                 <el-option v-for="(item, idx) in shenfenList" :key="idx" :label="item.name" :value="item.name" />
                             </el-select>
+                            </el-col>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12" :offset="0">
                         <el-form-item label="年龄" prop="age">
+                            <el-col :span="16">
                             <el-input v-model="auntInfo.age" />
+                            </el-col>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -45,17 +53,21 @@
                 <el-row>
                     <el-col :span="12" :offset="0">
                         <el-form-item label="生肖" prop="zodiac">
-                            <el-select placeholder="请选择状态" v-model="auntInfo.zodiac">
+                            <el-col :span="16">
+                            <el-select placeholder="请选择状态" v-model="auntInfo.zodiac" style="width:100%;">
                                 <el-option v-for="(item, idx) in shuxiangList" :key="idx" :label="item" :value="item" />
                             </el-select>
+                            </el-col>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="12" :offset="0">
                         <el-form-item label="星座" prop="constellation">
-                            <el-select placeholder="请选择状态" v-model="auntInfo.constellation">
+                            <el-col :span="16">
+                            <el-select placeholder="请选择状态" v-model="auntInfo.constellation" style="width:100%;">
                                 <el-option v-for="(item, idx) in xingzuoList" :key="idx" :label="item" :value="item" />
                             </el-select>
+                            </el-col>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -63,14 +75,18 @@
                 <el-row>
                     <el-col :span="12" :offset="0">
                         <el-form-item label="学历" prop="education">
-                            <el-select placeholder="请选择状态" v-model="auntInfo.education">
+                            <el-col :span="16">
+                            <el-select placeholder="请选择状态" v-model="auntInfo.education" style="width:100%;">
                                 <el-option v-for="(item, idx) in xueliList" :key="idx" :label="item" :value="item" />
                             </el-select>
+                            </el-col>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12" :offset="0">
                         <el-form-item label="电话" prop="mobile">
+                            <el-col :span="16">
                             <el-input v-model="auntInfo.mobile" />
+                            </el-col>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -78,15 +94,19 @@
                 <el-row>
                     <el-col :span="12" :offset="0">
                         <el-form-item label="从业时长" prop="experience">
+                            <el-col :span="16">
                             <el-input v-model="auntInfo.experience">
                                 <template slot="append">年</template>
                             </el-input>
+                            </el-col>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="12" :offset="0">
                         <el-form-item label="出生日期" prop="birthday">
-                            <el-date-picker v-model="auntInfo.birthday" type="date" placeholder="选择日期" />
+                            <el-col :span="16">
+                            <el-date-picker style="width:100%" v-model="auntInfo.birthday" value-format="yyyy-MM-dd" type="date" placeholder="选择日期" />
+                            </el-col>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -94,7 +114,9 @@
                 <el-row>
                     <el-col :span="12" :offset="0">
                         <el-form-item label="证件号" prop="idcard">
+                            <el-col :span="16">
                             <el-input v-model="auntInfo.idcard" />
+                            </el-col>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12" :offset="0">
@@ -139,18 +161,22 @@
 
                     <el-col :span="12" :offset="0">
                         <el-form-item label="矩阵类别" prop="type">
-                            <el-select placeholder="请选择状态" v-model="auntInfo.type">
+                            <el-col :span="16">
+                            <el-select placeholder="请选择状态" v-model="auntInfo.type" style="width:100%">
                                 <el-option v-for="(item, idx) in dictType1List" :key="idx" :label="item.dictValue" :value="item.dictValue" />
                             </el-select>
+                            </el-col>
                         </el-form-item>
                     </el-col>
                 </el-row>
 
 
                 <el-form-item label="主要技能" prop="expertin">
-                    <el-select placeholder="请选择状态" v-model="auntInfo.expertin">
+                    <el-col :span="7">
+                    <el-select placeholder="请选择状态" v-model="auntInfo.expertin" style="width:100%">
                         <el-option v-for="(item, idx) in dictType2List" :key="idx" :label="item.dictValue" :value="item.dictValue" />
                     </el-select>
+                    </el-col>
                 </el-form-item>
 
                 <el-form-item label="个性标签" prop="flag">

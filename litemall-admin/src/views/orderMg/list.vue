@@ -67,42 +67,119 @@
       highlight-current-row
     >
 
-      <el-table-column align="center" label="订单编号" prop="id" />
-      <el-table-column align="center" label="阿姨姓名" prop="auntName" />
-      <el-table-column align="center" label="阿姨电话" prop="auntMobile" />
-      <el-table-column align="center" label="阿姨编号" prop="auntId" />
+      <el-table-column
+        align="center"
+        label="订单编号"
+        prop="id"
+      />
+      <el-table-column
+        align="center"
+        label="阿姨姓名"
+        prop="auntName"
+      />
+      <el-table-column
+        align="center"
+        label="阿姨电话"
+        prop="auntMobile"
+      />
+      <el-table-column
+        align="center"
+        label="阿姨编号"
+        prop="auntId"
+      />
       <!--<el-table-column align="center" label="客户id" prop="userId" />-->
-      <el-table-column align="center" label="联系人" prop="name" />
-      <el-table-column align="center" label="地址" prop="addr" />
-      <el-table-column align="center" label="联系电话" prop="mobile" />
-      <el-table-column align="center" label="预约时间" prop="startTime" />
-      <el-table-column align="center" label="截止时间" prop="endTime" />
-      <el-table-column align="center" label="金额" prop="blance" />
-      <el-table-column align="center" label="备注" prop="remark" />
-      <el-table-column align="center" label="下单时间" prop="creatTime" />
+      <el-table-column
+        align="center"
+        label="联系人"
+        prop="name"
+      />
+      <el-table-column
+        align="center"
+        label="地址"
+        prop="addr"
+      />
+      <el-table-column
+        align="center"
+        label="联系电话"
+        prop="mobile"
+      />
+      <el-table-column
+        align="center"
+        label="预约时间"
+        prop="startTime"
+      />
+      <el-table-column
+        align="center"
+        label="截止时间"
+        prop="endTime"
+      />
+      <el-table-column
+        align="center"
+        label="金额"
+        prop="blance"
+      />
+      <el-table-column
+        align="center"
+        label="备注"
+        prop="remark"
+      />
+      <el-table-column
+        align="center"
+        label="下单时间"
+        prop="creatTime"
+      />
       <!--<el-table-column align="center" label="支付单号" prop="payNo" />-->
       <!--<el-table-column align="center" label="支付流水" prop="transactionCode" />-->
-      <el-table-column align="center" label="支付状态" prop="payStatus" />
+      <el-table-column
+        align="center"
+        label="支付状态"
+        prop="payStatus"
+      />
       <!--<el-table-column align="center" label="调度状态" prop="dispatchStatus" />-->
       <!--<el-table-column align="center" label="是否删除" prop="isDel" />-->
 
-      <el-table-column align="center" label="调度状态" prop="dispatchStatus">
+      <el-table-column
+        align="center"
+        label="调度状态"
+        prop="dispatchStatus"
+      >
         <template slot-scope="scope">
           <el-tag :type="scope.row.dispatchStatus ? '1' : '0' ">{{ scope.row.dispatchStatus ? '已调度' : '待调度' }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="订单状态" prop="status">
+      <el-table-column
+        align="center"
+        label="订单状态"
+        prop="status"
+      >
         <template slot-scope="scope">
           <el-tag :type="scope.row.status ? '1' : '0' ">{{ scope.row.status ? '已完成' : '未完成' }}</el-tag>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="操作" width="250" class-name="oper">
+      <el-table-column
+        align="center"
+        label="操作"
+        width="250"
+        class-name="oper"
+      >
         <template slot-scope="scope">
 
-          <el-button type="primary" size="mini" @click="handleBackOrder(scope.row)">退款</el-button>
-          <el-button type="primary" size="mini" @click="handleSendOrder(scope.row)">派单</el-button>
-          <el-button type="danger" size="mini" @click="handleDeleteOrder(scope.row)">删除</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="handleBackOrder(scope.row)"
+          >退款</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="handleSendOrder(scope.row)"
+          >派单</el-button>
+          <el-button
+            type="danger"
+            size="mini"
+            @click="handleDeleteOrder(scope.row)"
+          >删除</el-button>
 
         </template>
       </el-table-column>
@@ -117,9 +194,16 @@
     />
 
     <!-- 订单详情对话框 -->
-    <el-dialog :visible.sync="orderDialogVisible" title="订单详情" width="800">
+    <el-dialog
+      :visible.sync="orderDialogVisible"
+      title="订单详情"
+      width="800"
+    >
       <section ref="print">
-        <el-form :data="orderDetail" label-position="left">
+        <el-form
+          :data="orderDetail"
+          label-position="left"
+        >
           <el-form-item label="订单编号">
             <span>{{ orderDetail.order.orderSn }}</span>
           </el-form-item>
@@ -144,14 +228,41 @@
               fit
               highlight-current-row
             >
-              <el-table-column align="center" label="商品名称" prop="goodsName" />
-              <el-table-column align="center" label="商品编号" prop="goodsSn" />
-              <el-table-column align="center" label="货品规格" prop="specifications" />
-              <el-table-column align="center" label="货品价格" prop="price" />
-              <el-table-column align="center" label="货品数量" prop="number" />
-              <el-table-column align="center" label="货品图片" prop="picUrl">
+              <el-table-column
+                align="center"
+                label="商品名称"
+                prop="goodsName"
+              />
+              <el-table-column
+                align="center"
+                label="商品编号"
+                prop="goodsSn"
+              />
+              <el-table-column
+                align="center"
+                label="货品规格"
+                prop="specifications"
+              />
+              <el-table-column
+                align="center"
+                label="货品价格"
+                prop="price"
+              />
+              <el-table-column
+                align="center"
+                label="货品数量"
+                prop="number"
+              />
+              <el-table-column
+                align="center"
+                label="货品图片"
+                prop="picUrl"
+              >
                 <template slot-scope="scope">
-                  <img :src="scope.row.picUrl" width="40">
+                  <img
+                    :src="scope.row.picUrl"
+                    width="40"
+                  >
                 </template>
               </el-table-column>
             </el-table>
@@ -186,14 +297,25 @@
           </el-form-item>
         </el-form>
       </section>
-      <span slot="footer" class="dialog-footer">
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button @click="orderDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="printOrder">打 印</el-button>
+        <el-button
+          type="primary"
+          @click="printOrder"
+        >打 印</el-button>
       </span>
     </el-dialog>
 
     <!-- 收款对话框 -->
-    <el-dialog :visible.sync="payDialogVisible" title="订单收款" width="40%" center>
+    <el-dialog
+      :visible.sync="payDialogVisible"
+      title="订单收款"
+      width="40%"
+      center
+    >
       <el-form
         ref="payForm"
         :model="payForm"
@@ -204,39 +326,64 @@
         <div style="margin-bottom: 10px">
           确认当前订单（订单编号 {{ payForm.orderSn }} ) 已经完成线下收款 ？
         </div>
-        <el-form-item label="订单金额" prop="oldMoney">
+        <el-form-item
+          label="订单金额"
+          prop="oldMoney"
+        >
           <el-input-number
             v-model="payForm.oldMoney"
             :controls="false"
             disabled
           />
         </el-form-item>
-        <el-form-item label="付款金额" prop="newMoney">
-          <el-input-number v-model="payForm.newMoney" :controls="false" />
+        <el-form-item
+          label="付款金额"
+          prop="newMoney"
+        >
+          <el-input-number
+            v-model="payForm.newMoney"
+            :controls="false"
+          />
         </el-form-item>
       </el-form>
       <el-table :data="payForm.goodsList">
-        <el-table-column property="goodsName" label="商品" />
+        <el-table-column
+          property="goodsName"
+          label="商品"
+        />
         <el-table-column label="规格">
           <template slot-scope="scope">
             {{ scope.row.specifications.join("-") }}
           </template>
         </el-table-column>
-        <el-table-column property="onumber" width="100" label="下单数量" />
+        <el-table-column
+          property="onumber"
+          width="100"
+          label="下单数量"
+        />
         <!-- <el-table-column label="实际数量" width="100">
           <template slot-scope="scope">
             <el-input-number v-model="scope.row.number" :min="0" :controls="false" />
           </template>
         </el-table-column> -->
       </el-table>
-      <div slot="footer" class="dialog-footer">
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button @click="payDialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="confirmPay">确定</el-button>
+        <el-button
+          type="primary"
+          @click="confirmPay"
+        >确定</el-button>
       </div>
     </el-dialog>
 
     <!-- 发货对话框 -->
-    <el-dialog :visible.sync="shipDialogVisible" title="发货">
+    <el-dialog
+      :visible.sync="shipDialogVisible"
+      title="发货"
+    >
       <el-form
         ref="shipForm"
         :model="shipForm"
@@ -245,8 +392,14 @@
         label-width="100px"
         style="width: 400px; margin-left: 50px"
       >
-        <el-form-item label="快递公司" prop="shipChannel">
-          <el-select v-model="shipForm.shipChannel" placeholder="请选择">
+        <el-form-item
+          label="快递公司"
+          prop="shipChannel"
+        >
+          <el-select
+            v-model="shipForm.shipChannel"
+            placeholder="请选择"
+          >
             <el-option
               v-for="item in channels"
               :key="item.code"
@@ -255,18 +408,30 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="快递编号" prop="shipSn">
+        <el-form-item
+          label="快递编号"
+          prop="shipSn"
+        >
           <el-input v-model="shipForm.shipSn" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button @click="shipDialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="confirmShip">确定</el-button>
+        <el-button
+          type="primary"
+          @click="confirmShip"
+        >确定</el-button>
       </div>
     </el-dialog>
 
     <!-- 退款对话框 -->
-    <el-dialog :visible.sync="refundDialogVisible" title="退款">
+    <el-dialog
+      :visible.sync="refundDialogVisible"
+      title="退款"
+    >
       <el-form
         ref="refundForm"
         :model="refundForm"
@@ -275,13 +440,25 @@
         label-width="100px"
         style="width: 400px; margin-left: 50px"
       >
-        <el-form-item label="退款金额" prop="refundMoney">
-          <el-input v-model="refundForm.refundMoney" :disabled="true" />
+        <el-form-item
+          label="退款金额"
+          prop="refundMoney"
+        >
+          <el-input
+            v-model="refundForm.refundMoney"
+            :disabled="true"
+          />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button @click="refundDialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="confirmRefund">确定</el-button>
+        <el-button
+          type="primary"
+          @click="confirmRefund"
+        >确定</el-button>
       </div>
     </el-dialog>
 
@@ -343,30 +520,30 @@ import {
   listChannel,
   refundOrder,
   payOrder,
-  shipOrder
-} from '@/api/order'
-import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-import checkPermission from '@/utils/permission' // 权限判断函数
+  shipOrder,
+} from "@/api/order";
+import Pagination from "@/components/Pagination"; // Secondary package based on el-pagination
+import checkPermission from "@/utils/permission"; // 权限判断函数
 
 const statusMap = {
-  101: '未付款',
-  102: '用户取消',
-  103: '系统取消',
-  201: '已付款',
-  202: '申请退款',
-  203: '已退款',
-  301: '已发货',
-  401: '用户收货',
-  402: '系统收货'
-}
+  101: "未付款",
+  102: "用户取消",
+  103: "系统取消",
+  201: "已付款",
+  202: "申请退款",
+  203: "已退款",
+  301: "已发货",
+  401: "用户收货",
+  402: "系统收货",
+};
 
 export default {
-  name: 'Order',
+  name: "Order",
   components: { Pagination },
   filters: {
     orderStatusFilter(status) {
-      return statusMap[status]
-    }
+      return statusMap[status];
+    },
   },
   data() {
     return {
@@ -387,373 +564,373 @@ export default {
       pickerOptions: {
         shortcuts: [
           {
-            text: '最近一周',
+            text: "最近一周",
             onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-              picker.$emit('pick', [start, end])
-            }
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", [start, end]);
+            },
           },
           {
-            text: '最近一个月',
+            text: "最近一个月",
             onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-              picker.$emit('pick', [start, end])
-            }
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit("pick", [start, end]);
+            },
           },
           {
-            text: '最近三个月',
+            text: "最近三个月",
             onClick(picker) {
-              const end = new Date()
-              const start = new Date()
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-              picker.$emit('pick', [start, end])
-            }
-          }
-        ]
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+        ],
       },
       statusMap,
       orderDialogVisible: false,
       orderDetail: {
         order: {},
         user: {},
-        orderGoods: []
+        orderGoods: [],
       },
       shipForm: {
         orderId: undefined,
         shipChannel: undefined,
-        shipSn: undefined
+        shipSn: undefined,
       },
       shipDialogVisible: false,
       payForm: {
         orderId: undefined,
-        orderSn: '',
+        orderSn: "",
         oldMoney: 0,
         newMoney: 0,
-        goodsList: []
+        goodsList: [],
       },
       payDialogVisible: false,
       refundForm: {
         orderId: undefined,
-        refundMoney: undefined
+        refundMoney: undefined,
       },
       refundDialogVisible: false,
       downloadLoading: false,
-      channels: []
-    }
+      channels: [],
+    };
   },
   created() {
-    this.getList()
+    this.getList();
     // this.getChannel()
   },
   methods: {
     checkPermission,
     getList() {
-      this.listLoading = true
-      const self = this
+      this.listLoading = true;
+      const self = this;
 
-      console.log('+++++++++++++++++++')
-      console.log(this.listQuery)
+      console.log("+++++++++++++++++++");
+      console.log(this.listQuery);
 
       listOrder(this.listQuery)
         .then((response) => {
-          self.list = response.data.data.list
-          self.total = response.data.data.total
-          self.listLoading = false
+          self.list = response.data.data.list;
+          self.total = response.data.data.total;
+          self.listLoading = false;
         })
         .catch(() => {
-          self.list = []
-          self.total = 0
-          self.listLoading = false
-        })
+          self.list = [];
+          self.total = 0;
+          self.listLoading = false;
+        });
 
       //   return;
 
-    //   if (this.listQuery.timeArray && this.listQuery.timeArray.length === 2) {
-    //     this.listQuery.start = this.listQuery.timeArray[0]
-    //     this.listQuery.end = this.listQuery.timeArray[1]
-    //   } else {
-    //     this.listQuery.start = null
-    //     this.listQuery.end = null
-    //   }
-    //   if (this.listQuery.orderId) {
-    //     detailOrder(this.listQuery.orderId)
-    //       .then((response) => {
-    //         this.list = []
-    //         if (response.data.data.order) {
-    //           this.list.push(response.data.data.order)
-    //           this.total = 1
-    //           this.listLoading = false
-    //         }
-    //       })
-    //       .catch(() => {
-    //         this.list = []
-    //         this.total = 0
-    //         this.listLoading = false
-    //       })
-    //   } else {
-    //     listOrder(this.listQuery)
-    //       .then((response) => {
-    //         this.list = response.data.data.list
-    //         this.total = response.data.data.total
-    //         this.listLoading = false
-    //       })
-    //       .catch(() => {
-    //         this.list = []
-    //         this.total = 0
-    //         this.listLoading = false
-    //       })
-    //   }
+      //   if (this.listQuery.timeArray && this.listQuery.timeArray.length === 2) {
+      //     this.listQuery.start = this.listQuery.timeArray[0]
+      //     this.listQuery.end = this.listQuery.timeArray[1]
+      //   } else {
+      //     this.listQuery.start = null
+      //     this.listQuery.end = null
+      //   }
+      //   if (this.listQuery.orderId) {
+      //     detailOrder(this.listQuery.orderId)
+      //       .then((response) => {
+      //         this.list = []
+      //         if (response.data.data.order) {
+      //           this.list.push(response.data.data.order)
+      //           this.total = 1
+      //           this.listLoading = false
+      //         }
+      //       })
+      //       .catch(() => {
+      //         this.list = []
+      //         this.total = 0
+      //         this.listLoading = false
+      //       })
+      //   } else {
+      //     listOrder(this.listQuery)
+      //       .then((response) => {
+      //         this.list = response.data.data.list
+      //         this.total = response.data.data.total
+      //         this.listLoading = false
+      //       })
+      //       .catch(() => {
+      //         this.list = []
+      //         this.total = 0
+      //         this.listLoading = false
+      //       })
+      //   }
     },
 
     // / 退单
     handleBackOrder(row) {
-      if (row.payStatus != 0) {
-        this.$alert('订单已支付，不能退', '提示')
-        return
-      }
-
-      this.$confirm('确定操作这条记录吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        row.payStatus = '3'
-        updateOrder(row).then(response => {
-          this.$notify.success({
-            title: '成功',
-            message: '退单款申请成功'
-          })
-          this.getList()
-        }).catch(response => {
-          this.$notify.error({
-            title: '失败',
-            message: response.data.errmsg
-          })
-        })
-      }).catch(() => {
-
+      this.$confirm("确定操作这条记录吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
       })
+        .then(() => {
+          row.payStatus = "3";
+          updateOrder(row)
+            .then((response) => {
+              this.$notify.success({
+                title: "成功",
+                message: "退单款申请成功",
+              });
+              this.getList();
+            })
+            .catch((response) => {
+              this.$notify.error({
+                title: "失败",
+                message: response.data.errmsg,
+              });
+            });
+        })
+        .catch(() => {});
     },
 
     // / 派单
     handleSendOrder(row) {
-      this.$confirm('确定操作这条记录吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        row.dispatchStatus = '1'
-        updateOrder(row).then(response => {
-          this.$notify.success({
-            title: '提示',
-            message: '派单成功'
-          })
-          this.getList()
-        }).catch(response => {
-          this.$notify.error({
-            title: '失败',
-            message: response.data.errmsg
-          })
-        })
-      }).catch(() => {
-
+      this.$confirm("确定操作这条记录吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
       })
+        .then(() => {
+          row.dispatchStatus = "1";
+          updateOrder(row)
+            .then((response) => {
+              this.$notify.success({
+                title: "提示",
+                message: "派单成功",
+              });
+              this.getList();
+            })
+            .catch((response) => {
+              this.$notify.error({
+                title: "失败",
+                message: response.data.errmsg,
+              });
+            });
+        })
+        .catch(() => {});
     },
 
     // / 删除订单
     handleDeleteOrder(row) {
-      this.$confirm('确定操作这条记录吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        deleteOrder(row.id).then(response => {
-          this.$notify.success({
-            title: '成功',
-            message: '删除成功'
-          })
-          this.getList()
-        }).catch(response => {
-          this.$notify.error({
-            title: '失败',
-            message: response.data.errmsg
-          })
-        })
-      }).catch(() => {
-
+      this.$confirm("确定操作这条记录吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
       })
+        .then(() => {
+          deleteOrder(row.id)
+            .then((response) => {
+              this.$notify.success({
+                title: "成功",
+                message: "删除成功",
+              });
+              this.getList();
+            })
+            .catch((response) => {
+              this.$notify.error({
+                title: "失败",
+                message: response.data.errmsg,
+              });
+            });
+        })
+        .catch(() => {});
     },
 
     getChannel() {
       listChannel().then((response) => {
-        this.channels = response.data.data
-      })
+        this.channels = response.data.data;
+      });
     },
     handleFilter() {
-      this.listQuery.page = 1
-      this.getList()
+      this.listQuery.page = 1;
+      this.getList();
     },
     handleDetail(row) {
       detailOrder(row.id).then((response) => {
-        this.orderDetail = response.data.data
-      })
-      this.orderDialogVisible = true
+        this.orderDetail = response.data.data;
+      });
+      this.orderDialogVisible = true;
     },
     handlePay(row) {
-      this.payForm.orderId = row.id
-      this.payForm.orderSn = row.orderSn
-      this.payForm.oldMoney = row.actualPrice
-      this.payForm.newMoney = row.actualPrice
-      this.payForm.goodsList = row.goodsVoList
+      this.payForm.orderId = row.id;
+      this.payForm.orderSn = row.orderSn;
+      this.payForm.oldMoney = row.actualPrice;
+      this.payForm.newMoney = row.actualPrice;
+      this.payForm.goodsList = row.goodsVoList;
       this.payForm.goodsList.forEach((element) => {
-        element.onumber = element.number
-      })
-      this.payDialogVisible = true
+        element.onumber = element.number;
+      });
+      this.payDialogVisible = true;
     },
     confirmPay() {
       if (this.payForm.oldMoney !== this.payForm.newMoney) {
-        const diff = this.payForm.newMoney - this.payForm.oldMoney
-        this.$confirm('差额 ' + diff + '元， 是否确认提交')
+        const diff = this.payForm.newMoney - this.payForm.oldMoney;
+        this.$confirm("差额 " + diff + "元， 是否确认提交")
           .then((_) => {
-            this.confirmPay2()
+            this.confirmPay2();
           })
-          .catch((_) => {})
+          .catch((_) => {});
       } else {
-        this.confirmPay2()
+        this.confirmPay2();
       }
     },
     confirmPay2() {
       payOrder(this.payForm)
         .then((response) => {
           this.$notify.success({
-            title: '成功',
-            message: '订单收款操作成功'
-          })
-          this.getList()
+            title: "成功",
+            message: "订单收款操作成功",
+          });
+          this.getList();
         })
         .catch((response) => {
           this.$notify.error({
-            title: '失败',
-            message: response.data.errmsg
-          })
+            title: "失败",
+            message: response.data.errmsg,
+          });
         })
         .finally(() => {
-          this.payDialogVisible = false
-        })
+          this.payDialogVisible = false;
+        });
     },
     handleShip(row) {
-      this.shipForm.orderId = row.id
-      this.shipForm.shipChannel = row.shipChannel
-      this.shipForm.shipSn = row.shipSn
+      this.shipForm.orderId = row.id;
+      this.shipForm.shipChannel = row.shipChannel;
+      this.shipForm.shipSn = row.shipSn;
 
-      this.shipDialogVisible = true
+      this.shipDialogVisible = true;
       this.$nextTick(() => {
-        this.$refs['shipForm'].clearValidate()
-      })
+        this.$refs["shipForm"].clearValidate();
+      });
     },
     confirmShip() {
-      this.$refs['shipForm'].validate((valid) => {
+      this.$refs["shipForm"].validate((valid) => {
         if (valid) {
           shipOrder(this.shipForm)
             .then((response) => {
-              this.shipDialogVisible = false
+              this.shipDialogVisible = false;
               this.$notify.success({
-                title: '成功',
-                message: '确认发货成功'
-              })
-              this.getList()
+                title: "成功",
+                message: "确认发货成功",
+              });
+              this.getList();
             })
             .catch((response) => {
               this.$notify.error({
-                title: '失败',
-                message: response.data.errmsg
-              })
-            })
+                title: "失败",
+                message: response.data.errmsg,
+              });
+            });
         }
-      })
+      });
     },
     handleDelete(row) {
       deleteOrder({ orderId: row.id })
         .then((response) => {
           this.$notify.success({
-            title: '成功',
-            message: '订单删除成功'
-          })
-          this.getList()
+            title: "成功",
+            message: "订单删除成功",
+          });
+          this.getList();
         })
         .catch((response) => {
           this.$notify.error({
-            title: '失败',
-            message: response.data.errmsg
-          })
-        })
+            title: "失败",
+            message: response.data.errmsg,
+          });
+        });
     },
     handleRefund(row) {
-      this.refundForm.orderId = row.id
-      this.refundForm.refundMoney = row.actualPrice
+      this.refundForm.orderId = row.id;
+      this.refundForm.refundMoney = row.actualPrice;
 
-      this.refundDialogVisible = true
+      this.refundDialogVisible = true;
       this.$nextTick(() => {
-        this.$refs['refundForm'].clearValidate()
-      })
+        this.$refs["refundForm"].clearValidate();
+      });
     },
     confirmRefund() {
-      this.$refs['refundForm'].validate((valid) => {
+      this.$refs["refundForm"].validate((valid) => {
         if (valid) {
           refundOrder(this.refundForm)
             .then((response) => {
-              this.refundDialogVisible = false
+              this.refundDialogVisible = false;
               this.$notify.success({
-                title: '成功',
-                message: '确认退款成功'
-              })
-              this.getList()
+                title: "成功",
+                message: "确认退款成功",
+              });
+              this.getList();
             })
             .catch((response) => {
               this.$notify.error({
-                title: '失败',
-                message: response.data.errmsg
-              })
-            })
+                title: "失败",
+                message: response.data.errmsg,
+              });
+            });
         }
-      })
+      });
     },
     handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then((excel) => {
+      this.downloadLoading = true;
+      import("@/vendor/Export2Excel").then((excel) => {
         const tHeader = [
-          '订单ID',
-          '订单编号',
-          '用户ID',
-          '订单状态',
-          '是否删除',
-          '收货人',
-          '收货联系电话',
-          '收货地址'
-        ]
+          "订单ID",
+          "订单编号",
+          "用户ID",
+          "订单状态",
+          "是否删除",
+          "收货人",
+          "收货联系电话",
+          "收货地址",
+        ];
         const filterVal = [
-          'id',
-          'orderSn',
-          'userId',
-          'orderStatus',
-          'isDelete',
-          'consignee',
-          'mobile',
-          'address'
-        ]
-        excel.export_json_to_excel2(tHeader, this.list, filterVal, '订单信息')
-        this.downloadLoading = false
-      })
+          "id",
+          "orderSn",
+          "userId",
+          "orderStatus",
+          "isDelete",
+          "consignee",
+          "mobile",
+          "address",
+        ];
+        excel.export_json_to_excel2(tHeader, this.list, filterVal, "订单信息");
+        this.downloadLoading = false;
+      });
     },
     printOrder() {
-      this.$print(this.$refs.print)
-      this.orderDialogVisible = false
-    }
-  }
-
-}
+      this.$print(this.$refs.print);
+      this.orderDialogVisible = false;
+    },
+  },
+};
 </script>

@@ -551,6 +551,7 @@ export default {
       total: 0,
       listLoading: false,
       listQuery: {
+        isDel: 0,
         // page: 1,
         // limit: 20,
         // nickname: undefined,

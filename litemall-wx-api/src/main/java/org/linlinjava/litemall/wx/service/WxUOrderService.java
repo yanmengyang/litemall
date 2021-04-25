@@ -105,25 +105,24 @@ public class WxUOrderService {
      */
     @Transactional
     public Object prepay( AuntOrder order,HttpServletRequest request) {
+        if (!checkLogin(request)){
+            return ResponseUtil.unlogin();
+        }
         if (order == null) {
             return ResponseUtil.badArgument();
         }
         if (null==order.getId()) {
             return ResponseUtil.badArgument();
         }
-        if (null==order.getUserId()) {
-            return ResponseUtil.badArgument();
-        }
         AuntOrder dbOrder = uOrderService.selectById(order.getId());
         if (dbOrder == null) {
             return ResponseUtil.badArgumentValue();
         }
-
         if (dbOrder.getPayStatus()!=0){
             return ResponseUtil.fail(ORDER_INVALID_OPERATION, "订单不能支付");
         }
 
-        LitemallUser user = userService.findById(order.getUserId());
+        LitemallUser user = userService.findById(dbOrder.getUserId());
         String openid = user.getWeixinOpenid();
         if (openid == null) {
             return ResponseUtil.fail(AUTH_OPENID_UNACCESS, "订单不能支付");
@@ -132,7 +131,6 @@ public class WxUOrderService {
         String transactionCode =UUID.randomUUID().toString().replace("-","");
         dbOrder.setPayStatus(1);
         dbOrder.setTransactionCode(transactionCode);
-
         try {
             WxPayUnifiedOrderRequest orderRequest = new WxPayUnifiedOrderRequest();
             orderRequest.setOutTradeNo(dbOrder.getTransactionCode());
@@ -144,14 +142,12 @@ public class WxUOrderService {
             fee = actualPrice.multiply(new BigDecimal(100)).intValue();
             orderRequest.setTotalFee(fee);
             orderRequest.setSpbillCreateIp(IpUtil.getIpAddr(request));
-
             result = wxPayService.createOrder(orderRequest);
+            uOrderService.updateById(dbOrder);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseUtil.fail(ORDER_PAY_FAIL, "订单不能支付");
         }
-
-        uOrderService.updateById(dbOrder);
 
         return ResponseUtil.ok(result);
     }
@@ -166,13 +162,13 @@ public class WxUOrderService {
      */
     @Transactional
     public Object h5pay(AuntOrder order,HttpServletRequest request) {
+        if (!checkLogin(request)){
+            return ResponseUtil.unlogin();
+        }
         if (order == null) {
             return ResponseUtil.badArgument();
         }
         if (null==order.getId()) {
-            return ResponseUtil.badArgument();
-        }
-        if (null==order.getUserId()) {
             return ResponseUtil.badArgument();
         }
 
@@ -200,11 +196,12 @@ public class WxUOrderService {
             fee = actualPrice.multiply(new BigDecimal(100)).intValue();
             orderRequest.setTotalFee(fee);
             orderRequest.setSpbillCreateIp(IpUtil.getIpAddr(request));
-
             result = wxPayService.createOrder(orderRequest);
+            uOrderService.updateById(dbOrder);
 
         } catch (Exception e) {
             e.printStackTrace();
+
         }
 
         return ResponseUtil.ok(result);
@@ -263,7 +260,7 @@ public class WxUOrderService {
         }
 
         // 检查这个订单是否已经处理过
-        if (order.getPayStatus()==2) {
+        if (order.getPayStatus()==2||order.getPayStatus()==4) {
             return WxPayNotifyResponse.success("订单已经处理成功!");
         }
 
@@ -271,84 +268,34 @@ public class WxUOrderService {
         if (!totalFee.equals(order.getBlance().toString())) {
             return WxPayNotifyResponse.fail(order.getTransactionCode() + " : 支付金额不符合 totalFee=" + totalFee);
         }
-
         order.setPayNo(payId);
-        order.setPayStatus(2);
+        if (1==order.getPayStatus()){
+            order.setPayStatus(2);
+        }
+        if (3==order.getPayStatus()){
+            order.setPayStatus(4);
+
+        }
         uOrderService.updateById(order);
 
-        // 这里微信的短信平台对参数长度有限制，所以将订单号只截取后6位
-        notifyService.notifySmsTemplateSync(order.getMobile(), NotifyType.PAY_SUCCEED, new String[]{orderSn.substring(8, 14)});
-
-
+        if (order.getPayStatus()==2){
+            // 这里微信的短信平台对参数长度有限制，所以将订单号只截取后6位
+            notifyService.notifySmsTemplateSync(order.getMobile(),NotifyType.PAY_SUCCEED,
+                    new String[]{orderSn.substring(8, 14)});
+        }
+        if (order.getPayStatus()==4){
+            notifyService.notifySmsTemplateSync(order.getMobile(),NotifyType.REFUND, new String[]{orderSn.substring(8, 14)});
+        }
 
         return WxPayNotifyResponse.success("处理成功!");
     }
 
-    /**
-     * 订单申请退款
-     * <p>
-     * 1. 检测当前订单是否能够退款；
-     * 2. 设置订单申请退款状态。
-     *
-     * @param userId 用户ID
-     * @param body   订单信息，{ orderId：xxx }
-     * @return 订单退款操作结果
-     */
-    public Object refund(AuntOrder order,HttpServletRequest request) {
-        if (order == null) {
-            return ResponseUtil.badArgument();
-        }
-        if (null==order.getId()) {
-            return ResponseUtil.badArgument();
-        }
-
-        AuntOrder dbOrder = uOrderService.selectById(order.getId());
-        if (dbOrder == null) {
-            return ResponseUtil.badArgumentValue();
-        }
-        if (dbOrder.getPayStatus()!=2){
-            return ResponseUtil.fail(ORDER_INVALID_OPERATION, "订单不能退款");
-        }
-
-        // 微信退款
-        WxPayRefundRequest wxPayRefundRequest = new WxPayRefundRequest();
-        wxPayRefundRequest.setOutTradeNo(order.getTransactionCode());
-        wxPayRefundRequest.setOutRefundNo("refund_" + order.getTransactionCode());
-        // 元转成分
-        Integer totalFee = order.getBlance().multiply(new BigDecimal(100)).intValue();
-        wxPayRefundRequest.setTotalFee(totalFee);
-        wxPayRefundRequest.setRefundFee(totalFee);
-
-        WxPayRefundResult wxPayRefundResult;
-        try {
-            wxPayRefundResult = wxPayService.refund(wxPayRefundRequest);
-        } catch (WxPayException e) {
-            logger.error(e.getMessage(), e);
-            return ResponseUtil.fail(621, "订单退款失败");
-        }
-        if (!wxPayRefundResult.getReturnCode().equals("SUCCESS")) {
-            logger.warn("refund fail: " + wxPayRefundResult.getReturnMsg());
-            return ResponseUtil.fail(621, "订单退款失败");
-        }
-        if (!wxPayRefundResult.getResultCode().equals("SUCCESS")) {
-            logger.warn("refund fail: " + wxPayRefundResult.getReturnMsg());
-            return ResponseUtil.fail(621, "订单退款失败");
-        }
-
-        LocalDateTime now = LocalDateTime.now();
-        // 设置订单取消状态
-        order.setPayStatus(3);
-        // 记录订单退款相关信息
-        uOrderService.updateById(order);
+    private boolean checkLogin(HttpServletRequest request){
+        // TODO: 2021/4/25 0025 登陆检测
 
 
-        //TODO 发送邮件和短信通知，这里采用异步发送
-        // 退款成功通知用户, 例如“您申请的订单退款 [ 单号:{1} ] 已成功，请耐心等待到账。”
-        // 注意订单号只发后6位
-        notifyService.notifySmsTemplate(order.getMobile(), NotifyType.REFUND,
-                new String[]{order.getId().toString()});
 
-        return ResponseUtil.ok();
+        return true;
     }
 
 }

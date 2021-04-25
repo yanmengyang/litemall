@@ -180,6 +180,24 @@ public class ApiAuntAuthController {
             return ResponseUtil.fail();
         }
         LitemallUser user = userService.queryByOid(openId);
+        if (userInfo==null||userInfo.getUserId()==null){
+            if (user!=null){
+                // token
+                String token = UserTokenManager.generateToken(user.getId());
+                Map<Object, Object> result = new HashMap<Object, Object>();
+                result.put("token", token);
+                result.put("userInfo", user);
+                result.put("openId", openId);
+                result.put("sessionKey", sessionKey);
+                result.put("unionid", unionid);
+                result.put("unionid", user.getMobile());
+                return ResponseUtil.ok(result);
+            }
+        }
+
+
+
+
         if (user!=null&&userInfo!=null&&!user.getId().equals(userInfo.getUserId())){
             return ResponseUtil.fail(50001,"改微信已绑定其他账号");
         }
@@ -220,6 +238,7 @@ public class ApiAuntAuthController {
         result.put("openId", openId);
         result.put("sessionKey", sessionKey);
         result.put("unionid", unionid);
+        result.put("mobile", null);
         return ResponseUtil.ok(result);
     }
 

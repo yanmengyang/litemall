@@ -69,9 +69,11 @@ public class ApiAuntOrderController {
 
         order.setAuntMobile(aunt.getMobile());
         order.setAuntName(aunt.getNickName());
-
-
-        return ResponseUtil.ok(orderService.save(order));
+        Integer cunt =orderService.save(order);
+        if (cunt==null||cunt==0){
+            return ResponseUtil.fail();
+        }
+        return ResponseUtil.ok(cunt);
 
     }
 
@@ -114,8 +116,7 @@ public class ApiAuntOrderController {
     /**
      * 付款订单的预支付会话标识
      *
-     * @param userId 用户ID
-     * @param body   订单信息，{ orderId：xxx }
+
      * @return 支付订单ID
      */
     @PostMapping("prepay")
@@ -125,8 +126,8 @@ public class ApiAuntOrderController {
 
     /**
      * 微信H5支付
-     * @param userId
-     * @param body
+     * @param
+     * @param
      * @param request
      * @return
      */
@@ -149,20 +150,5 @@ public class ApiAuntOrderController {
     public Object payNotify(HttpServletRequest request, HttpServletResponse response) {
         return wxUOrderService.payNotify(request, response);
     }
-
-    /**
-     * 订单申请退款
-     *
-     * @param userId 用户ID
-     * @param body   订单信息，{ orderId：xxx }
-     * @return 订单退款操作结果
-     */
-    @PostMapping("refund")
-    public Object refund(@RequestBody AuntOrder order,HttpServletRequest request) {
-        return wxUOrderService.refund(order, request);
-    }
-
-
-
 
 }

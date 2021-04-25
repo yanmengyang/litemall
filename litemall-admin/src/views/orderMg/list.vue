@@ -551,6 +551,7 @@ export default {
       total: 0,
       listLoading: false,
       listQuery: {
+        isDel: 0,
         // page: 1,
         // limit: 20,
         // nickname: undefined,
@@ -632,12 +633,15 @@ export default {
       this.listLoading = true;
       const self = this;
 
-      console.log("+++++++++++++++++++");
-      console.log(this.listQuery);
 
       listOrder(this.listQuery)
         .then((response) => {
-          self.list = response.data.data.list;
+          let arr = response.data.data.list;
+          arr.map((obj,idx)=>{
+              if (obj.isDel == 0) {
+                  self.list.push(obj)
+              }
+          });
           self.total = response.data.data.total;
           self.listLoading = false;
         })

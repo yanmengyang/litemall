@@ -3,7 +3,7 @@
     <!-- 查询和其他操作 -->
     <div class="filter-container">
       <el-input
-        v-model="listQuery.nickname"
+        v-model="listQuery.auntMobile"
         clearable
         class="filter-item"
         style="width: 160px"
@@ -11,43 +11,24 @@
       />
 
       <el-input
-        v-model="listQuery.orderSn"
+        v-model="listQuery.id"
         clearable
         class="filter-item"
         style="width: 160px"
         placeholder="请输入订单编号"
       />
-      <el-date-picker
-        v-model="listQuery.timeArray"
-        type="datetimerange"
-        value-format="yyyy-MM-dd HH:mm:ss"
-        class="filter-item"
-        range-separator="至"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-        :picker-options="pickerOptions"
-      />
-      <el-select
-        v-model="listQuery.orderStatusArray"
-        multiple
-        style="width: 200px"
-        class="filter-item"
-        placeholder="请选择订单状态"
-      >
-        <el-option
-          v-for="(key, value) in statusMap"
-          :key="key"
-          :label="key"
-          :value="value"
-        />
-      </el-select>
+      <!-- <el-date-picker v-model="listQuery.timeArray" type="datetimerange" value-format="yyyy-MM-dd HH:mm:ss" class="filter-item" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions" /> -->
+      <!-- <el-select v-model="listQuery.orderStatusArray" multiple style="width: 200px" class="filter-item" placeholder="请选择订单状态">
+                <el-option v-for="(key, value) in statusMap" :key="key" :label="key" :value="value" />
+            </el-select> -->
+
       <el-button
-        v-permission="['GET /admin/order/list']"
         class="filter-item"
         type="primary"
         icon="el-icon-search"
         @click="handleFilter"
       >查找</el-button>
+
       <el-button
         :loading="downloadLoading"
         class="filter-item"
@@ -55,6 +36,7 @@
         icon="el-icon-download"
         @click="handleDownload"
       >导出</el-button>
+
     </div>
 
     <!-- 查询结果 -->
@@ -268,13 +250,7 @@
             </el-table>
           </el-form-item>
           <el-form-item label="费用信息">
-            <span>
-              (实际费用){{ orderDetail.order.actualPrice }}元 = (商品总价){{
-                orderDetail.order.goodsPrice
-              }}元 + (快递费用){{ orderDetail.order.freightPrice }}元 -
-              (优惠减免){{ orderDetail.order.couponPrice }}元 - (积分减免){{
-                orderDetail.order.integralPrice
-              }}元
+            <span> (实际费用){{ orderDetail.order.actualPrice }}元 = (商品总价){{ orderDetail.order.goodsPrice }}元 + (快递费用){{ orderDetail.order.freightPrice }}元 - (优惠减免){{ orderDetail.order.couponPrice }}元 - (积分减免){{ orderDetail.order.integralPrice }}元
             </span>
           </el-form-item>
           <el-form-item label="支付信息">
@@ -552,6 +528,8 @@ export default {
       listLoading: false,
       listQuery: {
         isDel: 0,
+        auntMobile: undefined,
+        id: undefined,
         // page: 1,
         // limit: 20,
         // nickname: undefined,
@@ -633,14 +611,13 @@ export default {
       this.listLoading = true;
       const self = this;
 
-
       listOrder(this.listQuery)
         .then((response) => {
           let arr = response.data.data.list;
-          arr.map((obj,idx)=>{
-              if (obj.isDel == 0) {
-                  self.list.push(obj)
-              }
+          arr.map((obj, idx) => {
+            if (obj.isDel == 0) {
+              self.list.push(obj);
+            }
           });
           self.total = response.data.data.total;
           self.listLoading = false;
@@ -777,6 +754,14 @@ export default {
     },
     handleFilter() {
       this.listQuery.page = 1;
+      let { auntMobile, id } = this.listQuery;
+      if (id == undefined || id.length == 0) {
+        delete this.listQuery.id;
+      }
+
+      if (auntMobile == undefined || auntMobile.length == 0) {
+        delete this.listQuery.auntMobile;
+      }
       this.getList();
     },
     handleDetail(row) {

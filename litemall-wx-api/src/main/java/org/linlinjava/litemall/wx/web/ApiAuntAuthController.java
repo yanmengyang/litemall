@@ -3,8 +3,12 @@ package org.linlinjava.litemall.wx.web;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
+import me.chanjar.weixin.common.util.crypto.PKCS7Encoder;
+import net.sf.json.JSONObject;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.linlinjava.litemall.core.notify.NotifyService;
 import org.linlinjava.litemall.core.notify.NotifyType;
 import org.linlinjava.litemall.core.util.*;
@@ -23,19 +27,26 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.security.*;
+import java.security.spec.InvalidParameterSpecException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.linlinjava.litemall.wx.util.WxResponseCode.*;
 
 /**
  * 鉴权服务
  */
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/wx/aunt/auth")
 @Validated
@@ -182,6 +193,14 @@ public class ApiAuntAuthController {
         LitemallUser user = userService.queryByOid(openId);
         if (userInfo==null||userInfo.getUserId()==null){
             if (user!=null){
+                user.setWeixinOpenid(openId);
+                user.setUnionid(unionid);
+                user.setLastLoginTime(LocalDateTime.now());
+                user.setLastLoginIp(IpUtil.getIpAddr(request));
+                user.setSessionKey(sessionKey);
+                if (userService.updateById(user) == 0) {
+                    return ResponseUtil.updatedDataFailed();
+                }
                 // token
                 String token = UserTokenManager.generateToken(user.getId());
                 Map<Object, Object> result = new HashMap<Object, Object>();
@@ -262,14 +281,14 @@ public class ApiAuntAuthController {
             return ResponseUtil.badArgumentValue();
         }
 
-        if (!notifyService.isSmsEnable()) {
-            return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "小程序后台验证码服务不支持");
-        }
+//        if (!notifyService.isSmsEnable()) {
+//            return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "小程序后台验证码服务不支持");
+//        }
         String code = CharUtil.getRandomNum(6);
         boolean successful = CaptchaCodeManager.addToCache(phoneNumber, code);
-//        if (!successful) {
-//            return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时1分钟，不能发送");
-//        }
+        if (!successful) {
+            return ResponseUtil.fail(AUTH_CAPTCHA_FREQUENCY, "验证码未超时1分钟，不能发送");
+        }
         notifyService.notifySmsTemplate(phoneNumber, NotifyType.CAPTCHA, new String[]{code});
 
         return ResponseUtil.ok(code);
@@ -427,7 +446,18 @@ public class ApiAuntAuthController {
         if (StringUtils.isEmpty(phone)){
             String encryptedData = JacksonUtil.parseString(body, "encryptedData");
             String iv = JacksonUtil.parseString(body, "iv");
-            WxMaPhoneNumberInfo phoneNumberInfo = this.wxService.getUserService().getPhoneNoInfo(user.getSessionKey(), encryptedData, iv);
+            String json=decrypt(user.getSessionKey(), encryptedData, iv);
+
+            JSONObject jsonObject=getUserInfo(encryptedData,user.getSessionKey(),iv);
+
+
+
+            WxMaPhoneNumberInfo phoneNumberInfo = null;
+            try {
+                phoneNumberInfo = this.wxService.getUserService().getPhoneNoInfo(user.getSessionKey(), encryptedData, iv);
+            } catch (Exception e) {
+                ResponseUtil.fail(444444,"解析失败");
+            }
             phone = phoneNumberInfo.getPhoneNumber();
         }
         user.setMobile(phone);
@@ -460,4 +490,76 @@ public class ApiAuntAuthController {
 
         return ResponseUtil.ok(data);
     }
+
+
+
+    public static String decrypt(String sessionKey, String encryptedData, String ivStr) {
+        try {
+            AlgorithmParameters params = AlgorithmParameters.getInstance("AES");
+            params.init(new IvParameterSpec(Base64.decodeBase64(ivStr)));
+            Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding");
+            cipher.init(2, new SecretKeySpec(Base64.decodeBase64(sessionKey), "AES"), params);
+            return new String(PKCS7Encoder.decode(cipher.doFinal(Base64.decodeBase64(encryptedData))), StandardCharsets.UTF_8);
+        } catch (Exception var5) {
+            throw new RuntimeException("AES解密失败", var5);
+        }
+    }
+    /**
+     * 解密用户敏感数据获取用户信息
+     * @param sessionKey 数据进行加密签名的密钥
+     * @param encryptedData 包括敏感数据在内的完整用户信息的加密数据
+     * @param iv 加密算法的初始向量
+     */
+    public JSONObject getUserInfo(String encryptedData, String sessionKey, String iv){
+        // 被加密的数据
+        byte[] dataByte = org.codehaus.xfire.util.Base64.decode(encryptedData);
+        // 加密秘钥
+        byte[] keyByte = org.codehaus.xfire.util.Base64.decode(sessionKey);
+        // 偏移量
+        byte[] ivByte = org.codehaus.xfire.util.Base64.decode(iv);
+        try {
+            // 如果密钥不足16位，那么就补足.  这个if 中的内容很重要
+            int base = 16;
+            if (keyByte.length % base != 0) {
+                int groups = keyByte.length / base + (keyByte.length % base != 0 ? 1 : 0);
+                byte[] temp = new byte[groups * base];
+                Arrays.fill(temp, (byte) 0);
+                System.arraycopy(keyByte, 0, temp, 0, keyByte.length);
+                keyByte = temp;
+            }
+            // 初始化
+            Security.addProvider(new BouncyCastleProvider());
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding","BC");
+            SecretKeySpec spec = new SecretKeySpec(keyByte, "AES");
+            AlgorithmParameters parameters = AlgorithmParameters.getInstance("AES");
+            parameters.init(new IvParameterSpec(ivByte));
+            cipher.init(Cipher.DECRYPT_MODE, spec, parameters);// 初始化
+            byte[] resultByte = cipher.doFinal(dataByte);
+            if (null != resultByte && resultByte.length > 0) {
+                String result = new String(resultByte, "UTF-8");
+                return JSONObject.fromObject(result);
+            }
+        }catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidParameterSpecException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 }

@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 阿姨-订单服务
  */
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/wx/aunt/uorder")
 @Validated
@@ -73,7 +73,7 @@ public class ApiAuntOrderController {
         if (cunt==null||cunt==0){
             return ResponseUtil.fail();
         }
-        return ResponseUtil.ok(cunt);
+        return ResponseUtil.ok(order.getId());
 
     }
 

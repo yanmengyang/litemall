@@ -36,7 +36,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.linlinjava.litemall.admin.util.AdminResponseCode.*;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/auth")
 @Validated

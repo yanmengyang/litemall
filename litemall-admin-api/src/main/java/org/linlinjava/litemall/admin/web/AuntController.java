@@ -25,6 +25,7 @@ import java.util.List;
  * @time: 2021/3/26 0026 15:32
  * @Description 服务实现层 
  */
+//@CrossOrigin
 @RestController
 @RequestMapping("/admin/aunt")
 public class AuntController {

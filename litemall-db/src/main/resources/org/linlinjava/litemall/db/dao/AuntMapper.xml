@@ -447,6 +447,9 @@
     <include refid="Base_Column_List" />
     from litemall_aunt
     where TRUE
+    <if test="id != null">
+      and id =#{id}
+    </if>
     <if test="nickName != null">
       and nick_name LIKE CONCAT('%',#{nickName},'%')
     </if>

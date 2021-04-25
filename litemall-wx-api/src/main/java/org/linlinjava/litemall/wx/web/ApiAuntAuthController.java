@@ -434,7 +434,7 @@ public class ApiAuntAuthController {
         if (userService.updateById(user) == 0) {
             return ResponseUtil.updatedDataFailed();
         }
-        return ResponseUtil.ok();
+        return ResponseUtil.ok(user);
     }
 
     @PostMapping("logout")

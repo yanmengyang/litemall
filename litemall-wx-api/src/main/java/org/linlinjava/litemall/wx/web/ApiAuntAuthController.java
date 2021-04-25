@@ -162,43 +162,49 @@ public class ApiAuntAuthController {
     public Object loginByWeixin(@RequestBody WxLoginInfo wxLoginInfo, HttpServletRequest request) {
         String code = wxLoginInfo.getCode();
         UserInfo userInfo = wxLoginInfo.getUserInfo();
-        if (code == null || userInfo == null) {
+        if (code == null ) {
             return ResponseUtil.badArgument();
         }
-
         String sessionKey = null;
         String openId = null;
+        String unionid = null;
         try {
             WxMaJscode2SessionResult result = this.wxService.getUserService().getSessionInfo(code);
             sessionKey = result.getSessionKey();
             openId = result.getOpenid();
+            unionid = result.getUnionid();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         if (sessionKey == null || openId == null) {
             return ResponseUtil.fail();
         }
-
         LitemallUser user = userService.queryByOid(openId);
-        if (user == null) {
+        if (user!=null&&userInfo!=null&&!user.getId().equals(userInfo.getUserId())){
+            return ResponseUtil.fail(50001,"改微信已绑定其他账号");
+        }
+        if (null!=userInfo&&userInfo.getUserId()!=null){
+            user=userService.findById(userInfo.getUserId());
+        }
+
+        if (user==null){
             user = new LitemallUser();
             user.setUsername(openId);
             user.setPassword(openId);
             user.setWeixinOpenid(openId);
-            user.setAvatar(userInfo.getAvatarUrl());
-            user.setNickname(userInfo.getNickName());
-            user.setGender(userInfo.getGender());
+            user.setUnionid(unionid);
             user.setUserLevel((byte) 0);
             user.setStatus((byte) 0);
+            user.setAvatar("https://yanxuan.nosdn.127.net/80841d741d7fa3073e0ae27bf487339f.jpg?imageView&quality=90&thumbnail=64x64");
+            user.setNickname(openId);
+            user.setGender((byte) 0);
             user.setLastLoginTime(LocalDateTime.now());
             user.setLastLoginIp(IpUtil.getIpAddr(request));
             user.setSessionKey(sessionKey);
-
             userService.add(user);
-
-
-        } else {
+        }else {
+            user.setWeixinOpenid(openId);
+            user.setUnionid(unionid);
             user.setLastLoginTime(LocalDateTime.now());
             user.setLastLoginIp(IpUtil.getIpAddr(request));
             user.setSessionKey(sessionKey);
@@ -206,13 +212,14 @@ public class ApiAuntAuthController {
                 return ResponseUtil.updatedDataFailed();
             }
         }
-
         // token
         String token = UserTokenManager.generateToken(user.getId());
-        userInfo.setUserId(user.getId());
         Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("token", token);
-        result.put("userInfo", userInfo);
+        result.put("userInfo", user);
+        result.put("openId", openId);
+        result.put("sessionKey", sessionKey);
+        result.put("unionid", unionid);
         return ResponseUtil.ok(result);
     }
 
@@ -386,10 +393,24 @@ public class ApiAuntAuthController {
             return ResponseUtil.unlogin();
         }
         LitemallUser user = userService.findById(userId);
-        String encryptedData = JacksonUtil.parseString(body, "encryptedData");
-        String iv = JacksonUtil.parseString(body, "iv");
-        WxMaPhoneNumberInfo phoneNumberInfo = this.wxService.getUserService().getPhoneNoInfo(user.getSessionKey(), encryptedData, iv);
-        String phone = phoneNumberInfo.getPhoneNumber();
+        String phone=JacksonUtil.parseString(body, "phone");
+        String code=JacksonUtil.parseString(body, "code");
+
+        /*H5绑定*/
+        if (!StringUtils.isEmpty(phone)){
+            //判断验证码是否正确
+            String cacheCode = CaptchaCodeManager.getCachedCaptcha(phone);
+            if (cacheCode == null || cacheCode.isEmpty() || !cacheCode.equals(code)) {
+                return ResponseUtil.fail(AUTH_CAPTCHA_UNMATCH, "验证码错误");
+            }
+        }
+        /*小程序绑定*/
+        if (StringUtils.isEmpty(phone)){
+            String encryptedData = JacksonUtil.parseString(body, "encryptedData");
+            String iv = JacksonUtil.parseString(body, "iv");
+            WxMaPhoneNumberInfo phoneNumberInfo = this.wxService.getUserService().getPhoneNoInfo(user.getSessionKey(), encryptedData, iv);
+            phone = phoneNumberInfo.getPhoneNumber();
+        }
         user.setMobile(phone);
         if (userService.updateById(user) == 0) {
             return ResponseUtil.updatedDataFailed();

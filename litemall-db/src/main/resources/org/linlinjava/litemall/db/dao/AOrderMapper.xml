@@ -301,6 +301,9 @@
 	<if test="auntMobile != null">
       and  aunt_mobile = #{auntMobile}
     </if>
+    <if test="isDel != null">
+      and  `is_del` = #{isDel}
+    </if>
 
 
     ORDER BY  id

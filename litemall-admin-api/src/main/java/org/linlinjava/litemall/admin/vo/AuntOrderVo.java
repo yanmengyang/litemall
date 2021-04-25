@@ -1,5 +1,6 @@
 package org.linlinjava.litemall.admin.vo;
 
+import io.swagger.models.auth.In;
 import lombok.Data;
 import org.linlinjava.litemall.db.domain.AuntOrder;
 

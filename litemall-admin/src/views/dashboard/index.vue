@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-editor-container">
-
-    <el-row :gutter="40" class="panel-group">
+    <h1>欢迎使用，爱马家政管理系统</h1>
+    <!-- <el-row :gutter="40" class="panel-group">
       <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
           <div class="card-panel-icon-wrapper icon-people">
@@ -46,40 +46,40 @@
           </div>
         </div>
       </el-col>
-    </el-row>
+    </el-row> -->
   </div>
 </template>
 
 <script>
-import { info } from '@/api/dashboard'
-import CountTo from 'vue-count-to'
+import { info } from "@/api/dashboard";
+import CountTo from "vue-count-to";
 
 export default {
   components: {
-    CountTo
+    CountTo,
   },
   data() {
     return {
       userTotal: 0,
       goodsTotal: 0,
       productTotal: 0,
-      orderTotal: 0
-    }
+      orderTotal: 0,
+    };
   },
   created() {
-    info().then(response => {
-      this.userTotal = response.data.data.userTotal
-      this.goodsTotal = response.data.data.goodsTotal
-      this.productTotal = response.data.data.productTotal
-      this.orderTotal = response.data.data.orderTotal
-    })
+    info().then((response) => {
+      this.userTotal = response.data.data.userTotal;
+      this.goodsTotal = response.data.data.goodsTotal;
+      this.productTotal = response.data.data.productTotal;
+      this.orderTotal = response.data.data.orderTotal;
+    });
   },
   methods: {
     handleSetLineChartData(type) {
-      this.$emit('handleSetLineChartData', type)
-    }
-  }
-}
+      this.$emit("handleSetLineChartData", type);
+    },
+  },
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -96,7 +96,7 @@ export default {
 .panel-group {
   margin-top: 18px;
 
-  .card-panel-col{
+  .card-panel-col {
     margin-bottom: 32px;
   }
   .card-panel {
@@ -107,14 +107,14 @@ export default {
     overflow: hidden;
     color: #666;
     background: #fff;
-    box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
-    border-color: rgba(0, 0, 0, .05);
+    box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.05);
     &:hover {
       .card-panel-icon-wrapper {
         color: #fff;
       }
       .icon-people {
-         background: #40c9c6;
+        background: #40c9c6;
       }
       .icon-message {
         background: #36a3f7;
@@ -123,7 +123,7 @@ export default {
         background: #f4516c;
       }
       .icon-shoppingCard {
-        background: #34bfa3
+        background: #34bfa3;
       }
     }
     .icon-people {
@@ -136,7 +136,7 @@ export default {
       color: #f4516c;
     }
     .icon-shoppingCard {
-      color: #34bfa3
+      color: #34bfa3;
     }
     .card-panel-icon-wrapper {
       float: left;

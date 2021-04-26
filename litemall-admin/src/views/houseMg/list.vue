@@ -4,13 +4,26 @@
     <!-- 查询和其他操作 -->
     <div class="filter-container">
       <!--<el-input v-model="listQuery.goodsId" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨ID" />-->
-      <el-input v-model="listQuery.id" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨编号" />
-      <el-input v-model="listQuery.nickName" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨名称" />
-      <el-input v-model="listQuery.type" clearable class="filter-item" style="width: 160px;" placeholder="请输入矩阵类型" />
-      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
-      <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
-      <el-button v-if="0" :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导入</el-button>
-      <el-button v-if="0" :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button>
+            <div style="display: flex;align-items:center;">
+                <el-input v-model="listQuery.id" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨编号" />
+                <div style="width:12px;"/>
+                <el-input v-model="listQuery.nickName" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨名称" />
+                <div style="width:12px;"/>
+                <el-input v-model="listQuery.type" clearable class="filter-item" style="width: 160px;" placeholder="请输入矩阵类型" />
+                <div style="width:12px;"/>
+                <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
+                <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
+                <el-upload ref="upload" :show-file-list="false" :on-change="readExcel" :limit="1" 
+                    :action="'https://aimajiazheng.com/api/admin/aunt/insertBatich'" 
+                    accept=".xlsx"
+                    :on-error="xlsxUploadError" 
+                    :on-success="xlsxUploadSuccess" 
+                    style="margin-left: 12px;"
+                    >
+                    <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleImport">导入</el-button>
+                </el-upload>
+            </div>
+        <el-button v-if="0" :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -221,7 +234,9 @@ export default {
 
       })
     },
+    handleImport() {
 
+    },
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
@@ -230,7 +245,34 @@ export default {
         excel.export_json_to_excel2(tHeader, this.list, filterVal, '阿姨信息')
         this.downloadLoading = false
       })
-    }
+    },
+
+    xlsxUploadError(err) {
+         this.$notify.error({
+            title: "失败",
+            message: "导入失败",
+          });
+    },
+
+    xlsxUploadSuccess(response, file, fileList) {
+        let {errno,errmsg} = response
+        if (errno != 0) {
+             this.$notify.error({
+            title: "失败",
+            message: errmsg,
+          });
+        } else {
+              this.$notify.success({
+            title: "成功",
+            message: "导入成功"
+              });
+
+            this.listQuery.page = 1
+            this.getList()
+        }
+    },
+
+
   }
 }
 </script>

@@ -86,7 +86,7 @@
     </el-form>
 
     <div class="copyright">
-      Copyright © 2020 xxx.com 版权所有 <a href="http://www.example.com/">沪ICP备xxx号</a>
+      Copyright © 2021 aimajiazheng.com 版权所有 <a href="http://aimajiazheng.com/">沪ICP备20024094号</a>
     </div>
   </div>
 </template>

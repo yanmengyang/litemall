@@ -211,10 +211,12 @@
                     <el-input v-model="auntInfo.selfIntroduction" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" />
                 </el-form-item>
                 <el-form-item label="工作经历">
-                    <editor v-model="auntInfo.workExperience" :init="editorInit" />
+                  <el-input v-model="auntInfo.workExperience" type="textarea" :autosize="{ minRows: 2, maxRows: 8 }" />
+                    <!--<editor v-model="auntInfo.workExperience" :init="editorInit" />-->
                 </el-form-item>
                 <el-form-item label="培训经历">
-                    <editor v-model="auntInfo.des" :init="editorInit" />
+                  <el-input v-model="auntInfo.des" type="textarea" :autosize="{ minRows: 2, maxRows: 8 }" />
+                    <!--<editor v-model="auntInfo.des" :init="editorInit" />-->
                 </el-form-item>
 
                 <el-form-item label="个人展示" prop="nativePlace">

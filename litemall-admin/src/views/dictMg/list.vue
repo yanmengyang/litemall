@@ -3,7 +3,7 @@
 
     <!-- 查询和其他操作 -->
     <div class="filter-container">
-      <el-input v-model="listQuery.dictValue" clearable class="filter-item" style="width: 160px;" placeholder="类型值" />
+      <el-input v-model="listQuery.dictType" clearable class="filter-item" style="width: 160px;" placeholder="类型值" />
       <!--<el-input v-model="listQuery.goodsSn" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨编号" />-->
       <!--<el-input v-model="listQuery.name" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨名称" />-->
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
@@ -84,7 +84,7 @@ export default {
         limit: 20,
         goodsSn: undefined,
         name: undefined,
-        dictValue:undefined,
+        dictValue: undefined
         // sort: 'add_time',
         // order: 'desc'
       },
@@ -113,11 +113,11 @@ export default {
     handleFilter() {
       this.listQuery.page = 1
 
-        let {dictValue} = this.listQuery
-        if (dictValue.length == 0 || dictValue == undefined) {
-            delete this.listQuery.dictValue
-        }
-        this.getList()
+      const { dictValue } = this.listQuery
+      if (dictValue.length == 0 || dictValue == undefined) {
+        delete this.listQuery.dictValue
+      }
+      this.getList()
     },
 
     handleCreate() {

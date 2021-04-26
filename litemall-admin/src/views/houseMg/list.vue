@@ -183,18 +183,18 @@ export default {
 
     handleFilter() {
       this.listQuery.page = 1
-        let {id,type,nickName} = listQuery
+        let {id,type,nickName} = this.listQuery
 
-        if (id.length == 0 || id == undefined) {
-            delete listQuery.id
+        if (id == undefined || id.length == 0) {
+            delete this.listQuery.id
         }
         
-        if (type.length == 0 || type == undefined) {
-            delete listQuery.type
+        if (type == undefined || type.length == 0) {
+            delete this.listQuery.type
         }
 
-        if (nickName.length == 0 || nickName == undefined) {
-            delete listQuery.nickName
+        if (nickName == undefined || nickName.length == 0) {
+            delete this.listQuery.nickName
         }
       this.getList()
     },

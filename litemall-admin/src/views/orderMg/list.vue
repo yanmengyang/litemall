@@ -7,7 +7,7 @@
         clearable
         class="filter-item"
         style="width: 160px"
-        placeholder="联系电话"
+        placeholder="阿姨电话"
       />
 
       <el-input
@@ -619,6 +619,7 @@ export default {
               self.list.push(obj);
             }
           });
+          self.list = arr; 
           self.total = response.data.data.total;
           self.listLoading = false;
         })

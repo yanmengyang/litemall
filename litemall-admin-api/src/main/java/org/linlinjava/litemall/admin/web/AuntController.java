@@ -2,6 +2,7 @@ package org.linlinjava.litemall.admin.web;
 
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.linlinjava.litemall.admin.annotation.RequiresPermissionsDesc;
 import org.linlinjava.litemall.admin.service.AdminAuntService;
@@ -26,6 +27,7 @@ import java.util.List;
  * @Description 服务实现层 
  */
 //@CrossOrigin
+@Slf4j
 @RestController
 @RequestMapping("/admin/aunt")
 public class AuntController {
@@ -78,11 +80,12 @@ public class AuntController {
      * @param
      * @return
      */
-    @RequiresPermissions("admin:aunt:insertBatich")
-    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "导入")
+//    @RequiresPermissions("admin:aunt:insertBatich")
+//    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "导入")
     @PostMapping(value = "/insertBatich")
     public Object insertBatch(MultipartFile file){
-        return ResponseUtil.ok(adminAuntService.insertBatch(file));
+        log.info("insertBatch-file:file{}","ssss");
+        return ResponseUtil.ok(200);
     }
 
 

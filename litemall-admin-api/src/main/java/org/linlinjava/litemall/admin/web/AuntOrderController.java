@@ -159,10 +159,10 @@ public class AuntOrderController {
 
         // 微信退款
         WxPayRefundRequest wxPayRefundRequest = new WxPayRefundRequest();
-        wxPayRefundRequest.setOutTradeNo(order.getTransactionCode());
-        wxPayRefundRequest.setOutRefundNo("refund_" + order.getTransactionCode());
+        wxPayRefundRequest.setOutTradeNo(dbOrder.getTransactionCode());
+        wxPayRefundRequest.setOutRefundNo("refund_" + dbOrder.getTransactionCode());
         // 元转成分
-        Integer totalFee = order.getBlance().multiply(new BigDecimal(100)).intValue();
+        Integer totalFee = dbOrder.getBlance().multiply(new BigDecimal(100)).intValue();
         wxPayRefundRequest.setTotalFee(totalFee);
         wxPayRefundRequest.setRefundFee(totalFee);
 
@@ -184,9 +184,9 @@ public class AuntOrderController {
 
         LocalDateTime now = LocalDateTime.now();
         // 设置订单取消状态
-        order.setPayStatus(3);
+        dbOrder.setPayStatus(3);
         // 记录订单退款相关信息
-        service.updateById(order);
+        service.updateById(dbOrder);
 
 
         //TODO 发送邮件和短信通知，这里采用异步发送

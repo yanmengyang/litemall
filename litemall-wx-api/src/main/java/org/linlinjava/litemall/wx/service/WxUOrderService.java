@@ -12,6 +12,7 @@ import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import io.swagger.models.auth.In;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -67,6 +68,7 @@ import static org.linlinjava.litemall.wx.util.WxResponseCode.*;
  * 当401用户确认收货以后，此时用户可以进行的操作是删除订单，评价商品，申请售后，或者再次购买
  * 当402系统自动确认收货以后，此时用户可以删除订单，评价商品，申请售后，或者再次购买
  */
+@Slf4j
 @Service
 public class WxUOrderService {
     private final Log logger = LogFactory.getLog(WxUOrderService.class);
@@ -123,6 +125,9 @@ public class WxUOrderService {
         }
 
         LitemallUser user = userService.findById(dbOrder.getUserId());
+        if (null==user.getWeixinOpenid()){
+            return ResponseUtil.fail(AUTH_OPENID_UNACCESS, "未绑定微信不能微信支付");
+        }
         String openid = user.getWeixinOpenid();
         if (openid == null) {
             return ResponseUtil.fail(AUTH_OPENID_UNACCESS, "订单不能支付");
@@ -271,10 +276,11 @@ public class WxUOrderService {
         order.setPayNo(payId);
         if (1==order.getPayStatus()){
             order.setPayStatus(2);
+            log.info("付款成功 orderId{}",order.getId());
         }
         if (3==order.getPayStatus()){
             order.setPayStatus(4);
-
+            log.info("退款成功 orderId{}",order.getId());
         }
         uOrderService.updateById(order);
 

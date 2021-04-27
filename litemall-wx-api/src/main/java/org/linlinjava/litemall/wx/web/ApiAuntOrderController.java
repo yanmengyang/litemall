@@ -1,5 +1,6 @@
 package org.linlinjava.litemall.wx.web;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.core.notify.NotifyService;
@@ -29,11 +30,11 @@ import javax.servlet.http.HttpServletResponse;
  * 阿姨-订单服务
  */
 //@CrossOrigin
+@Slf4j
 @RestController
 @RequestMapping("/wx/aunt/uorder")
 @Validated
 public class ApiAuntOrderController {
-    private final Log logger = LogFactory.getLog(ApiAuntOrderController.class);
 
     @Autowired
     private LitemallUserService userService;
@@ -148,6 +149,8 @@ public class ApiAuntOrderController {
      */
     @PostMapping("pay-notify")
     public Object payNotify(HttpServletRequest request, HttpServletResponse response) {
+        log.info("\n");
+        log.info("payNotify-----------------------------------");
         return wxUOrderService.payNotify(request, response);
     }
 

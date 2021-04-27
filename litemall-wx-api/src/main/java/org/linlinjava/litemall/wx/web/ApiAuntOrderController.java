@@ -69,11 +69,11 @@ public class ApiAuntOrderController {
 
         order.setAuntMobile(aunt.getMobile());
         order.setAuntName(aunt.getNickName());
-        Integer cunt =orderService.save(order);
-        if (cunt==null||cunt==0){
+        Integer orderId =orderService.save(order);
+        if (orderId==null||orderId==0){
             return ResponseUtil.fail();
         }
-        return ResponseUtil.ok(order.getId());
+        return ResponseUtil.ok(orderId);
 
     }
 

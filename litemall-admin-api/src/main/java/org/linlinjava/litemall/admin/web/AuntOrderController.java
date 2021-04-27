@@ -84,6 +84,14 @@ public class AuntOrderController {
 //    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "编辑")
     @PostMapping(value = "/update")
     public Object update(@RequestBody  AuntOrder bean){
+        if (null==bean){
+            ResponseUtil.fail(422222,"订单不存在");
+        }
+        if (null!=bean.getPayStatus()){
+
+        }
+
+
         return ResponseUtil.ok(service.updateById(bean));
     }
 
@@ -130,8 +138,8 @@ public class AuntOrderController {
      *
      * @return 订单退款操作结果
      */
-    @RequiresPermissions("admin:uorder:refund")
-    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "退款")
+//    @RequiresPermissions("admin:uorder:refund")
+//    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "退款")
     @PostMapping("refund")
     public Object refund(@RequestBody AuntOrder order,HttpServletRequest request) {
         if (order == null) {
@@ -146,7 +154,7 @@ public class AuntOrderController {
             return ResponseUtil.badArgumentValue();
         }
         if (dbOrder.getPayStatus()!=2){
-            return ResponseUtil.fail(725, "订单不能退款");
+            return ResponseUtil.fail(4725, "不是已支付订单不能退款");
         }
 
         // 微信退款
@@ -163,15 +171,15 @@ public class AuntOrderController {
             wxPayRefundResult = wxPayService.refund(wxPayRefundRequest);
         } catch (WxPayException e) {
             logger.error(e.getMessage(), e);
-            return ResponseUtil.fail(621, "订单退款失败");
+            return ResponseUtil.fail(4621, "订单退款失败");
         }
         if (!wxPayRefundResult.getReturnCode().equals("SUCCESS")) {
             logger.warn("refund fail: " + wxPayRefundResult.getReturnMsg());
-            return ResponseUtil.fail(621, "订单退款失败");
+            return ResponseUtil.fail(4621, "订单退款失败");
         }
         if (!wxPayRefundResult.getResultCode().equals("SUCCESS")) {
             logger.warn("refund fail: " + wxPayRefundResult.getReturnMsg());
-            return ResponseUtil.fail(621, "订单退款失败");
+            return ResponseUtil.fail(4621, "订单退款失败");
         }
 
         LocalDateTime now = LocalDateTime.now();

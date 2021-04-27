@@ -6,6 +6,7 @@ import org.linlinjava.litemall.db.domain.AuntOrder;
 import org.linlinjava.litemall.db.exection.BeanValidator;
 import org.linlinjava.litemall.db.exection.BizException;
 import org.linlinjava.litemall.db.service.AuntOrderService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -47,7 +48,19 @@ public class AuntOrderServiceImpl implements AuntOrderService {
     @Override
     public Integer save(AuntOrder bean) throws BizException {
         BeanValidator.check(bean);
-        return orderMapper.insertSelective(bean);
+        AuntOrder order=new AuntOrder();
+        BeanUtils.copyProperties(bean,order);
+        List<AuntOrder> orderList= orderMapper.getList(order);
+        if (!CollectionUtils.isEmpty(orderList)){
+            order=orderList.get(0);
+            Long time=System.currentTimeMillis();
+            Long dbTime=order.getCreatTime().getTime();
+            if (time-dbTime>5000){
+               orderMapper.insertSelective(bean);
+               return bean.getId();
+            }
+        }
+        return order.getId();
     }
 
     @Override

@@ -84,7 +84,8 @@ public class AuntController {
 //    @RequiresPermissionsDesc(menu = {"家政管理", "阿姨管理"}, button = "导入")
     @PostMapping(value = "/insertBatich")
     public Object insertBatch(MultipartFile file){
-        log.info("insertBatch-file:file{}","ssss");
+        log.info("insertBatch-file:file{}",file.getName());
+        adminAuntService.insertBatch(file);
         return ResponseUtil.ok(200);
     }
 

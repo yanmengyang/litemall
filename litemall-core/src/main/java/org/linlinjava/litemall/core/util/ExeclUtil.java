@@ -80,48 +80,49 @@ public class ExeclUtil {
             if (lastCellNumber>keyList.size()){
                 lastCellNumber=keyList.size();
             }
-            for (int j = 0; j < lastCellNumber; j++) {
+            for (int j = 0; j <= lastCellNumber; j++) {
+                map.put(keyList.get(j),null);
                 HSSFCell cell=row.getCell(j);
-                if (null==cell){
-                    // 获取图片数据
-                    String key=""+i + "," + j;
-                    List<PictureData> pictureDataList = picMap.get(key);
-                    if (pictureDataList != null) {
-                        String filePath=new File("").getAbsolutePath()+"/"+key;
-                        List<String> fileList=new ArrayList<>(pictureDataList.size());
-                        for (PictureData pictureData : pictureDataList) {
-                            String suggestFileExtension = pictureData.suggestFileExtension();// 图片格式
-                            String path =filePath+ pictureDataList.indexOf(pictureData) + "."
-                                    + suggestFileExtension;// 存储路径
-                            FileOutputStream out = new FileOutputStream(path);// 流写入
-                            out.write(pictureData.getData());
-                            out.close();
-                            fileList.add(path);
-                        }
-                        map.put(key,fileList);
-                    }
-                    continue;
+            // 获取图片数据
+            String key=""+i + "," + j;
+            List<PictureData> pictureDataList = picMap.get(key);
+            if (pictureDataList != null) {
+                String filePath=new File("").getAbsolutePath()+"/"+key;
+                List<String> fileList=new ArrayList<>(pictureDataList.size());
+                for (PictureData pictureData : pictureDataList) {
+                    String suggestFileExtension = pictureData.suggestFileExtension();// 图片格式
+                    String path =filePath+ pictureDataList.indexOf(pictureData) + "."
+                            + suggestFileExtension;// 存储路径
+                    FileOutputStream out = new FileOutputStream(path);// 流写入
+                    out.write(pictureData.getData());
+                    out.close();
+                    fileList.add(path);
                 }
-                switch (cell.getCellType()) {
-                        case HSSFCell.CELL_TYPE_STRING:
-                            map.put(keyList.get(j),cell.getRichStringCellValue());
-                            break;
-                        case HSSFCell.CELL_TYPE_NUMERIC:
-                            map.put(keyList.get(j),cell.getNumericCellValue());
-                            break;
-                        case HSSFCell.CELL_TYPE_BOOLEAN:
-                            map.put(keyList.get(j),cell.getBooleanCellValue());
-                            break;
-                        case HSSFCell.CELL_TYPE_FORMULA:
-                            map.put(keyList.get(j),cell.getCellFormula());
-                            break;
-                        default:
-                            map.put(keyList.get(j),"");
-                    }
+                map.put(keyList.get(j),fileList);
+                continue;
+            }
+            if (cell==null){
+                continue;
+            }
+            switch (cell.getCellType()) {
+                    case HSSFCell.CELL_TYPE_STRING:
+                        map.put(keyList.get(j),cell.getRichStringCellValue());
+                        break;
+                    case HSSFCell.CELL_TYPE_NUMERIC:
+                        map.put(keyList.get(j),cell.getNumericCellValue());
+                        break;
+                    case HSSFCell.CELL_TYPE_BOOLEAN:
+                        map.put(keyList.get(j),cell.getBooleanCellValue());
+                        break;
+                    case HSSFCell.CELL_TYPE_FORMULA:
+                        map.put(keyList.get(j),cell.getCellFormula());
+                        break;
+                    default:
+                        map.put(keyList.get(j),null);
+                }
             }
             mapList.add(map);
         }
-
     } catch (IOException e) {
         e.printStackTrace();
     }

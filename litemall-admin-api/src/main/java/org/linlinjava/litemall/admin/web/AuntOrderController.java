@@ -119,13 +119,16 @@ public class AuntOrderController {
 //    @RequiresPermissions("admin:uorder:delete")
 //    @RequiresPermissionsDesc(menu = {"家政管理", "预约管理"}, button = "删除")
     @PostMapping(value = "/delete/{id}")
-    public Object delete(HttpServletRequest request, @PathVariable("id") Integer id){
+    public Object delete(HttpServletRequest request, @PathVariable("id") Integer id) throws BizException {
         AuntOrder auntOrder = service.selectById(id);
         if (auntOrder == null){
             return ResponseUtil.fail(-1,"该订单不存在");
         }
-        if (auntOrder.getPayStatus() == 1){
-            return ResponseUtil.fail(-1,"该订单状态不允许删除");
+        if (null!=auntOrder.getPayStatus()&&auntOrder.getPayStatus() != 0){
+            return ResponseUtil.fail(-1,"非未支付状态，不允许删除");
+        }
+        if (null!=auntOrder.getDispatchStatus()&&auntOrder.getDispatchStatus()!=0){
+            throw  new BizException(40001,"已派单不能删除");
         }
         return ResponseUtil.ok(service.removeById(id));
     }

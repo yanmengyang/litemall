@@ -20,7 +20,7 @@ public interface AuntOrderService {
 
     Integer save(AuntOrder bean) throws BizException;
 
-    Integer removeById(Integer id);
+    Integer removeById(Integer id) throws BizException;
 
     List<AuntOrder> getListPage(Integer page, Integer limit, AuntOrder order);
 

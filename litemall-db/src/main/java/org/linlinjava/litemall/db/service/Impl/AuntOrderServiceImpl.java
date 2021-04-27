@@ -55,12 +55,12 @@ public class AuntOrderServiceImpl implements AuntOrderService {
             order=orderList.get(0);
             Long time=System.currentTimeMillis();
             Long dbTime=order.getCreatTime().getTime();
-            if (time-dbTime>5000){
-               orderMapper.insertSelective(bean);
-               return bean.getId();
+            if (time-dbTime<5000){
+               return order.getId();
             }
         }
-        return order.getId();
+        orderMapper.insertSelective(bean);
+        return bean.getId();
     }
 
     @Override

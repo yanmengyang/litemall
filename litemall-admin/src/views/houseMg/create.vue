@@ -390,7 +390,7 @@ export default {
     },
 
     netFetchDictType1() {
-      listDict({ dictType: 3 })
+      listDict({ dictType: 1 })
         .then((response) => {
           this.dictType1List = response.data.data.list
         })

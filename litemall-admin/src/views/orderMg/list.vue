@@ -116,7 +116,11 @@
         align="center"
         label="支付状态"
         prop="payStatus"
-      />
+      >
+        <template slot-scope="scope">
+          <el-tag :type="1">{{ payStatusList[scope.row.payStatus]}}</el-tag>
+        </template>
+      </el-table-column>
       <!--<el-table-column align="center" label="调度状态" prop="dispatchStatus" />-->
       <!--<el-table-column align="center" label="是否删除" prop="isDel" />-->
 
@@ -540,6 +544,7 @@ export default {
         // sort: 'add_time',
         // order: 'desc'
       },
+      payStatusList: ["未支付", "支付中", "已支付", "退款中", "已退款"],
       pickerOptions: {
         shortcuts: [
           {
@@ -619,7 +624,7 @@ export default {
               self.list.push(obj);
             }
           });
-          self.list = arr; 
+          self.list = arr;
           self.total = response.data.data.total;
           self.listLoading = false;
         })
@@ -676,8 +681,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          row.payStatus = "3";
-          updateOrder(row)
+          refundOrder({ id: row.id })
             .then((response) => {
               this.$notify.success({
                 title: "成功",

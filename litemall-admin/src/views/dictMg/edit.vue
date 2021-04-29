@@ -189,14 +189,14 @@ export default {
       this.$router.push({ path: '/goods/list' })
     },
     handlePublish: function() {
-      publishAunt(this.dictInfo)
+      updateDict(this.dictInfo)
         .then((response) => {
           this.$notify.success({
             title: '成功',
-            message: '创建成功'
+            message: '更新成功'
           })
           this.$store.dispatch('tagsView/delView', this.$route)
-          this.$router.push({ path: '/goods/list' })
+          this.$router.push({ path: '/houseMg/dictlist' })
         })
         .catch((response) => {
           MessageBox.alert('业务错误：' + response.data.errmsg, '警告', {

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.core.notify.NotifyService;
+import org.linlinjava.litemall.core.notify.NotifyType;
 import org.linlinjava.litemall.core.util.*;
 import org.linlinjava.litemall.db.domain.Aunt;
 import org.linlinjava.litemall.db.domain.AuntOrder;
@@ -153,5 +154,19 @@ public class ApiAuntOrderController {
         log.info("payNotify-----------------------------------");
         return wxUOrderService.payNotify(request, response);
     }
+
+
+    @Autowired
+    private NotifyService notifyService;
+
+    @PostMapping("smsTest")
+    public void smsTest(Integer id) {
+        AuntOrder order = orderService.selectById(id);
+        String time=order.getStartTime().substring(0,10);
+        notifyService.notifySmsTemplateSync(order.getMobile(), NotifyType.PAY_SUCCEED,
+                new String[]{order.getBlance().toString(),""+time,""+order.getAddr()});
+    }
+
+
 
 }

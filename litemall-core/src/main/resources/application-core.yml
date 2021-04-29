@@ -28,16 +28,16 @@ litemall:
       # 如果是腾讯云短信，则设置active的值tencent
       # 如果是阿里云短信，则设置active的值aliyun
       active: aliyun
-      sign: 百泓毕业聘
+      sign: 百泓爱马家政
       template:
       - name: paySucceed
-        templateId: 156349
+        templateId: SMS_215822925
       - name: captcha
         templateId: SMS_202415323
       - name: ship
         templateId: 158002
       - name: refund
-        templateId: 159447
+        templateId: SMS_215820195
       tencent:
         appid: 111111111
         appkey: xxxxxxxxxxxxxx

@@ -187,7 +187,7 @@ public class AuntOrderController {
 
         LocalDateTime now = LocalDateTime.now();
         // 设置订单取消状态
-        dbOrder.setPayStatus(3);
+        dbOrder.setPayStatus(4);
         // 记录订单退款相关信息
         service.updateById(dbOrder);
 
@@ -196,7 +196,7 @@ public class AuntOrderController {
         // 退款成功通知用户, 例如“您申请的订单退款 [ 单号:{1} ] 已成功，请耐心等待到账。”
         // 注意订单号只发后6位
         notifyService.notifySmsTemplate(order.getMobile(), NotifyType.REFUND,
-                new String[]{order.getId().toString()});
+                new String[]{dbOrder.getBlance().toString()});
 
         return ResponseUtil.ok();
     }

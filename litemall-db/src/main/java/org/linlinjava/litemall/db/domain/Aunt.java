@@ -97,7 +97,7 @@ public class Aunt implements Serializable {
 //    @NotEmpty(message = "属相不能为空")
     private String sign;
 
-
+    @NotEmpty(message = "电话不能为空")
     private String mobile;
 
     private String zodiac;

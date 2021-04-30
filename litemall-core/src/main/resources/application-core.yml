@@ -31,7 +31,7 @@ litemall:
       sign: 百泓爱马家政
       template:
       - name: paySucceed
-        templateId: SMS_215822925
+        templateId: SMS_216370917
       - name: captcha
         templateId: SMS_202415323
       - name: ship

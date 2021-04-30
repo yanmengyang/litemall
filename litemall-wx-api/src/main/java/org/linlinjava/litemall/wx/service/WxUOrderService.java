@@ -288,7 +288,7 @@ public class WxUOrderService {
             // 这里微信的短信平台对参数长度有限制，所以将订单号只截取后6位
             String time=order.getStartTime().substring(0,10);
             notifyService.notifySmsTemplateSync(order.getMobile(),NotifyType.PAY_SUCCEED,
-                    new String[]{order.getBlance().toString(),""+time,""+order.getAddr()});
+                    new String[]{""+time,""+order.getAddr()});
         }
         if (order.getPayStatus()==4){
             notifyService.notifySmsTemplateSync(order.getMobile(),NotifyType.REFUND, new String[]{order.getBlance().toString()});

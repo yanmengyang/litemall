@@ -123,7 +123,7 @@
       <if test="constellation != null">
         constellation,
       </if>
-      <if test="des != null">
+      <if test="des != null and des != ''">
         des,
       </if>
       <if test="auditStatus != null">
@@ -183,7 +183,7 @@
       <if test="workExperience != null">
         work_experience,
       </if>
-      <if test="personalPresentation != null">
+      <if test="personalPresentation != null and personalPresentation != ''">
         personal_presentation,
       </if>
     </trim>
@@ -203,7 +203,7 @@
       <if test="age != null">
         #{age,jdbcType=INTEGER},
       </if>
-      <if test="birthday != null">
+      <if test="birthday != null and birthday != ''">
         #{birthday,jdbcType=DATE},
       </if>
       <if test="nativePlace != null">
@@ -230,7 +230,7 @@
       <if test="constellation != null">
         #{constellation,jdbcType=VARCHAR},
       </if>
-      <if test="des != null">
+      <if test="des != null and des != ''">
         #{des,jdbcType=VARCHAR},
       </if>
       <if test="auditStatus != null">
@@ -290,7 +290,7 @@
       <if test="workExperience != null">
         #{workExperience,jdbcType=VARCHAR},
       </if>
-      <if test="personalPresentation != null">
+      <if test="personalPresentation != null and personalPresentation != ''">
         #{personalPresentation,jdbcType=VARCHAR},
       </if>
     </trim>

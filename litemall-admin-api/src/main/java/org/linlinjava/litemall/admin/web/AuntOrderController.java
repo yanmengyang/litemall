@@ -195,7 +195,7 @@ public class AuntOrderController {
         //TODO 发送邮件和短信通知，这里采用异步发送
         // 退款成功通知用户, 例如“您申请的订单退款 [ 单号:{1} ] 已成功，请耐心等待到账。”
         // 注意订单号只发后6位
-        notifyService.notifySmsTemplate(order.getMobile(), NotifyType.REFUND,
+        notifyService.notifySmsTemplate(dbOrder.getMobile(), NotifyType.REFUND,
                 new String[]{dbOrder.getBlance().toString()});
 
         return ResponseUtil.ok();

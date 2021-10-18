@@ -1,4 +1,4 @@
-FROM registry.cn-hangzhou.aliyuncs.com/wbyjk/openjdk-base:latest
+FROM java:8
 RUN rm -f /etc/localtime \
 && ln -sv /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 && echo "Asia/Shanghai" > /etc/timezone

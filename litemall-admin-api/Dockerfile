@@ -5,7 +5,7 @@ RUN rm -f /etc/localtime \
 ADD ./target/ /java/src/app
 WORKDIR /java/src/app
 RUN ls -a /java/src/app
-RUN cp /java/src/app/*.jar /tmp/target.jar
+RUN cp /java/src/app/litemall-admin-api-0.1.0.jar /tmp/target.jar
 RUN rm -rf /java/src/app
 RUN sh -c 'touch /tmp/target.jar'
 EXPOSE 8080

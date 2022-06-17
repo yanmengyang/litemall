@@ -59,12 +59,14 @@
                 <executions>
                     <execution>
                         <id>repackage</id>
-                        <configuration>
-                            <executable>true</executable>
-                            <classifier>exec</classifier>
-                        </configuration>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <mainClass>org.linlinjava.litemall.admin.Application</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>

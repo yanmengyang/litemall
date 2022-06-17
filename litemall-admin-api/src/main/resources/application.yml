@@ -12,7 +12,7 @@ logging:
     root:  ERROR
     org.springframework:  ERROR
     org.mybatis:  ERROR
-    org.linlinjava.litemall.admin:  DEBUG
+    org.linlinjava.litemall.admin:  info
     org.linlinjava.litemall:  ERROR
 
 swagger:

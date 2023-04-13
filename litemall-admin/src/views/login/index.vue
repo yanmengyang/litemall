@@ -106,8 +106,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'aima123',
-        password: '123456',
+        username: 'admin123',
+        password: 'admin123',
         code: '123456'
       },
       codeImg: '',

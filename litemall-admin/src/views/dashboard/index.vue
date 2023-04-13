@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-editor-container">
-    <h1>欢迎使用，爱马家政管理系统</h1>
+    <h1>欢迎使用，Litemall管理系统</h1>
     <!-- <el-row :gutter="40" class="panel-group">
       <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
         <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
@@ -51,35 +51,35 @@
 </template>
 
 <script>
-import { info } from "@/api/dashboard";
-import CountTo from "vue-count-to";
+import { info } from '@/api/dashboard'
+import CountTo from 'vue-count-to'
 
 export default {
   components: {
-    CountTo,
+    CountTo
   },
   data() {
     return {
       userTotal: 0,
       goodsTotal: 0,
       productTotal: 0,
-      orderTotal: 0,
-    };
+      orderTotal: 0
+    }
   },
   created() {
     info().then((response) => {
-      this.userTotal = response.data.data.userTotal;
-      this.goodsTotal = response.data.data.goodsTotal;
-      this.productTotal = response.data.data.productTotal;
-      this.orderTotal = response.data.data.orderTotal;
-    });
+      this.userTotal = response.data.data.userTotal
+      this.goodsTotal = response.data.data.goodsTotal
+      this.productTotal = response.data.data.productTotal
+      this.orderTotal = response.data.data.orderTotal
+    })
   },
   methods: {
     handleSetLineChartData(type) {
-      this.$emit("handleSetLineChartData", type);
-    },
-  },
-};
+      this.$emit('handleSetLineChartData', type)
+    }
+  }
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

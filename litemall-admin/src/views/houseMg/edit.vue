@@ -44,7 +44,7 @@
           <el-col :span="12" :offset="0">
             <el-form-item label="年龄" prop="age">
               <el-col :span="16">
-                <el-input v-model="auntInfo.age" type="number"/>
+                <el-input v-model="auntInfo.age" type="number" />
               </el-col>
             </el-form-item>
           </el-col>
@@ -85,7 +85,7 @@
           <el-col :span="12" :offset="0">
             <el-form-item label="电话" prop="mobile">
               <el-col :span="16">
-                <el-input v-model="auntInfo.mobile" type="number"/>
+                <el-input v-model="auntInfo.mobile" type="number" />
               </el-col>
             </el-form-item>
           </el-col>
@@ -202,7 +202,7 @@
         <el-form-item label="上户保险" prop="insuranceApprove">
           <el-input v-model="auntInfo.insuranceApprove" />
         </el-form-item>
-         <el-form-item label="体检报告" prop="examinationApprove">
+        <el-form-item label="体检报告" prop="examinationApprove">
           <el-input v-model="auntInfo.examinationApprove" />
         </el-form-item>
 

@@ -4,26 +4,30 @@
     <!-- 查询和其他操作 -->
     <div class="filter-container">
       <!--<el-input v-model="listQuery.goodsId" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨ID" />-->
-            <div style="display: flex;align-items:center;">
-                <el-input v-model="listQuery.id" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨编号" />
-                <div style="width:12px;"/>
-                <el-input v-model="listQuery.nickName" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨名称" />
-                <div style="width:12px;"/>
-                <el-input v-model="listQuery.type" clearable class="filter-item" style="width: 160px;" placeholder="请输入矩阵类型" />
-                <div style="width:12px;"/>
-                <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
-                <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
-                <el-upload ref="upload" :show-file-list="false" :on-change="readExcel" :limit="1" 
-                    :action="'https://aimajiazheng.com/api/admin/aunt/insertBatich'" 
-                    accept=".xlsx"
-                    :on-error="xlsxUploadError" 
-                    :on-success="xlsxUploadSuccess" 
-                    style="margin-left: 12px;"
-                    >
-                    <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleImport">导入</el-button>
-                </el-upload>
-            </div>
-        <el-button v-if="0" :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button>
+      <div style="display: flex;align-items:center;">
+        <el-input v-model="listQuery.id" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨编号" />
+        <div style="width:12px;" />
+        <el-input v-model="listQuery.nickName" clearable class="filter-item" style="width: 160px;" placeholder="请输入阿姨名称" />
+        <div style="width:12px;" />
+        <el-input v-model="listQuery.type" clearable class="filter-item" style="width: 160px;" placeholder="请输入矩阵类型" />
+        <div style="width:12px;" />
+        <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
+        <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
+        <el-upload
+          ref="upload"
+          :show-file-list="false"
+          :on-change="readExcel"
+          :limit="1"
+          :action="'https://aimajiazheng.com/api/admin/aunt/insertBatich'"
+          accept=".xlsx"
+          :on-error="xlsxUploadError"
+          :on-success="xlsxUploadSuccess"
+          style="margin-left: 12px;"
+        >
+          <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleImport">导入</el-button>
+        </el-upload>
+      </div>
+      <el-button v-if="0" :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -151,9 +155,9 @@ export default {
         page: 1,
         limit: 20,
 
-        id:undefined,
-        nickName:undefined,
-        type:undefined,
+        id: undefined,
+        nickName: undefined,
+        type: undefined,
 
         name: undefined,
         // sort: 'add_time',
@@ -183,19 +187,19 @@ export default {
 
     handleFilter() {
       this.listQuery.page = 1
-        let {id,type,nickName} = this.listQuery
+      const { id, type, nickName } = this.listQuery
 
-        if (id == undefined || id.length == 0) {
-            delete this.listQuery.id
-        }
-        
-        if (type == undefined || type.length == 0) {
-            delete this.listQuery.type
-        }
+      if (id == undefined || id.length == 0) {
+        delete this.listQuery.id
+      }
 
-        if (nickName == undefined || nickName.length == 0) {
-            delete this.listQuery.nickName
-        }
+      if (type == undefined || type.length == 0) {
+        delete this.listQuery.type
+      }
+
+      if (nickName == undefined || nickName.length == 0) {
+        delete this.listQuery.nickName
+      }
       this.getList()
     },
 
@@ -248,30 +252,29 @@ export default {
     },
 
     xlsxUploadError(err) {
-         this.$notify.error({
-            title: "失败",
-            message: "导入失败",
-          });
+      this.$notify.error({
+        title: '失败',
+        message: '导入失败'
+      })
     },
 
     xlsxUploadSuccess(response, file, fileList) {
-        let {errno,errmsg} = response
-        if (errno != 0) {
-             this.$notify.error({
-            title: "失败",
-            message: errmsg,
-          });
-        } else {
-              this.$notify.success({
-            title: "成功",
-            message: "导入成功"
-              });
+      const { errno, errmsg } = response
+      if (errno != 0) {
+        this.$notify.error({
+          title: '失败',
+          message: errmsg
+        })
+      } else {
+        this.$notify.success({
+          title: '成功',
+          message: '导入成功'
+        })
 
-            this.listQuery.page = 1
-            this.getList()
-        }
-    },
-
+        this.listQuery.page = 1
+        this.getList()
+      }
+    }
 
   }
 }
